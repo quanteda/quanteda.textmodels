@@ -1,0 +1,49 @@
+Package: quanteda.textmodels
+Type: Package
+Title: Scaling models and classifiers for textual data
+Version: 0.9.0
+Description: Scaling models and classifers for sparse matrix objects representing textual data in the form of a document-feature matrix. 
+    Originally from the quanteda package, these models take quanteda dfm (document-feature matrix) objects as inputs.
+Authors@R: c( 
+    person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role = c("cre", "aut", "cph"), comment = c(ORCID = "0000-0002-0797-564X")), 
+    person("Kohei", "Watanabe", email = "watanabe.kohei@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-6519-5265")), 
+    person("Haiyan", "Wang", email = "whyinsa@yahoo.com", role = "aut", comment = c(ORCID = "0000-0003-4992-4311")),
+    person("Stefan", "Müller", email = "mullers@tcd.ie", role = "aut", comment = c(ORCID = "0000-0002-6315-4125")),
+    person("Patrick O.", "Perry", email = "patperry@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-7460-127X")),
+    person("Benjamin", "Lauderdale", email = "b.e.lauderdale@lse.ac.uk", role = "aut", comment = c(ORCID = "0000-0003-3090-0969")),    
+    person("William", "Lowe", email = "wlowe@princeton.edu", role = "aut", comment = c(ORCID = "0000-0002-1549-6163")),
+    person("European Research Council", role = "fnd", comment = "ERC-2011-StG 283794-QUANTESS")
+    )
+Depends:
+    R (>= 3.1.0),
+    quanteda,
+    methods
+Imports:
+    ca,
+    ggplot2,
+    keras (>= 2.1.0),
+    LiblineaR,
+    lsa,
+    Matrix (>= 1.2),
+    RColorBrewer,
+    RSpectra,
+    Rcpp (>= 0.12.12),
+    RcppParallel,
+    RSSL,
+    SparseM,
+    stringi
+Suggests:
+    spelling,
+    testthat,
+    covr,
+    knitr
+LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0)
+URL: https://textmodels.quanteda.io
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+VignetteBuilder: knitr
+Language: en-GB
+RoxygenNote: 7.0.2
+SystemRequirements: C++11
+Roxygen: list(markdown = TRUE)
