@@ -39,7 +39,7 @@ Suggests:
     knitr
 Remotes:
     quanteda/quanteda@no-textmodels
-LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0)
+LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
 URL: https://textmodels.quanteda.io
 License: GPL-3
 Encoding: UTF-8
