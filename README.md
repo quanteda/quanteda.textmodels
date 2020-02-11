@@ -10,7 +10,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![Travis build
 status](https://travis-ci.org/quanteda/quanteda.textmodels.svg?branch=master)](https://travis-ci.org/quanteda/quanteda.textmodels)
 [![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/quanteda/quanteda.textmodels?branch=master&svg=true)](https://ci.appveyor.com/project/quanteda/quanteda.textmodels)
+status](https://ci.appveyor.com/api/projects/status/github/quanteda/quanteda-textmodels?branch=master&svg=true)](https://ci.appveyor.com/project/quanteda/quanteda-textmodels)
 <!-- badges: end -->
 
 ## About
