@@ -24,7 +24,7 @@ For more details, see <https://quanteda.io>.
 
 ## How to Install
 
-Once the packahge is on CRAN (which is it not yet), then you can install
+Once the package is on CRAN (which is it not yet), then you can install
 it via the normal way from CRAN, using your R GUI or
 
 ``` r
