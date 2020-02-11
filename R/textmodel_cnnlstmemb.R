@@ -1,4 +1,4 @@
-#' Convolutional NN + LSTM model fitted to word embeddings
+#' [Experimental] Convolutional NN + LSTM model fitted to word embeddings
 #'
 #' A function that combines a convolutional neural network layer with a
 #' long-term short-term layer. It is designed to incorporate word sequences,

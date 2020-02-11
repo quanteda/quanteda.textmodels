@@ -1,4 +1,4 @@
-#' Convert quanteda tokens to keras sequences
+#' [Experimental] Convert quanteda tokens to keras sequences
 #'
 #' This function converts a \pkg{quanteda} \code{\link[quanteda]{tokens}} object
 #' into a tokens sequence object as expected by some functions in the
