@@ -12,15 +12,11 @@
 #'   numeric code for every unique token kept (determined by \code{keepn}) and
 #'   they are arranged in the same sequence indicated by the original
 #'   \code{\link[quanteda]{tokens}} object.
+#' @seealso [is.tokens2sequences()], [tokens2sequences_conform()]
 #' @export
 #' @examples
-#' corpcoded <- corpus_subset(data_corpus_manifestosentsUK, !is.na(crowd_immigration_label))
-#' corpuncoded <- data_corpus_manifestosentsUK %>%
-#'     corpus_subset(is.na(crowd_immigration_label) & year > 1980) %>%
-#'     corpus_sample(size = ndoc(corpcoded))
-#' corp <- corpcoded + corpuncoded
-#'
-#' corptok <- tokens(texts(corp))
+#' corp <- corpus_subset(data_corpus_inaugural, Year <= 1793)
+#' corptok <- tokens(corp)
 #' print(corp)
 #' seqs <- tokens2sequences(corptok, maxsenlen = 200)
 #' print(seqs)
@@ -98,8 +94,10 @@ print.tokens2sequences <- function(x, ...) {
 #' @param y \code{\link{tokens2sequences}} object whose feature names will be
 #'   used to change token labels for \code{x}
 #' @seealso \code{\link{tokens2sequences}}
+#' @keywords internal
 #' @export
 #' @examples
+#' \dontrun{
 #' corpcoded <- corpus_subset(data_corpus_manifestosentsUK, !is.na(crowd_immigration_label))
 #' corpuncoded <- data_corpus_manifestosentsUK %>%
 #'     corpus_subset(is.na(crowd_immigration_label) & year > 1980) %>%
@@ -111,6 +109,7 @@ print.tokens2sequences <- function(x, ...) {
 #' seqx <- tokens2sequences(tokx, maxsenlen = 50, keepn = 5000)
 #' seqy <- tokens2sequences(toky, maxsenlen = 50, keepn = 5000)
 #' tokens2sequences_conform(seqx, seqy)
+#' }
 tokens2sequences_conform <- function(x, y) {
     UseMethod("tokens2sequences_conform")
 }
@@ -148,6 +147,7 @@ tokens2sequences_conform.tokens2sequences <- function(x, y) {
 #'
 #' @param x Object that will be checked to see if it is of the type \code{\link{tokens2sequences}}
 #' @seealso \code{\link{tokens2sequences}}
+#' @keywords internal
 #' @export
 is.tokens2sequences <- function(x) {
     "tokens2sequences" %in% class(x)

@@ -15,3 +15,4 @@ Check to see if function is a tokens2sequences type
 \seealso{
 \code{\link{tokens2sequences}}
 }
+\keyword{internal}

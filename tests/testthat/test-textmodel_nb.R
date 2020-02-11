@@ -140,13 +140,13 @@ test_that("types works (#1322)", {
 test_that("textmodel_nb print methods work", {
     nb <- textmodel_nb(data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA))
     expect_output(
-        quanteda:::print.textmodel_nb(nb),
+        print(nb),
         "^\\nCall:\\ntextmodel_nb.dfm\\(x = data_dfm_lbgexample, y = c\\(seq\\(-1\\.5,"
     )
 
     nbs <- summary(nb)
     expect_output(
-        quanteda:::print.summary.textmodel(nbs),
+        print(nbs),
         "^\\nCall:\\ntextmodel_nb.dfm\\(x = data_dfm_lbgexample, y = c\\(seq\\(-1\\.5,"
     )
 })

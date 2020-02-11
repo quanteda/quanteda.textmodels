@@ -4,12 +4,12 @@ test_that("test wordscores on LBG data", {
     ws <- textmodel_wordscores(data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA))
     pr <- predict(ws, newdata = data_dfm_lbgexample[6, ], interval = "none")
     expect_equal(unclass(pr), c(V1 = -.45), tolerance = .01)
-    
+
     pr2 <- predict(ws, data_dfm_lbgexample, interval = "none")
     expect_is(pr2, "numeric")
     expect_equal(names(pr2), docnames(data_dfm_lbgexample))
     expect_equal(pr2["V1"], c(V1 = -.45), tolerance = .01)
-    
+
     pr3 <- predict(ws, data_dfm_lbgexample, se.fit = TRUE, interval = "none")
     expect_is(pr3, "list")
     expect_equal(names(pr3), c("fit", "se.fit"))
@@ -53,7 +53,7 @@ test_that("predict.textmodel_wordscores with rescaling works with additional ref
     refscores[docnames(data_dfm_lbgexample) == "R1"] <- -1
     refscores[docnames(data_dfm_lbgexample) == "R5"] <- 1
 
-    ws1999 <- textmodel_wordscores(data_dfm_lbgexample, refscores, 
+    ws1999 <- textmodel_wordscores(data_dfm_lbgexample, refscores,
                                    scale = "linear", smooth = 1)
     expect_identical(
         unclass(predict(ws1999, rescaling = "mv"))[c("R1", "R5")],
@@ -64,7 +64,7 @@ test_that("predict.textmodel_wordscores with rescaling works with additional ref
 # test_that("test wordscores predict is same for virgin texts with and without ref texts", {
 #     y <- c(seq(-1.5, 1.5, .75), NA)
 #     ws <- textmodel_wordscores(data_dfm_lbgexample, y)
-#     
+#
 #     expect_equal(
 #         predict(ws)["V1"],
 #         predict(ws, data_dfm_lbgexample)["V1"]
@@ -77,7 +77,7 @@ test_that("predict.textmodel_wordscores with rescaling works with additional ref
 #         suppressWarnings(predict(ws, include_reftexts = FALSE, rescaling = "lbg")["V1"]),
 #         suppressWarnings(predict(ws, include_reftexts = TRUE, rescaling = "lbg")["V1"])
 #     )
-#     
+#
 #     expect_equal(
 #         predict(ws, include_reftexts = FALSE, se.fit = TRUE)["V1"],
 #         predict(ws, include_reftexts = TRUE, se.fit = TRUE)["V1"]
@@ -87,15 +87,15 @@ test_that("predict.textmodel_wordscores with rescaling works with additional ref
 #         predict(ws, include_reftexts = TRUE, interval = "confidence", se.fit = TRUE)$fit["V1", , drop = FALSE]
 #     )
 #     expect_equal(
-#         predict(ws, include_reftexts = FALSE, interval = "confidence", 
+#         predict(ws, include_reftexts = FALSE, interval = "confidence",
 #                 se.fit = TRUE)$se.fit,
-#         predict(ws, include_reftexts = TRUE, interval = "confidence", 
+#         predict(ws, include_reftexts = TRUE, interval = "confidence",
 #                 se.fit = TRUE)$se.fit[which(docnames(ws) == "V1")]
 #     )
 #     expect_equal(
-#         predict(ws, include_reftexts = FALSE, interval = "confidence", 
+#         predict(ws, include_reftexts = FALSE, interval = "confidence",
 #                 rescaling = "lbg", se.fit = TRUE)$se.fit,
-#         predict(ws, include_reftexts = TRUE, interval = "confidence", 
+#         predict(ws, include_reftexts = TRUE, interval = "confidence",
 #                 rescaling = "lbg", se.fit = TRUE)$se.fit[which(docnames(ws) == "V1")]
 #     )
 # })
@@ -112,24 +112,24 @@ test_that("predict.textmodel_wordscores with rescaling works with additional ref
 
 # test_that("coef works for wordscores predicted, rescaling = mv", {
 #     pr <- suppressWarnings(
-#         predict(textmodel_wordscores(data_dfm_lbgexample, 
-#                                      c(seq(-1.5, 1.5, .75), NA)), 
+#         predict(textmodel_wordscores(data_dfm_lbgexample,
+#                                      c(seq(-1.5, 1.5, .75), NA)),
 #                 rescaling = "mv")
 #     )
 #     expect_equal(coef(pr)$coef_document, pr@textscores$textscore_mv)
 #     expect_equal(
-#         coef(pr)$coef_document_se, 
+#         coef(pr)$coef_document_se,
 #         (pr@textscores$textscore_mv - pr@textscores$textscore_mv_lo) / 1.96,
 #         tolerance = .001
 #     )
 # })
 
 # test_that("coef works for wordscores predicted, rescaling = lbg", {
-#     pr <- predict(textmodel_wordscores(data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA)), 
+#     pr <- predict(textmodel_wordscores(data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA)),
 #                   rescaling = "lbg")
 #     expect_equal(coef(pr)$coef_document, pr@textscores$textscore_lbg)
 #     expect_equal(
-#         coef(pr)$coef_document_se, 
+#         coef(pr)$coef_document_se,
 #         (pr@textscores$textscore_lbg - pr@textscores$textscore_lbg_lo) / 1.96,
 #         tolerance = .001
 #     )
@@ -146,17 +146,17 @@ test_that("coef and coefficients are the same", {
 
 test_that("confidence intervals all work", {
     ws <- textmodel_wordscores(data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA))
-    
+
     pr <- predict(ws, se.fit = TRUE, interval = "confidence", rescaling = "none")
     expect_equal(names(pr), c("fit", "se.fit"))
     expect_equal(colnames(pr$fit), c("fit", "lwr", "upr"))
     expect_is(pr$fit, "matrix")
-    
+
     pr_lbg <- predict(ws, se.fit = TRUE, interval = "confidence", rescaling = "lbg")
     expect_equal(names(pr_lbg), c("fit", "se.fit"))
     expect_equal(colnames(pr_lbg$fit), c("fit", "lwr", "upr"))
     expect_is(pr_lbg$fit, "matrix")
-    
+
     pr_mv <- suppressWarnings(
         predict(ws, se.fit = TRUE, interval = "confidence", rescaling = "mv")
     )
@@ -169,13 +169,13 @@ test_that("confidence intervals all work", {
 test_that("textmodel_wordscores print methods work", {
     ws <- textmodel_wordscores(data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA))
     expect_output(
-        quanteda:::print.textmodel_wordscores(ws),
+        print(ws),
         "^\\nCall:\\ntextmodel_wordscores\\.dfm\\(.*Scale: linear;.*37 scored features\\.$"
     )
-    
+
     sws <- summary(ws)
     expect_output(
-        quanteda:::print.summary.textmodel(sws),
+        print(sws),
         "^\\nCall:\\ntextmodel_wordscores\\.dfm\\(.*Reference Document Statistics:.*Wordscores:\\n"
     )
 })
@@ -185,15 +185,15 @@ test_that("additional quanteda methods", {
     expect_equal(ndoc(ws), 6)
     expect_equal(nfeat(ws), 37)
     expect_equal(docnames(ws), docnames(data_dfm_lbgexample))
-    expect_equal(featnames(ws), 
+    expect_equal(featnames(ws),
                  featnames(data_dfm_lbgexample))
 })
 
 test_that("Works with newdata with different features from the model (#1329)", {
-    
+
     mt1 <- dfm(c(text1 = "a b c", text2 = "d e f"))
     mt2 <- dfm(c(text3 = "a b c", text4 = "e f g"))
-    
+
     ws <- textmodel_wordscores(mt1, 1:2)
     expect_silent(predict(ws, newdata = mt1, force = TRUE))
     expect_warning(predict(ws, newdata = mt2, force = TRUE),
@@ -216,12 +216,12 @@ test_that("textmodel_wordscores does not use NA wordscores scores", {
     thedfm["V1", "ZJ"] <- 1
     thedfm <- as.dfm(thedfm)
     ws <- textmodel_wordscores(thedfm, c(-1, NA, NA, NA, 1, NA))
-    
+
     expect_identical(ws$wordscores, c(A = -1, B = -1, ZJ = 1, ZK = 1))
     pws <- suppressWarnings(predict(ws))
     class(pws) <- class(pws)[-1]
     expect_identical(
-        pws, 
+        pws,
         c(R1 = -1, R2 = 0, R3 = 0, R4 = 0, R5 = 1, V1 = 1)
     )
     expect_warning(
@@ -231,15 +231,15 @@ test_that("textmodel_wordscores does not use NA wordscores scores", {
 })
 
 test_that("raises error when dfm is empty (#1419)",  {
-    
+
     mx <- dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_wordscores(mx, y = c(-1, NA, NA, NA, 1, NA)),
                  quanteda:::message_error("dfm_empty"))
-    
+
 })
 
 test_that("works with different predicted object in different shapes (#1440)",  {
-    
+
     ws <- textmodel_wordscores(data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA))
     expect_silent(textplot_scale1d(predict(ws)))
     expect_silent(textplot_scale1d(predict(ws, se.fit = TRUE)))
@@ -257,7 +257,7 @@ test_that("textmodel_wordscores correctly implements smoothing (#1476)", {
                                         c(seq(-1.5, 1.5, .75), NA), scale = "linear")
     expect_identical(coef(ws_smooth1), coef(ws_smooth1a))
     expect_true(!any(coef(ws_nosmooth) ==  coef(ws_smooth1)))
-    
+
     ws_smooth2 <- textmodel_wordscores(data_dfm_lbgexample, smooth = 0.5,
                                         c(seq(-1.5, 1.5, .75), NA), scale = "linear")
     ws_smooth2a <- textmodel_wordscores(data_dfm_lbgexample + 0.5,

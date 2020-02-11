@@ -27,14 +27,12 @@ into a tokens sequence object as expected by some functions in the
 \pkg{keras} package.
 }
 \examples{
-corpcoded <- corpus_subset(data_corpus_manifestosentsUK, !is.na(crowd_immigration_label))
-corpuncoded <- data_corpus_manifestosentsUK \%>\%
-    corpus_subset(is.na(crowd_immigration_label) & year > 1980) \%>\%
-    corpus_sample(size = ndoc(corpcoded))
-corp <- corpcoded + corpuncoded
-
-corptok <- tokens(texts(corp))
+corp <- corpus_subset(data_corpus_inaugural, Year <= 1793)
+corptok <- tokens(corp)
 print(corp)
 seqs <- tokens2sequences(corptok, maxsenlen = 200)
 print(seqs)
+}
+\seealso{
+\code{\link[=is.tokens2sequences]{is.tokens2sequences()}}, \code{\link[=tokens2sequences_conform]{tokens2sequences_conform()}}
 }

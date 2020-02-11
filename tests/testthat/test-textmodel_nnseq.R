@@ -3,21 +3,23 @@ context("test textmodel_nnseq")
 test_that("the nnseq model works", {
     skip_on_cran()
 
-    dfmat <- dfm(data_corpus_irishbudget2010)
-    y <- test <- docvars(data_corpus_irishbudget2010, "party")
-    y[5] <- NA
-    tmod <- textmodel_nnseq(dfmat, y = y, epoch = 50)
+    set.seed(100)
+    corp_train <- corpus_sample(data_corpus_EPcoaldebate, size = 3000, by = "crowd_subsidy_label")
+    corp_test <- corpus_sample(data_corpus_EPcoaldebate, size = 10, by = "crowd_subsidy_label")
+    dfmat_train <- dfm(corp_train)
+    dfmat_test <- dfm(corp_test)
+
+    tmod <- textmodel_nnseq(dfmat_train, y = docvars(dfmat_train, "crowd_subsidy_label"), epoch = 5)
 
     # label
-    expect_equal(names(predict(tmod, type = "class"))[5], "Cowen, Brian (FF)")
-    # prediction
-    expect_true(as.character(predict(tmod, type = "class")[5]) %in% c("FF", "Green"))
-    
-    probmat <- predict(tmod, type = "probability")
-    expect_equal(dim(probmat), c(14, 5))
-    expect_equal(rownames(probmat), docnames(dfmat))
-    expect_equal(colnames(probmat), tmod$classnames)
-    expect_equal(unname(rowSums(probmat)), rep(1, nrow(probmat)), tol = .000001)
+    pred <- predict(tmod, newdata = dfmat_test, type = "class")
+    tab <- table(pred, dfmat_test$crowd_subsidy_label)
+    acc <- sum(diag(tab)) / sum(tab)
+    expect_gte(acc, .6)
+
+    # predicted prob
+    prob <- predict(tmod, newdata = dfmat_test, type = "probability")
+    expect_gte(prob["PL_Lamberts_3_3", "Anti-Subsidy"], .95)
 
     expect_output(
         print(tmod),
@@ -25,16 +27,10 @@ test_that("the nnseq model works", {
     )
 
     expect_equal(names(summary(tmod)), c("call", "model structure"))
-    expect_equivalent(
-        as.character(predict(tmod, type = "class")),
-        test
-    )
     set.seed(10)
-    pred_out <- predict(tmod, type = "probability")
-    pred_max <- apply(pred_out, 1, function(x) colnames(pred_out)[which.max(x)])
-    names(test) <- paste0("text", 1:length(test))
+    pred_max <- apply(prob, 1, function(x) colnames(prob)[which.max(x)])
     expect_equivalent(
         pred_max,
-        as.character(predict(tmod, type = "class"))
+        as.character(pred)
     )
 })

@@ -2,26 +2,26 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 qatd_cpp_ca <- function(dfm, residual_floor) {
-    .Call('_quanteda_textmodels_qatd_cpp_ca', PACKAGE = 'quanteda.textmodels', dfm, residual_floor)
+    .Call(`_quanteda_textmodels_qatd_cpp_ca`, dfm, residual_floor)
 }
 
 qatd_cpp_is_grouped_numeric <- function(values_, groups_) {
-    .Call('_quanteda_textmodels_qatd_cpp_is_grouped_numeric', PACKAGE = 'quanteda.textmodels', values_, groups_)
+    .Call(`_quanteda_textmodels_qatd_cpp_is_grouped_numeric`, values_, groups_)
 }
 
 qatd_cpp_is_grouped_character <- function(values_, groups_) {
-    .Call('_quanteda_textmodels_qatd_cpp_is_grouped_character', PACKAGE = 'quanteda.textmodels', values_, groups_)
+    .Call(`_quanteda_textmodels_qatd_cpp_is_grouped_character`, values_, groups_)
 }
 
 qatd_cpp_tbb_enabled <- function() {
-    .Call('_quanteda_textmodels_qatd_cpp_tbb_enabled', PACKAGE = 'quanteda.textmodels')
+    .Call(`_quanteda_textmodels_qatd_cpp_tbb_enabled`)
 }
 
 qatd_cpp_wordfish_dense <- function(wfm, dir, priors, tol, disp, dispfloor, abs_err) {
-    .Call('_quanteda_textmodels_qatd_cpp_wordfish_dense', PACKAGE = 'quanteda.textmodels', wfm, dir, priors, tol, disp, dispfloor, abs_err)
+    .Call(`_quanteda_textmodels_qatd_cpp_wordfish_dense`, wfm, dir, priors, tol, disp, dispfloor, abs_err)
 }
 
 qatd_cpp_wordfish <- function(wfm, dirvec, priorvec, tolvec, disptype, dispmin, ABS, svd_sparse, residual_floor) {
-    .Call('_quanteda_textmodels_qatd_cpp_wordfish', PACKAGE = 'quanteda.textmodels', wfm, dirvec, priorvec, tolvec, disptype, dispmin, ABS, svd_sparse, residual_floor)
+    .Call(`_quanteda_textmodels_qatd_cpp_wordfish`, wfm, dirvec, priorvec, tolvec, disptype, dispmin, ABS, svd_sparse, residual_floor)
 }
 

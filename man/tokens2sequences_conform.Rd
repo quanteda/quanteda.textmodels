@@ -17,6 +17,7 @@ Converts the feature names of one tokens2sequences object to those of
 another.  Useful in aligning training and test sets.
 }
 \examples{
+\dontrun{
 corpcoded <- corpus_subset(data_corpus_manifestosentsUK, !is.na(crowd_immigration_label))
 corpuncoded <- data_corpus_manifestosentsUK \%>\%
     corpus_subset(is.na(crowd_immigration_label) & year > 1980) \%>\%
@@ -29,6 +30,8 @@ seqx <- tokens2sequences(tokx, maxsenlen = 50, keepn = 5000)
 seqy <- tokens2sequences(toky, maxsenlen = 50, keepn = 5000)
 tokens2sequences_conform(seqx, seqy)
 }
+}
 \seealso{
 \code{\link{tokens2sequences}}
 }
+\keyword{internal}

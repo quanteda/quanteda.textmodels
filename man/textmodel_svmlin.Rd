@@ -2,7 +2,7 @@
 % Please edit documentation in R/textmodel_svmlin.R
 \name{textmodel_svmlin}
 \alias{textmodel_svmlin}
-\title{Linear SVM classifier for texts}
+\title{(faster) Linear SVM classifier for texts}
 \usage{
 textmodel_svmlin(x, y, intercept = TRUE, ...)
 }
@@ -55,5 +55,4 @@ Linear SVMs. Book Chapter in \emph{Large Scale Kernel Machines}, MIT Press, 2006
 \seealso{
 \code{\link[RSSL]{svmlin}}, \code{text{textmodel_svm}}
 }
-\keyword{internal}
 \keyword{textmodel}

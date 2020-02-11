@@ -1,4 +1,4 @@
-#' Linear SVM classifier for texts
+#' (faster) Linear SVM classifier for texts
 #'
 #' Fit a fast linear SVM classifier for texts, using the R interface to the
 #' svmlin code by Vikas Sindhwani and S. Sathiya Keerthi for fast linear
@@ -39,7 +39,7 @@
 #'                       pos_frac = 5/14))
 #' @import quanteda
 #' @importFrom stats na.omit predict
-#' @keywords textmodel internal
+#' @keywords textmodel
 #' @export
 textmodel_svmlin <- function(x, y, intercept = TRUE, ...) {
     UseMethod("textmodel_svmlin")

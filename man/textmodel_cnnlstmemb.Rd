@@ -109,4 +109,7 @@ tail(texts(corpuncoded)[pred == "Immigration"], 10)
 
 }
 }
+\seealso{
+\code{\link[=save.textmodel_cnnlstmemb]{save.textmodel_cnnlstmemb()}}, \code{\link[=load.textmodel_cnnlstmemb]{load.textmodel_cnnlstmemb()}}
+}
 \keyword{textmodel}
