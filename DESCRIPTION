@@ -37,6 +37,8 @@ Suggests:
     testthat,
     covr,
     knitr
+Remotes:
+    quanteda/quanteda@no-textmodels
 LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0)
 URL: https://textmodels.quanteda.io
 License: GPL-3
