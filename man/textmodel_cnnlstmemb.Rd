@@ -2,7 +2,7 @@
 % Please edit documentation in R/textmodel_cnnlstmemb.R
 \name{textmodel_cnnlstmemb}
 \alias{textmodel_cnnlstmemb}
-\title{Convolutional NN + LSTM model fitted to word embeddings}
+\title{\link{Experimental} Convolutional NN + LSTM model fitted to word embeddings}
 \usage{
 textmodel_cnnlstmemb(
   x,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tokens2sequences.R
 \name{tokens2sequences}
 \alias{tokens2sequences}
-\title{Convert quanteda tokens to keras sequences}
+\title{\link{Experimental} Convert quanteda tokens to keras sequences}
 \usage{
 tokens2sequences(x, maxsenlen = 40, keepn = NULL)
 }

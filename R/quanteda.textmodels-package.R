@@ -1,7 +1,7 @@
 #' @name textmodels
 #' @keywords internal
 #' @aliases textmodels quanteda.textmodels quanteda.textmodels-package
-#' @useDynLib quanteda.textmodels, .registration = TRUE
+#' @useDynLib "quanteda.textmodels", .registration = TRUE
 "_PACKAGE"
 
 # The following block is used by usethis to automatically manage
