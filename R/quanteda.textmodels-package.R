@@ -1,7 +1,6 @@
 #' @name textmodels
 #' @keywords internal
 #' @aliases textmodels quanteda.textmodels quanteda.textmodels-package
-#' @import Rcpp
 #' @useDynLib "quanteda.textmodels", .registration = TRUE
 "_PACKAGE"
 
