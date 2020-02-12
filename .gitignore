@@ -1,3 +1,9 @@
+# Binary files
+*.o
+*.so
+.httr-oauth
+*.dll
+
 # History files
 .Rhistory
 .Rapp.history
