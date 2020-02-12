@@ -2,5 +2,7 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^\.github/workflows/R-CMD-check\.yaml$
+^\.github/
 ^\.travis\.yml$
 ^appveyor\.yml$
+
