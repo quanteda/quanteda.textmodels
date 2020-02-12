@@ -23,8 +23,6 @@ cache:
 build_script:
   - travis-tool.sh install_deps
   - R CMD INSTALL .
-  - R -e "keras::install_keras(tensorflow = Sys.getenv('TF_VERSION'), extra_packages = 'IPython')"
-
 
 test_script:
   - travis-tool.sh run_tests

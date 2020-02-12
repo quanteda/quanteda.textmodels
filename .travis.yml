@@ -1,32 +1,14 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
 language: R
-
-dist: xenial
-sudo: false
-
-cache:
-  packages: true
-  directories:
-    - $HOME/.keras
-    - $HOME/.cache/pip
-
+cache: packages
 warnings_are_errors: true
-
-matrix:
-  include:
-    - name: "Backend: TensorFlow | Implementation: Keras"
-      env:
-        - KERAS_BACKEND="tensorflow"
-        - KERAS_IMPLEMENTATION="tensorflow"
-        - TENSORFLOW_VERSION="default"
-
-before_script:
-  - sudo apt-get update
-  - sudo apt-get install python3 python3-pip
-  - pip3 install --upgrade --ignore-installed --user travis virtualenv
-  - R CMD INSTALL .
-  - R -e 'Sys.setenv(PIP_QUIET=1); keras::install_keras(tensorflow = Sys.getenv("TENSORFLOW_VERSION"), extra_packages = "IPython")'
-  - R -e 'tensorflow::tf_config()'
-
+sudo: true
+latex: false
+r_packages:
+  - covr
+env:
+  global:
+    - R_CHECK_ARGS="--no-build-vignettes"
 after_success:
-  - Rscript -e 'covr::codecov()'
+  - Rscript -e 'library(covr);codecov()'
