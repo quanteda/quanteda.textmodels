@@ -29,9 +29,9 @@ docnames will be used}
 score. If a vector, order according to these values from low to high. Only
 applies when \code{margin = "documents"}.}
 
-\item{groups}{either: a character vector containing the names of document
-variables to be used for grouping; or a factor or object that can be
-coerced into a factor equal in length or rows to the number of documents.
+\item{groups}{either: a character vector containing the names of document 
+variables to be used for grouping; or a factor or object that can be 
+coerced into a factor equal in length or rows to the number of documents. 
 See \link[quanteda]{groups} for details.}
 
 \item{highlighted}{a vector of feature names to draw attention to in a

@@ -17,7 +17,7 @@ Authors@R: c(
 Depends:
     R (>= 3.1.0),
     methods,
-    quanteda (>= 1.9)
+    quanteda
 Imports:
     ca,
     ggplot2,
