@@ -37,7 +37,7 @@ Suggests:
     covr,
     knitr
 LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
-URL: https://textmodels.quanteda.io
+URL: https://github.com/quanteda/quanteda.textmodels
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
