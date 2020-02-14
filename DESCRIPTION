@@ -22,9 +22,7 @@ Imports:
     ca,
     ggplot2,
     LiblineaR,
-    lsa,
     Matrix (>= 1.2),
-    RColorBrewer,
     RSpectra,
     Rcpp (>= 0.12.12),
     RcppParallel,
@@ -32,10 +30,12 @@ Imports:
     SparseM,
     stringi
 Suggests:
-    spelling,
-    testthat,
     covr,
-    knitr
+    knitr,
+    lsa,
+    spelling,
+    RColorBrewer,
+    testthat
 LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
 URL: https://github.com/quanteda/quanteda.textmodels
 License: GPL-3

@@ -14,7 +14,7 @@ Scaling models and classifers for sparse matrix objects representing textual dat
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://textmodels.quanteda.io}
+  \item \url{https://github.com/quanteda/quanteda.textmodels}
 }
 
 }
