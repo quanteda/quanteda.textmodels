@@ -19,7 +19,6 @@ Depends:
     methods,
     quanteda
 Imports:
-    ca,
     ggplot2,
     LiblineaR,
     lsa,
@@ -32,6 +31,7 @@ Imports:
     SparseM,
     stringi
 Suggests:
+    ca,
     spelling,
     testthat,
     covr,
