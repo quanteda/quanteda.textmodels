@@ -19,7 +19,6 @@ Depends:
     methods,
     quanteda
 Imports:
-    ca,
     ggplot2,
     LiblineaR,
     Matrix (>= 1.2),
@@ -30,6 +29,7 @@ Imports:
     SparseM,
     stringi
 Suggests:
+    ca,
     covr,
     knitr,
     lsa,
