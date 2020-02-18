@@ -22,7 +22,6 @@ cache:
 
 build_script:
   - travis-tool.sh install_deps
-  - R CMD INSTALL .
 
 test_script:
   - travis-tool.sh run_tests
