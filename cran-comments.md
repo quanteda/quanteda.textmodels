@@ -1,3 +1,7 @@
+## RESUBMISSION
+
+After adding quotes around the name of the software package ('quanteda') in the Description: field.
+
 ## Summary
 
 A new package containing the scaling and classification "textmodels" split from the **quanteda** package.  This will make maintenance easier and bring the size of **quanteda** to within the CRAN 5MB limit.
