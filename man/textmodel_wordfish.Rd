@@ -45,7 +45,7 @@ for a single dispersion parameter}
 \item{dispersion_floor}{constraint for the minimal underdispersion multiplier
 in the quasi-Poisson model.  Used to minimize the distorting effect of
 terms with rare term or document frequencies that appear to be severely
-underdispersed.  Default is 0, but this only applies if \code{dispersion =  "quasipoisson"}.}
+underdispersed.  Default is 0, but this only applies if \code{dispersion = "quasipoisson"}.}
 
 \item{sparse}{specifies whether the \code{"dfm"} is coerced to dense.  While
 setting this to \code{TRUE} will make it possible to handle larger dfm
@@ -96,11 +96,12 @@ predict(tmod1, se.fit = TRUE)
 predict(tmod1, interval = "confidence")
 
 \dontrun{
+library("quanteda")
 dfmat <- dfm(data_corpus_irishbudget2010)
 (tmod2 <- textmodel_wordfish(dfmat, dir = c(6,5)))
-(tmod3 <- textmodel_wordfish(dfmat, dir = c(6,5), 
+(tmod3 <- textmodel_wordfish(dfmat, dir = c(6,5),
                              dispersion = "quasipoisson", dispersion_floor = 0))
-(tmod4 <- textmodel_wordfish(dfmat, dir = c(6,5), 
+(tmod4 <- textmodel_wordfish(dfmat, dir = c(6,5),
                              dispersion = "quasipoisson", dispersion_floor = .5))
 plot(tmod3$phi, tmod4$phi, xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
      xlim = c(0, 1.0), ylim = c(0, 1.0))
@@ -108,13 +109,13 @@ plot(tmod3$phi, tmod4$phi, xlab = "Min underdispersion = 0", ylab = "Min underdi
      xlim = c(0, 1.0), ylim = c(0, 1.0), type = "n")
 underdispersedTerms <- sample(which(tmod3$phi < 1.0), 5)
 which(featnames(dfmat) \%in\% names(topfeatures(dfmat, 20)))
-text(tmod3$phi, tmod4$phi, tmod3$features, 
+text(tmod3$phi, tmod4$phi, tmod3$features,
      cex = .8, xlim = c(0, 1.0), ylim = c(0, 1.0), col = "grey90")
-text(tmod3$phi['underdispersedTerms'], tmod4$phi['underdispersedTerms'], 
-     tmod3$features['underdispersedTerms'], 
+text(tmod3$phi['underdispersedTerms'], tmod4$phi['underdispersedTerms'],
+     tmod3$features['underdispersedTerms'],
      cex = .8, xlim = c(0, 1.0), ylim = c(0, 1.0), col = "black")
 if (requireNamespace("austin")) {
-    tmod5 <- austin::wordfish(quanteda::as.wfm(dfmat), dir = c(6,5))
+    tmod5 <- austin::wordfish(quanteda::as.wfm(dfmat), dir = c(6, 5))
     cor(tmod1$theta, tmod5$theta)
 }}
 }

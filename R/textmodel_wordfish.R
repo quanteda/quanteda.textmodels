@@ -1,67 +1,67 @@
 # main methods --------------
 
 #' Wordfish text model
-#' 
-#' Estimate Slapin and Proksch's (2008) "wordfish" Poisson scaling model of 
+#'
+#' Estimate Slapin and Proksch's (2008) "wordfish" Poisson scaling model of
 #' one-dimensional document positions using conditional maximum likelihood.
 #' @importFrom Rcpp evalCpp
 #' @param x the dfm on which the model will be fit
-#' @param dir set global identification by specifying the indexes for a pair of 
+#' @param dir set global identification by specifying the indexes for a pair of
 #'   documents such that \eqn{\hat{\theta}_{dir[1]} < \hat{\theta}_{dir[2]}}.
-#' @param priors prior precisions for the estimated parameters \eqn{\alpha_i}, 
-#'   \eqn{\psi_j}, \eqn{\beta_j}, and \eqn{\theta_i}, where \eqn{i} indexes 
+#' @param priors prior precisions for the estimated parameters \eqn{\alpha_i},
+#'   \eqn{\psi_j}, \eqn{\beta_j}, and \eqn{\theta_i}, where \eqn{i} indexes
 #'   documents and \eqn{j} indexes features
-#' @param tol tolerances for convergence.  The first value is a convergence 
-#'   threshold for the log-posterior of the model, the second value is the 
-#'   tolerance in the difference in parameter values from the iterative 
-#'   conditional maximum likelihood (from conditionally estimating 
+#' @param tol tolerances for convergence.  The first value is a convergence
+#'   threshold for the log-posterior of the model, the second value is the
+#'   tolerance in the difference in parameter values from the iterative
+#'   conditional maximum likelihood (from conditionally estimating
 #'   document-level, then feature-level parameters).
-#' @param dispersion sets whether a quasi-Poisson quasi-likelihood should be 
-#'   used based on a single dispersion parameter (`"poisson"`), or 
+#' @param dispersion sets whether a quasi-Poisson quasi-likelihood should be
+#'   used based on a single dispersion parameter (`"poisson"`), or
 #'   quasi-Poisson (`"quasipoisson"`)
-#' @param dispersion_level sets the unit level for the dispersion parameter, 
-#'   options are `"feature"` for term-level variances, or `"overall"` 
+#' @param dispersion_level sets the unit level for the dispersion parameter,
+#'   options are `"feature"` for term-level variances, or `"overall"`
 #'   for a single dispersion parameter
-#' @param dispersion_floor constraint for the minimal underdispersion multiplier 
-#'   in the quasi-Poisson model.  Used to minimize the distorting effect of 
-#'   terms with rare term or document frequencies that appear to be severely 
-#'   underdispersed.  Default is 0, but this only applies if `dispersion = 
+#' @param dispersion_floor constraint for the minimal underdispersion multiplier
+#'   in the quasi-Poisson model.  Used to minimize the distorting effect of
+#'   terms with rare term or document frequencies that appear to be severely
+#'   underdispersed.  Default is 0, but this only applies if `dispersion =
 #'   "quasipoisson"`.
 #' @param sparse specifies whether the `"dfm"` is coerced to dense.  While
 #'   setting this to `TRUE` will make it possible to handle larger dfm
 #'   objects (and make execution faster), it will generate slightly different
 #'   results each time, because the sparse SVD routine has a stochastic element.
 #' @param abs_err specifies how the convergence is considered
-#' @param svd_sparse uses svd to initialize the starting values of theta, 
-#'   only applies when `sparse = TRUE` 
-#' @param residual_floor specifies the threshold for residual matrix when 
+#' @param svd_sparse uses svd to initialize the starting values of theta,
+#'   only applies when `sparse = TRUE`
+#' @param residual_floor specifies the threshold for residual matrix when
 #'   calculating the svds, only applies when `sparse = TRUE`
-#' @return An object of class `textmodel_fitted_wordfish`.  This is a list 
-#'   containing: \item{dir}{global identification of the dimension} 
-#'   \item{theta}{estimated document positions} \item{alpha}{estimated document 
-#'   fixed effects} \item{beta}{estimated feature marginal effects} 
-#'   \item{psi}{estimated word fixed effects} \item{docs}{document labels} 
-#'   \item{features}{feature labels} \item{sigma}{regularization parameter for 
-#'   betas in Poisson form} \item{ll}{log likelihood at convergence} 
-#'   \item{se.theta}{standard errors for theta-hats} \item{x}{dfm to which 
+#' @return An object of class `textmodel_fitted_wordfish`.  This is a list
+#'   containing: \item{dir}{global identification of the dimension}
+#'   \item{theta}{estimated document positions} \item{alpha}{estimated document
+#'   fixed effects} \item{beta}{estimated feature marginal effects}
+#'   \item{psi}{estimated word fixed effects} \item{docs}{document labels}
+#'   \item{features}{feature labels} \item{sigma}{regularization parameter for
+#'   betas in Poisson form} \item{ll}{log likelihood at convergence}
+#'   \item{se.theta}{standard errors for theta-hats} \item{x}{dfm to which
 #'   the model was fit}
-#' @details The returns match those of Will Lowe's R implementation of 
-#'   `wordfish` (see the austin package), except that here we have renamed 
-#'   `words` to be `features`.  (This return list may change.)  We 
-#'   have also followed the practice begun with Slapin and Proksch's early 
-#'   implementation of the model that used a regularization parameter of 
+#' @details The returns match those of Will Lowe's R implementation of
+#'   `wordfish` (see the austin package), except that here we have renamed
+#'   `words` to be `features`.  (This return list may change.)  We
+#'   have also followed the practice begun with Slapin and Proksch's early
+#'   implementation of the model that used a regularization parameter of
 #'   se\eqn{(\sigma) = 3}, through the third element in `priors`.
-#'   
+#'
 #' @note In the rare situation where a warning message of "The algorithm did not
 #'   converge." shows up, removing some documents may work.
-#' @seealso [predict.textmodel_wordfish()]  
-#' @references Slapin, J. & Proksch, S.O. (2008). 
-#'   [A Scaling Model 
-#'   for Estimating Time-Series Party Positions from Texts](https://doi.org/10.1111/j.1540-5907.2008.00338.x). *American 
+#' @seealso [predict.textmodel_wordfish()]
+#' @references Slapin, J. & Proksch, S.O. (2008).
+#'   [A Scaling Model
+#'   for Estimating Time-Series Party Positions from Texts](https://doi.org/10.1111/j.1540-5907.2008.00338.x). *American
 #'   Journal of Political Science*, 52(3), 705--772.
-#'   
-#'   Lowe, W. & Benoit, K.R. (2013). [Validating 
-#'   Estimates of Latent Traits from Textual Data Using Human Judgment as a Benchmark](http://doi.org/10.1093/pan/mpt002).  
+#'
+#'   Lowe, W. & Benoit, K.R. (2013). [Validating
+#'   Estimates of Latent Traits from Textual Data Using Human Judgment as a Benchmark](http://doi.org/10.1093/pan/mpt002).
 #'   *Political Analysis*, 21(3), 298--313.
 #' @author Benjamin Lauderdale, Haiyan Wang, and Kenneth Benoit
 #' @examples
@@ -71,13 +71,14 @@
 #' predict(tmod1)
 #' predict(tmod1, se.fit = TRUE)
 #' predict(tmod1, interval = "confidence")
-#' 
+#'
 #' \dontrun{
+#' library("quanteda")
 #' dfmat <- dfm(data_corpus_irishbudget2010)
 #' (tmod2 <- textmodel_wordfish(dfmat, dir = c(6,5)))
-#' (tmod3 <- textmodel_wordfish(dfmat, dir = c(6,5), 
+#' (tmod3 <- textmodel_wordfish(dfmat, dir = c(6,5),
 #'                              dispersion = "quasipoisson", dispersion_floor = 0))
-#' (tmod4 <- textmodel_wordfish(dfmat, dir = c(6,5), 
+#' (tmod4 <- textmodel_wordfish(dfmat, dir = c(6,5),
 #'                              dispersion = "quasipoisson", dispersion_floor = .5))
 #' plot(tmod3$phi, tmod4$phi, xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
 #'      xlim = c(0, 1.0), ylim = c(0, 1.0))
@@ -85,37 +86,38 @@
 #'      xlim = c(0, 1.0), ylim = c(0, 1.0), type = "n")
 #' underdispersedTerms <- sample(which(tmod3$phi < 1.0), 5)
 #' which(featnames(dfmat) %in% names(topfeatures(dfmat, 20)))
-#' text(tmod3$phi, tmod4$phi, tmod3$features, 
+#' text(tmod3$phi, tmod4$phi, tmod3$features,
 #'      cex = .8, xlim = c(0, 1.0), ylim = c(0, 1.0), col = "grey90")
-#' text(tmod3$phi['underdispersedTerms'], tmod4$phi['underdispersedTerms'], 
-#'      tmod3$features['underdispersedTerms'], 
+#' text(tmod3$phi['underdispersedTerms'], tmod4$phi['underdispersedTerms'],
+#'      tmod3$features['underdispersedTerms'],
 #'      cex = .8, xlim = c(0, 1.0), ylim = c(0, 1.0), col = "black")
 #' if (requireNamespace("austin")) {
-#'     tmod5 <- austin::wordfish(quanteda::as.wfm(dfmat), dir = c(6,5))
+#'     tmod5 <- austin::wordfish(quanteda::as.wfm(dfmat), dir = c(6, 5))
 #'     cor(tmod1$theta, tmod5$theta)
 #' }}
+#' @importFrom quanteda as.dfm
 #' @export
-textmodel_wordfish <- function(x, dir = c(1, 2), 
-                               priors = c(Inf, Inf, 3, 1), 
-                               tol = c(1e-6, 1e-8), 
-                               dispersion = c("poisson", "quasipoisson"), 
+textmodel_wordfish <- function(x, dir = c(1, 2),
+                               priors = c(Inf, Inf, 3, 1),
+                               tol = c(1e-6, 1e-8),
+                               dispersion = c("poisson", "quasipoisson"),
                                dispersion_level = c("feature", "overall"),
                                dispersion_floor = 0,
-                               sparse = FALSE, 
+                               sparse = FALSE,
                                abs_err = FALSE,
                                svd_sparse = TRUE,
                                residual_floor = 0.5) {
     UseMethod("textmodel_wordfish")
 }
-    
+
 #' @export
-textmodel_wordfish.default <- function(x, dir = c(1, 2), 
-                                       priors = c(Inf, Inf, 3, 1), 
+textmodel_wordfish.default <- function(x, dir = c(1, 2),
+                                       priors = c(Inf, Inf, 3, 1),
                                        tol = c(1e-6, 1e-8),
-                                       dispersion = c("poisson", "quasipoisson"), 
+                                       dispersion = c("poisson", "quasipoisson"),
                                        dispersion_level = c("feature", "overall"),
                                        dispersion_floor = 0,
-                                       sparse = FALSE, 
+                                       sparse = FALSE,
                                        abs_err = FALSE,
                                        svd_sparse = TRUE,
                                        residual_floor = 0.5) {
@@ -123,37 +125,37 @@ textmodel_wordfish.default <- function(x, dir = c(1, 2),
 }
 
 #' @export
-textmodel_wordfish.dfm <- function(x, dir = c(1, 2), 
-                                   priors = c(Inf, Inf, 3, 1), 
-                                   tol = c(1e-6, 1e-8), 
-                                   dispersion = c("poisson", "quasipoisson"), 
+textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
+                                   priors = c(Inf, Inf, 3, 1),
+                                   tol = c(1e-6, 1e-8),
+                                   dispersion = c("poisson", "quasipoisson"),
                                    dispersion_level = c("feature", "overall"),
                                    dispersion_floor = 0,
-                                   sparse = FALSE, 
+                                   sparse = FALSE,
                                    abs_err = FALSE,
                                    svd_sparse = TRUE,
                                    residual_floor = 0.5) {
-    
+
     x <- as.dfm(x)
     if (!sum(x)) stop(message_error("dfm_empty"))
     dispersion <- match.arg(dispersion)
     dispersion_level <- match.arg(dispersion_level)
-    
+
     # check that no rows or columns are all zero
     empty_docs <- which(ntoken(x) == 0)
     if (length(empty_docs)) {
-        catm("Note: removed the following zero-token documents:", 
+        catm("Note: removed the following zero-token documents:",
              docnames(x)[empty_docs], "\n")
         x <- x[empty_docs * -1, ]
     }
     empty_feats <- which(docfreq(x) == 0)
     if (length(empty_feats)) {
-        catm("Note: removed the following zero-count features:", 
+        catm("Note: removed the following zero-count features:",
              featnames(x)[empty_feats], "\n")
         x <- x[, empty_feats * -1]
     }
     if (length(empty_docs) || length(empty_feats)) catm("\n")
-    
+
     # some error checking
     if (length(priors) != 4)
         stop("priors requires 4 elements")
@@ -163,14 +165,14 @@ textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
         stop("priors and tol must be numeric")
     if (dispersion_floor < 0 || dispersion_floor > 1.0)
         stop("dispersion_floor must be between 0 and 1.0")
-    
+
     if (dispersion == "poisson" && dispersion_floor != 0)
         warning("dispersion_floor argument ignored for poisson")
-    
-    # check quasi-poisson settings and translate into numerical values  
-    # 1 = Poisson, 
-    # 2 = quasi-Poisson, overall dispersion, 
-    # 3 = quasi-Poisson, term dispersion, 
+
+    # check quasi-poisson settings and translate into numerical values
+    # 1 = Poisson,
+    # 2 = quasi-Poisson, overall dispersion,
+    # 3 = quasi-Poisson, term dispersion,
     # 4 = quasi-Poisson, term dispersion w/floor
     if (dispersion == "poisson") {
         disp <- 1L
@@ -186,21 +188,21 @@ textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
         stop("Illegal option combination.")
     }
     if (sparse == TRUE) {
-        result <- qatd_cpp_wordfish(x, as.integer(dir), 1 / (priors ^ 2), 
-                                    tol, disp, 
-                                    dispersion_floor, abs_err, svd_sparse, 
+        result <- qatd_cpp_wordfish(x, as.integer(dir), 1 / (priors ^ 2),
+                                    tol, disp,
+                                    dispersion_floor, abs_err, svd_sparse,
                                     residual_floor)
     } else{
-        result <- qatd_cpp_wordfish_dense(as.matrix(x), 
-                                          as.integer(dir), 1 / (priors ^ 2), 
-                                          tol, disp, 
+        result <- qatd_cpp_wordfish_dense(as.matrix(x),
+                                          as.integer(dir), 1 / (priors ^ 2),
+                                          tol, disp,
                                           dispersion_floor, abs_err)
     }
     # NOTE: psi is a 1 x nfeat matrix, not a numeric vector
     #       alpha is a ndoc x 1 matrix, not a numeric vector
-    if (any(is.nan(result$theta))) 
+    if (any(is.nan(result$theta)))
         warning("Warning: The algorithm did not converge.")
-    
+
     result <- list(
         x = x,
         docs = docnames(x),
@@ -230,21 +232,21 @@ textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
 #' @inheritParams predict.textmodel_wordscores
 #' @keywords textmodel internal
 #' @export
-predict.textmodel_wordfish <- function(object, 
+predict.textmodel_wordfish <- function(object,
                                        se.fit = FALSE,
                                        interval = c("none", "confidence"), level = 0.95,
                                        ...) {
     if (length(list(...)) > 0) stop("Arguments:", names(list(...)), "not supported.\n")
     interval <- match.arg(interval)
-    
+
     fit <- object$theta
     names(fit) <- object$docs
-    
+
     if (!se.fit && interval == "none") {
         class(fit) <- c("predict.textmodel_wordfish", "numeric")
         return(fit)
     }
-    
+
     result <- list(fit = fit)
     if (se.fit) result$se.fit <- object$se.theta
     if (interval == "confidence") {
@@ -284,7 +286,7 @@ print.textmodel_wordfish <- function(x, ...) {
 #' @method summary textmodel_wordfish
 #' @keywords internal textmodel
 summary.textmodel_wordfish <- function(object, n = 30, ...) {
-    
+
     stat <- data.frame(
         theta = object$theta,
         se = object$se.theta,
@@ -292,7 +294,7 @@ summary.textmodel_wordfish <- function(object, n = 30, ...) {
         check.rows = FALSE,
         stringsAsFactors = FALSE
     )
-    
+
     result <- list(
         'call' = object$call,
         'estimated.document.positions' = as.statistics_textmodel(stat),
@@ -317,7 +319,7 @@ coef.textmodel_wordfish <- function(object, margin = c("both", "documents", "fea
                           dimnames = list(featnames(object), c("beta", "psi")))
     )
     if (margin == "documents") {
-        result[["documents"]] 
+        result[["documents"]]
     } else if (margin == "features") {
         result[["features"]]
     } else result
@@ -326,7 +328,7 @@ coef.textmodel_wordfish <- function(object, margin = c("both", "documents", "fea
 #' @export
 #' @rdname predict.textmodel_wordfish
 coefficients.textmodel_wordfish <- function(object, ...) {
-    UseMethod("coef")   
+    UseMethod("coef")
 }
 
 #' @export

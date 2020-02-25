@@ -36,14 +36,16 @@ implemented by the \pkg{RSSL} package.
 }
 \examples{
 # use Lenihan for govt class and Bruton for opposition
-docvars(data_corpus_irishbudget2010, "govtopp") <- c("Govt", "Opp", rep(NA, 12))
-dfmat <- dfm(data_corpus_irishbudget2010)
+quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
+    c("Govt", "Opp", rep(NA, 12))
+dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
 
-tmod <- textmodel_svmlin(dfmat, y = docvars(dfmat, "govtopp"), pos_frac = 5/14)
+tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"),
+                         pos_frac = 5/14)
 predict(tmod)
 
-predict(textmodel_svmlin(dfmat, y = docvars(dfmat, "govtopp"), intercept = FALSE,
-                      pos_frac = 5/14))
+predict(textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"),
+                         intercept = FALSE, pos_frac = 5/14))
 }
 \references{
 Vikas Sindhwani and S. Sathiya Keerthi (2006).  Large Scale Semi-supervised

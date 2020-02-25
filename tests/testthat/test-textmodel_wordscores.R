@@ -7,7 +7,7 @@ test_that("test wordscores on LBG data", {
 
     pr2 <- predict(ws, data_dfm_lbgexample, interval = "none")
     expect_is(pr2, "numeric")
-    expect_equal(names(pr2), docnames(data_dfm_lbgexample))
+    expect_equal(names(pr2), quanteda::docnames(data_dfm_lbgexample))
     expect_equal(pr2["V1"], c(V1 = -.45), tolerance = .01)
 
     pr3 <- predict(ws, data_dfm_lbgexample, se.fit = TRUE, interval = "none")
@@ -37,7 +37,7 @@ test_that("test wordscores on LBG data, LBG rescaling", {
 test_that("test wordscores fitted and predicted", {
     y <- c(seq(-1.5, 1.5, .75), NA)
     ws <- textmodel_wordscores(data_dfm_lbgexample, y)
-    expect_equal(ws$x, as.dfm(data_dfm_lbgexample))
+    expect_equal(ws$x, quanteda::as.dfm(data_dfm_lbgexample))
     expect_equal(ws$y, y)
     expect_equal("textmodel_wordscores.dfm", as.character(ws$call)[1])
 })
@@ -49,9 +49,9 @@ test_that("coef works for wordscores fitted", {
 })
 
 test_that("predict.textmodel_wordscores with rescaling works with additional reference texts (#1251)", {
-    refscores <- rep(NA, ndoc(data_dfm_lbgexample))
-    refscores[docnames(data_dfm_lbgexample) == "R1"] <- -1
-    refscores[docnames(data_dfm_lbgexample) == "R5"] <- 1
+    refscores <- rep(NA, quanteda::ndoc(data_dfm_lbgexample))
+    refscores[quanteda::docnames(data_dfm_lbgexample) == "R1"] <- -1
+    refscores[quanteda::docnames(data_dfm_lbgexample) == "R5"] <- 1
 
     ws1999 <- textmodel_wordscores(data_dfm_lbgexample, refscores,
                                    scale = "linear", smooth = 1)
@@ -182,17 +182,16 @@ test_that("textmodel_wordscores print methods work", {
 
 test_that("additional quanteda methods", {
     ws <- textmodel_wordscores(data_dfm_lbgexample, c(-1.5, NA, NA, NA, .75, NA))
-    expect_equal(ndoc(ws), 6)
-    expect_equal(nfeat(ws), 37)
-    expect_equal(docnames(ws), docnames(data_dfm_lbgexample))
-    expect_equal(featnames(ws),
-                 featnames(data_dfm_lbgexample))
+    expect_equal(quanteda::ndoc(ws), 6)
+    expect_equal(quanteda::nfeat(ws), 37)
+    expect_equal(quanteda::docnames(ws), quanteda::docnames(data_dfm_lbgexample))
+    expect_equal(quanteda::featnames(ws),
+                 quanteda::featnames(data_dfm_lbgexample))
 })
 
 test_that("Works with newdata with different features from the model (#1329)", {
-
-    mt1 <- dfm(c(text1 = "a b c", text2 = "d e f"))
-    mt2 <- dfm(c(text3 = "a b c", text4 = "e f g"))
+    mt1 <- quanteda::dfm(c(text1 = "a b c", text2 = "d e f"))
+    mt2 <- quanteda::dfm(c(text3 = "a b c", text4 = "e f g"))
 
     ws <- textmodel_wordscores(mt1, 1:2)
     expect_silent(predict(ws, newdata = mt1, force = TRUE))
@@ -214,7 +213,7 @@ test_that("raise warning of unused dots", {
 test_that("textmodel_wordscores does not use NA wordscores scores", {
     thedfm <- data_dfm_lbgexample[, c("A", "B", "S", "ZJ", "ZK")]
     thedfm["V1", "ZJ"] <- 1
-    thedfm <- as.dfm(thedfm)
+    thedfm <- quanteda::as.dfm(thedfm)
     ws <- textmodel_wordscores(thedfm, c(-1, NA, NA, NA, 1, NA))
 
     expect_identical(ws$wordscores, c(A = -1, B = -1, ZJ = 1, ZK = 1))
@@ -231,11 +230,9 @@ test_that("textmodel_wordscores does not use NA wordscores scores", {
 })
 
 test_that("raises error when dfm is empty (#1419)",  {
-
-    mx <- dfm_trim(data_dfm_lbgexample, 1000)
+    mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_wordscores(mx, y = c(-1, NA, NA, NA, 1, NA)),
                  quanteda:::message_error("dfm_empty"))
-
 })
 
 test_that("works with different predicted object in different shapes (#1440)",  {
@@ -251,7 +248,7 @@ test_that("works with different predicted object in different shapes (#1440)",  
 test_that("textmodel_wordscores correctly implements smoothing (#1476)", {
     ws_nosmooth <- textmodel_wordscores(data_dfm_lbgexample, smooth = 0,
                                         c(seq(-1.5, 1.5, .75), NA), scale = "linear")
-    ws_smooth1 <- textmodel_wordscores(dfm_smooth(data_dfm_lbgexample, smoothing = 1),
+    ws_smooth1 <- textmodel_wordscores(quanteda::dfm_smooth(data_dfm_lbgexample, smoothing = 1),
                                         c(seq(-1.5, 1.5, .75), NA), scale = "linear")
     ws_smooth1a <- textmodel_wordscores(data_dfm_lbgexample + 1,
                                         c(seq(-1.5, 1.5, .75), NA), scale = "linear")
@@ -270,7 +267,7 @@ test_that("predict.textmodel_wordscores correctly implements smoothing (#1476)",
                                         c(seq(-1.5, 1.5, .75), NA), scale = "linear")
     ws_smooth1 <- textmodel_wordscores(data_dfm_lbgexample, smooth = 1,
                                         c(seq(-1.5, 1.5, .75), NA), scale = "linear")
-    ws_smooth1a <- textmodel_wordscores(dfm_smooth(data_dfm_lbgexample, smoothing = 1),
+    ws_smooth1a <- textmodel_wordscores(quanteda::dfm_smooth(data_dfm_lbgexample, smoothing = 1),
                                         c(seq(-1.5, 1.5, .75), NA), scale = "linear")
     expect_identical(
         predict(ws_smooth1),
@@ -278,12 +275,12 @@ test_that("predict.textmodel_wordscores correctly implements smoothing (#1476)",
     )
     expect_identical(
         predict(ws_smooth1a),
-        predict(ws_smooth1, newdata = dfm_smooth(data_dfm_lbgexample, smoothing = 1))
+        predict(ws_smooth1, newdata = quanteda::dfm_smooth(data_dfm_lbgexample, smoothing = 1))
     )
 })
 
 test_that("textmodel_wordscores() work with weighted dfm", {
-    dfmat <- dfm_tfidf(data_dfm_lbgexample)
+    dfmat <- quanteda::dfm_tfidf(data_dfm_lbgexample)
     expect_silent(
         tmod <- textmodel_wordscores(dfmat, y = c(-1, -1, NA, 1, 1, NA))
     )

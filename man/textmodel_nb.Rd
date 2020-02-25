@@ -27,7 +27,7 @@ factors.)}
 
 \item{distribution}{count model for text features, can be \code{multinomial}
 or \code{Bernoulli}.  To fit a "binary multinomial" model, first convert
-the dfm to a binary matrix using \verb{[dfm_weight](x, scheme = "boolean")}.}
+the dfm to a binary matrix using \verb{[quanteda::dfm_weight](x, scheme = "boolean")}.}
 }
 \value{
 \code{textmodel_nb()} returns a list consisting of the following (where
@@ -94,7 +94,7 @@ txt <- c(d1 = "Chinese Beijing Chinese",
          d3 = "Chinese Macao",
          d4 = "Tokyo Japan Chinese",
          d5 = "Chinese Chinese Chinese Tokyo Japan")
-trainingset <- dfm(txt, tolower = FALSE)
+trainingset <- quanteda::dfm(txt, tolower = FALSE)
 trainingclass <- factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)
 
 ## replicate IIR p261 prediction for test set (document 5)

@@ -29,15 +29,17 @@
 #' @seealso \code{\link[RSSL]{svmlin}}, \code{text{textmodel_svm}}
 #' @examples
 #' # use Lenihan for govt class and Bruton for opposition
-#' docvars(data_corpus_irishbudget2010, "govtopp") <- c("Govt", "Opp", rep(NA, 12))
-#' dfmat <- dfm(data_corpus_irishbudget2010)
+#' quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
+#'     c("Govt", "Opp", rep(NA, 12))
+#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
 #'
-#' tmod <- textmodel_svmlin(dfmat, y = docvars(dfmat, "govtopp"), pos_frac = 5/14)
+#' tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"),
+#'                          pos_frac = 5/14)
 #' predict(tmod)
 #'
-#' predict(textmodel_svmlin(dfmat, y = docvars(dfmat, "govtopp"), intercept = FALSE,
-#'                       pos_frac = 5/14))
-#' @import quanteda
+#' predict(textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"),
+#'                          intercept = FALSE, pos_frac = 5/14))
+#' @importFrom quanteda dfm_group as.dfm
 #' @importFrom stats na.omit predict
 #' @keywords textmodel
 #' @export

@@ -1,6 +1,6 @@
 context('Testing textmodel-wordfish.R')
 
-ie2010dfm <- dfm(data_corpus_irishbudget2010)
+ie2010dfm <- quanteda::dfm(data_corpus_irishbudget2010)
 wfm <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = TRUE)
 wfm_d <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = FALSE)
 wfs <- summary(wfm)
@@ -8,7 +8,7 @@ wfp <- predict(wfm)
 
 test_that("textmodel-wordfish (sparse) works as expected as austin::wordfish", {
     skip_if_not_installed("austin")
-    wfmodelAustin <- austin::wordfish(quanteda::as.wfm(ie2010dfm), dir = c(6,5))
+    wfmodelAustin <- austin::wordfish(quanteda::as.wfm(ie2010dfm), dir = c(6, 5))
     cc <- cor(wfm$theta, wfmodelAustin$theta)
     expect_gt(cc, 0.99)
 
@@ -55,7 +55,7 @@ test_that("coef works for wordfish fitted", {
 })
 
 test_that("textmodel-wordfish works for quasipoisson - feature as expected: dense vs sparse vs sparse+mt", {
-    #ie2010dfm <- dfm(data_corpus_irishbudget2010, verbose = FALSE)
+    ie2010dfm <- quanteda::dfm(data_corpus_irishbudget2010, verbose = FALSE)
     wfm_d <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = FALSE,
                                 dispersion = "quasipoisson", dispersion_floor = 0)
     wfm <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = TRUE,
@@ -77,7 +77,7 @@ test_that("textmodel-wordfish works for quasipoisson - overall as expected: dens
 })
 
 test_that("textmodel-wordfish (sparse) works as expected on another dataset", {
-    usdfm <- dfm(corpus_subset(data_corpus_inaugural, Year > 1900), verbose = FALSE)
+    usdfm <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1900))
 
     wfm_s <- textmodel_wordfish(usdfm, dir = c(6,5), sparse = TRUE, svd_sparse = TRUE, residual_floor = 0.5)
     wfm_d <- textmodel_wordfish(usdfm, dir = c(6,5), sparse = FALSE)
@@ -108,9 +108,7 @@ test_that("test wordfish predict methods", {
 })
 
 test_that("raises error when dfm is empty (#1419)",  {
-
-    mx <- dfm_trim(data_dfm_lbgexample, 1000)
+    mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_wordfish(mx),
                  quanteda:::message_error("dfm_empty"))
-
 })
