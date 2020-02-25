@@ -89,21 +89,21 @@
 #'                       prior = "docfreq")
 #' predict(tmod2, newdata = trainingset[5, ])
 #' @export
-textmodel_nb <- function(x, y, smooth = 1,
+textmodel_nb2 <- function(x, y, smooth = 1,
                          prior = c("uniform", "docfreq", "termfreq"),
                          distribution = c("multinomial", "Bernoulli")) {
     UseMethod("textmodel_nb")
 }
 
 #' @export
-textmodel_nb.default <- function(x, y, smooth = 1,
+textmodel_nb2.default <- function(x, y, smooth = 1,
                                  prior = c("uniform", "docfreq", "termfreq"),
                                  distribution = c("multinomial", "Bernoulli")) {
     stop(friendly_class_undefined_message(class(x), "textmodel_nb"))
 }
 
 #' @export
-textmodel_nb.dfm <- function(x, y, smooth = 1,
+textmodel_nb2.dfm <- function(x, y, smooth = 1,
                              prior = c("uniform", "docfreq", "termfreq"),
                              distribution = c("multinomial", "Bernoulli")) {
     x <- as.dfm(x)
@@ -138,7 +138,21 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
     }
 
     if (distribution == "multinomial") {
-        PwGc <- dfm_weight(dfm_smooth(temp, smooth), scheme = "prop", force = TRUE)
+        ## (formerly:)
+        # PwGc <- dfm_weight(dfm_smooth(temp, smooth), scheme = "prop", force = TRUE)
+
+        ## (experimental: compute as little as possible, as efficiently as possible)
+        # copy temp as template, without additional meta stuff
+        PwGc <- quanteda:::build_dfm(temp, features = featnames(temp),
+                                     docvars = temp@docvars[, "docname_", drop = FALSE])
+
+        # replace the counts with smoothed proportions
+        totals <- rowSums(temp) + smooth * nfeat(temp)
+        PwGc@x <- temp@x / totals[temp@i + 1]
+
+        # replace the zeros with weight proportions
+        PwGc[PwGc == 0] <- smooth / totals
+
     } else if (distribution == "Bernoulli") {
         # denominator here is same as IIR Fig 13.3 line 8 - see also Eq. 13.7
         PwGc <- (temp + smooth) / (freq + smooth * ndoc(temp))
@@ -170,163 +184,4 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
     )
     class(result) <- c("textmodel_nb", "textmodel", "list")
     result
-}
-
-# helper methods ----------------
-
-#' Prediction from a fitted textmodel_nb object
-#'
-#' `predict.textmodel_nb()` implements class predictions from a fitted
-#' Naive Bayes model. using trained Naive Bayes examples
-#' @param object a fitted Naive Bayes textmodel
-#' @param newdata dfm on which prediction should be made
-#' @param type the type of predicted values to be returned; see Value
-#' @param force make newdata's feature set conformant to the model terms
-#' @param ... not used
-#' @return `predict.textmodel_nb` returns either a vector of class
-#'   predictions for each row of `newdata` (when `type = "class"`), or
-#'   a document-by-class matrix of class probabilities (when `type =
-#'   "probability"`) or log posterior likelihoods (when `type =
-#'   "logposterior"`).
-#' @seealso [textmodel_nb()]
-#' @examples
-#' # application to LBG (2003) example data
-#' (tmod <- textmodel_nb(data_dfm_lbgexample, y = c("A", "A", "B", "C", "C", NA)))
-#' predict(tmod)
-#' predict(tmod, type = "logposterior")
-#' @keywords textmodel internal
-#' @export
-predict.textmodel_nb <- function(object, newdata = NULL,
-                                 type = c("class", "probability", "logposterior"),
-                                 force = FALSE, ...) {
-    unused_dots(...)
-
-    type <- match.arg(type)
-
-    if (!is.null(newdata)) {
-        data <- as.dfm(newdata)
-    } else {
-        data <- as.dfm(object$x)
-    }
-
-    # # remove any words with zero probabilities (this should be done in fitting)
-    # is_zero <- colSums(object$PwGc) == 0
-    # if (any(is_zero)) {
-    #     object$PwGc <- object$PwGc[,!is_zero,drop = FALSE]
-    #     object$PcGw <- object$PcGw[,!is_zero,drop = FALSE]
-    #     object$Pw <- object$Pw[!is_zero,,drop = FALSE]
-    # }
-    data <- force_conformance(data, colnames(object$PwGc), force)
-
-    if (object$distribution == "multinomial") {
-
-        # log P(d|c) class conditional document likelihoods
-        log_lik <- data %*% t(log(object$PwGc))
-        # weight by class priors
-        logpos <- t(apply(log_lik, 1, "+", log(object$Pc)))
-
-    } else if (object$distribution == "Bernoulli") {
-
-        data <- dfm_weight(data, "boolean")
-        Nc <- length(object$Pc)
-
-        # initialize log posteriors with class priors
-        logpos <- matrix(log(object$Pc), byrow = TRUE,
-                            ncol = Nc, nrow = nrow(data),
-                            dimnames = list(rownames(data), names(object$Pc)))
-        # APPLYBERNOULLINB from IIR Fig 13.3
-        for (c in seq_len(Nc)) {
-            tmp1 <- log(t(data) * object$PwGc[c, ])
-            tmp1[is.infinite(tmp1)] <- 0
-            tmp0 <- log(t(!data) * (1 - object$PwGc[c, ]))
-            tmp0[is.infinite(tmp0)] <- 0
-            logpos[, c] <- logpos[, c] + colSums(tmp0) + colSums(tmp1)
-        }
-    }
-
-    # predict MAP class
-    nb.predicted <- colnames(logpos)[apply(logpos, 1, which.max)]
-
-
-    if (type == "class") {
-        names(nb.predicted) <- docnames(data)
-        return(factor(nb.predicted, levels = names(object$Pc)))
-    } else if (type == "probability") {
-
-        ## compute class posterior probabilities
-        post_prob <- matrix(NA, ncol = ncol(logpos), nrow = nrow(logpos),
-                            dimnames = dimnames(logpos))
-
-        # compute posterior probabilities
-        for (j in seq_len(ncol(logpos))) {
-            base_lpl <- logpos[, j]
-            post_prob[, j] <- 1 / (1 + rowSums(exp(logpos[, -j, drop = FALSE] - base_lpl)))
-        }
-
-        # result <- list(probability = post_prob)
-        result <- post_prob
-
-    } else if (type == "logposterior") {
-
-        # result <- list(logposterior = logpos)
-        result <- logpos
-    }
-    # class(result) <- c("predict.textmodel_nb", "list")
-    result
-}
-
-#' @export
-#' @method print textmodel_nb
-print.textmodel_nb <- function(x, ...) {
-    cat("\nCall:\n")
-    print(x$call)
-    cat("\n",
-        "Distribution: ", x$distribution, "; ",
-        "prior: ", x$prior, "; ",
-        "smoothing value: ", x$smooth, "; ",
-        length(na.omit(x$y)), " training documents; ",
-        nfeat(na.omit(x)), " fitted features.",
-        "\n",
-        sep = "")
-}
-
-#' summary method for textmodel_nb objects
-#' @param object output from [textmodel_nb()]
-#' @param n how many coefficients to print before truncating
-#' @param ... additional arguments not used
-#' @keywords textmodel internal
-#' @method summary textmodel_nb
-#' @export
-summary.textmodel_nb <- function(object, n = 30, ...) {
-    result <- list(
-        'call' = object$call,
-        'class.priors' = as.coefficients_textmodel(object$Pc),
-        'estimated.feature.scores' = as.coefficients_textmodel(head(coef(object), n))
-    )
-    as.summary.textmodel(result)
-}
-
-#' @noRd
-#' @method coef textmodel_nb
-#' @export
-coef.textmodel_nb <- function(object, ...) {
-    t(object$PcGw)
-}
-
-#' @noRd
-#' @method coefficients textmodel_nb
-#' @export
-coefficients.textmodel_nb <- function(object, ...) {
-    UseMethod("coef")
-}
-
-## make cols add up to one
-colNorm <- function(x) {
-    x / outer(rep(1, nrow(x)), colSums(x))
-}
-
-#' @export
-#' @method print predict.textmodel_nb
-print.predict.textmodel_nb <- function(x, ...) {
-    print(unclass(x))
 }
