@@ -36,6 +36,8 @@ Suggests:
     spelling,
     RColorBrewer,
     testthat
+Remotes:
+    quanteda/quanteda
 LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
 URL: https://github.com/quanteda/quanteda.textmodels
 License: GPL-3
