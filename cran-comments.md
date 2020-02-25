@@ -1,6 +1,7 @@
 ## RESUBMISSION
 
-After adding quotes around the name of the software package ('quanteda') in the Description: field.
+After adding citation information about the methods in the Description: field, 
+including Author (year) <doi:> as per the request of Uwe Ligges.
 
 ## Summary
 

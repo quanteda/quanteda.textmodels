@@ -5,7 +5,7 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/quanteda.textmodels)](https://CRAN.R-project.org/package=quanteda.textmodels)
-[![](https://img.shields.io/badge/devel%20version-0.9.1-royalblue.svg)](https://github.com/quanteda/quanteda.textmodels)
+[![](https://img.shields.io/badge/devel%20version-0.9.0-royalblue.svg)](https://github.com/quanteda/quanteda.textmodels)  
 [![Travis build
 status](https://travis-ci.org/quanteda/quanteda.textmodels.svg?branch=master)](https://travis-ci.org/quanteda/quanteda.textmodels)
 [![AppVeyor build

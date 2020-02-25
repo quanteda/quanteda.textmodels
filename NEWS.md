@@ -1,3 +1,3 @@
 # quanteda.textmodels 0.9.0
 
-* Added a `NEWS.md` file to track changes to the package.
+* First implementation of the package, after splitting these functions from the **quanteda** package.
