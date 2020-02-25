@@ -35,7 +35,7 @@
 #' @keywords textplot
 #' @examples
 #' \dontrun{
-#' dfmat <- dfm(data_corpus_irishbudget2010)
+#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
 #'
 #' ## wordscores
 #' refscores <- c(rep(NA, 4), 1, -1, rep(NA, 8))

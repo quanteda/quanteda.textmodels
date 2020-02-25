@@ -43,7 +43,7 @@ predict(af, newdata = data_dfm_lbgexample[6, ])
 
 \dontrun{
 # compute bootstrapped SEs
-dfmat <- bootstrap_dfm(data_corpus_dailnoconf1991, n = 10, remove_punct = TRUE)
+dfmat <- quanteda::bootstrap_dfm(data_corpus_dailnoconf1991, n = 10, remove_punct = TRUE)
 textmodel_affinity(dfmat, y = c("Govt", "Opp", "Opp", rep(NA, 55)))
 }
 }

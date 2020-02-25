@@ -21,10 +21,10 @@
 #' @seealso \code{\link[LiblineaR]{LiblineaR}}
 #' @examples
 #' # use party leaders for govt and opposition classes
-#' docvars(data_corpus_irishbudget2010, "govtopp") <-
-#'     c(rep(NA, 4), "Govt", "Opp", NA, "Opp", NA, NA, NA, NA, NA, NA)
-#' dfmat <- dfm(data_corpus_irishbudget2010)
-#' tmod <- textmodel_svm(dfmat, y = docvars(dfmat, "govtopp"))
+#' quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
+#'     c(rep(NA, 4), "Gov", "Opp", NA, "Opp", NA, NA, NA, NA, NA, NA)
+#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+#' tmod <- textmodel_svm(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
 #' predict(tmod)
 #' predict(tmod, type = "probability")
 #'
@@ -43,9 +43,10 @@ textmodel_svm.default <- function(x, y, weight = c("uniform", "docfreq", "termfr
     stop(quanteda:::friendly_class_undefined_message(class(x), "textmodel_svm"))
 }
 
-#' @export
 #' @importFrom LiblineaR LiblineaR
 #' @importFrom SparseM as.matrix.csr
+#' @importFrom quanteda dfm_weight dfm_group dfm_trim as.dfm
+#' @export
 textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), ...) {
     x <- as.dfm(x)
     if (!sum(x)) stop(quanteda:::message_error("dfm_empty"))

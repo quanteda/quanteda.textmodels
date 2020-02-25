@@ -28,10 +28,10 @@ Fit a fast linear SVM classifier for texts, using the
 }
 \examples{
 # use party leaders for govt and opposition classes
-docvars(data_corpus_irishbudget2010, "govtopp") <-
-    c(rep(NA, 4), "Govt", "Opp", NA, "Opp", NA, NA, NA, NA, NA, NA)
-dfmat <- dfm(data_corpus_irishbudget2010)
-tmod <- textmodel_svm(dfmat, y = docvars(dfmat, "govtopp"))
+quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
+    c(rep(NA, 4), "Gov", "Opp", NA, "Opp", NA, NA, NA, NA, NA, NA)
+dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+tmod <- textmodel_svm(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
 predict(tmod)
 predict(tmod, type = "probability")
 

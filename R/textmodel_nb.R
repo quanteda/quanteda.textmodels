@@ -12,7 +12,7 @@
 #'   `"docfreq"`, or `"termfreq"`.  See Prior Distributions below.
 #' @param distribution count model for text features, can be `multinomial`
 #'   or `Bernoulli`.  To fit a "binary multinomial" model, first convert
-#'   the dfm to a binary matrix using `[dfm_weight](x, scheme = "boolean")`.
+#'   the dfm to a binary matrix using `[quanteda::dfm_weight](x, scheme = "boolean")`.
 #' @return
 #' `textmodel_nb()` returns a list consisting of the following (where
 #' \eqn{I} is the total number of documents, \eqn{J} is the total number of
@@ -64,6 +64,7 @@
 #'
 #' @seealso [predict.textmodel_nb()]
 #' @author Kenneth Benoit
+#' @importFrom quanteda dfm_weight dfm_group dfm_smooth as.dfm
 #' @examples
 #' ## Example from 13.1 of _An Introduction to Information Retrieval_
 #' txt <- c(d1 = "Chinese Beijing Chinese",
@@ -71,7 +72,7 @@
 #'          d3 = "Chinese Macao",
 #'          d4 = "Tokyo Japan Chinese",
 #'          d5 = "Chinese Chinese Chinese Tokyo Japan")
-#' trainingset <- dfm(txt, tolower = FALSE)
+#' trainingset <- quanteda::dfm(txt, tolower = FALSE)
 #' trainingclass <- factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)
 #'
 #' ## replicate IIR p261 prediction for test set (document 5)
@@ -103,6 +104,7 @@ textmodel_nb.default <- function(x, y, smooth = 1,
 }
 
 #' @export
+#' @importFrom quanteda colSums rowSums
 textmodel_nb.dfm <- function(x, y, smooth = 1,
                              prior = c("uniform", "docfreq", "termfreq"),
                              distribution = c("multinomial", "Bernoulli")) {

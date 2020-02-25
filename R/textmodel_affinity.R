@@ -25,13 +25,14 @@
 #'
 #' \dontrun{
 #' # compute bootstrapped SEs
-#' dfmat <- bootstrap_dfm(data_corpus_dailnoconf1991, n = 10, remove_punct = TRUE)
+#' dfmat <- quanteda::bootstrap_dfm(data_corpus_dailnoconf1991, n = 10, remove_punct = TRUE)
 #' textmodel_affinity(dfmat, y = c("Govt", "Opp", "Opp", rep(NA, 55)))
 #' }
 #' @export
 #' @keywords textmodel experimental
 #' @importFrom methods as
 #' @importFrom stats sd predict
+#' @importFrom quanteda dfm_group as.dfm
 #' @seealso [predict.textmodel_affinity()] for methods of applying a
 #'   fitted [textmodel_affinity] model object to predict quantities from
 #'   (other) documents.
@@ -50,10 +51,10 @@ textmodel_affinity.default <- function(x, y, exclude = NULL,
 
 
 #' @export
+#' @importFrom quanteda colSums rowSums t
 textmodel_affinity.dfm <- function(x, y, exclude = NULL,
                                    smooth = 0.5, ref_smooth = 0.5,
                                    verbose = quanteda_options("verbose")) {
-
     x <- as.dfm(x)
     if (!sum(x)) stop(message_error("dfm_empty"))
 
@@ -116,7 +117,7 @@ textmodel_affinity.dfm_bootstrap <- function(x, y, exclude = NULL,
     for (i in seq_len(length(x))) {
         message(i, " ", appendLF = FALSE)
         temp <- textmodel_affinity(x[[i]], y, exclude, smooth, ref_smooth)
-        coeff_replicates[,,i] <- coef(predict(temp))
+        coeff_replicates[, , i] <- coef(predict(temp))
     }
     message("")
     if (verbose)
@@ -179,9 +180,9 @@ affinity <- function(p, x, smooth = 0.5, verbose = FALSE) {
     if (is.matrix(x)) {
         for (j in seq_len(nfit)) {
             if (verbose) {
-                cat("Fitting column ", j, "\n", sep="")
+                cat("Fitting column ", j, "\n", sep = "")
             }
-            fit[[j]] <- affinity1(p, x[,j], smooth, verbose)
+            fit[[j]] <- affinity1(p, x[, j], smooth, verbose)
         }
     } else {
         x <- as(x, "dgCMatrix")
@@ -191,40 +192,40 @@ affinity <- function(p, x, smooth = 0.5, verbose = FALSE) {
 
         for (j in seq_len(nfit)) {
             if (verbose) {
-                cat("Fitting column ", j, "\n", sep="")
+                cat("Fitting column ", j, "\n", sep = "")
             }
 
             start <- col_ptr[[j]]
-            end <- col_ptr[[j+1]]
+            end <- col_ptr[[j + 1]]
             len <- end - start
-            ix <- seq.int(start, length.out=len)
+            ix <- seq.int(start, length.out = len)
 
             xj <- val[ix]
             ij <- row_ind[ix]
-            pj <- p[ij,,drop=FALSE]
+            pj <- p[ij, , drop = FALSE]
 
             fit[[j]] <- affinity1(pj, xj, smooth, verbose)
         }
     }
 
     # simplify results
-    coefficients <- matrix(NA, nfit, ndist, dimnames=list(fitnames, distnames))
-    se <- matrix(NA, nfit, ndist, dimnames=list(fitnames, distnames))
+    coefficients <- matrix(NA, nfit, ndist, dimnames = list(fitnames, distnames))
+    se <- matrix(NA, nfit, ndist, dimnames = list(fitnames, distnames))
     cov <- array(NA, c(ndist, ndist, nfit),
-                 dimnames=list(distnames, distnames, fitnames))
+                 dimnames = list(distnames, distnames, fitnames))
 
     for (j in seq_len(nfit)) {
         fitj <- fit[[j]]
-        coefficients[j,] <- fitj$theta
-        se[j,] <- fitj$theta_se
-        cov[,,j] <- fitj$cov
+        coefficients[j, ] <- fitj$theta
+        se[j, ] <- fitj$theta_se
+        cov[, , j] <- fitj$cov
     }
 
     # drop dimension if input x was a vector - NOT ANY MORE -kb
     if (is.null(xdim) && nfit == 1) {
         coefficients <- coefficients[1, drop = FALSE]
         se <- se[1, drop = FALSE]
-        cov <- cov[,,1, drop = FALSE]
+        cov <- cov[, , 1, drop = FALSE]
     }
 
     list(coefficients = coefficients,
@@ -320,7 +321,7 @@ affinity1 <- function(p, x, smooth, verbose = FALSE) {
         while (resid$norm > tol || max(abs(resid$primal)) > tol) {
             if (verbose) {
                 cat("iteration: ", iter, "; residual norm: ", resid$norm, "\n",
-                    sep="")
+                    sep = "")
             }
             step <- newton_step(theta, nu, bweight)
 
@@ -358,7 +359,7 @@ affinity1 <- function(p, x, smooth, verbose = FALSE) {
         shrink <- 0.1
 
         if (verbose) {
-            cat("bweight: ", bweight, "\n", sep="")
+            cat("bweight: ", bweight, "\n", sep = "")
         }
         opt <- optimize(theta, nu, bweight, verbose = verbose)
 
@@ -367,7 +368,7 @@ affinity1 <- function(p, x, smooth, verbose = FALSE) {
             nu <- opt$nu
             bweight <- shrink * bweight
             if (verbose) {
-                cat("bweight: ", bweight, "\n", sep="")
+                cat("bweight: ", bweight, "\n", sep = "")
             }
             opt <- optimize(theta, nu, bweight, verbose = verbose)
         }
@@ -525,7 +526,7 @@ residuals.predict.textmodel_affinity <- function(object, type = c("response", "p
     } else if (type == "pearson") {
         res <- r / sqrt(expected)
     }
-    res[,!object$support] <- NA
+    res[, !object$support] <- NA
     as.matrix(res)
 }
 
@@ -575,12 +576,12 @@ influence.predict.textmodel_affinity <- function(model, subset = !train, ...) {
     support <- model$support
 
     # class affinity estimates
-    theta <- model$coefficients[subset,,drop=FALSE]
-    cov <- model$cov[,,subset,drop=FALSE]
+    theta <- model$coefficients[subset, , drop = FALSE]
+    cov <- model$cov[, , subset, drop = FALSE]
 
     # data
-    x <- model$newdata[subset,]
-    x[,!support] <- 0
+    x <- model$newdata[subset, ]
+    x[, !support] <- 0
     x <- as(t(x), "dgCMatrix")
     nword <- nrow(x)
     words <- rownames(x)
@@ -597,18 +598,18 @@ influence.predict.textmodel_affinity <- function(model, subset = !train, ...) {
 
     for (j in seq_len(ntext)) {
         start <- col_ptr[[j]]
-        end <- col_ptr[[j+1]]
+        end <- col_ptr[[j + 1]]
         len <- end - start
-        ix <- seq.int(start, length.out=len)
+        ix <- seq.int(start, length.out = len)
 
         xj <- val[ix]
         ij <- row_ind[ix]
 
-        pj <- p[ij,,drop=FALSE]
-        mu <- as.vector(pj %*% theta[j,])
+        pj <- p[ij,,drop = FALSE]
+        mu <- as.vector(pj %*% theta[j, ])
         q <- pj / ifelse(mu == 0, 1, mu)
 
-        infl_dir <- as.matrix(q %*% cov[,,j])
+        infl_dir <- as.matrix(q %*% cov[, , j])
         h2 <- rowSums(q * infl_dir)
 
         # crude approximation for Hessian:
@@ -690,11 +691,11 @@ summary.influence.predict.textmodel_affinity <- function(object, ...) {
 
     for (j in seq_len(nword)) {
         start <- col_ptr[[j]]
-        end <- col_ptr[[j+1]]
+        end <- col_ptr[[j + 1]]
         len <- end - start
 
         if (len > 0) {
-            ix <- seq.int(start, length.out=len)
+            ix <- seq.int(start, length.out = len)
             xj <- val[ix]
             ij <- row_ind[ix]
 
