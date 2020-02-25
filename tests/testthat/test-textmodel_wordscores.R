@@ -281,3 +281,13 @@ test_that("predict.textmodel_wordscores correctly implements smoothing (#1476)",
         predict(ws_smooth1, newdata = dfm_smooth(data_dfm_lbgexample, smoothing = 1))
     )
 })
+
+test_that("textmodel_wordscores() work with weighted dfm", {
+    dfmat <- dfm_tfidf(data_dfm_lbgexample)
+    expect_silent(
+        tmod <- textmodel_wordscores(dfmat, y = c(-1, -1, NA, 1, 1, NA))
+    )
+    expect_silent(
+        predict(tmod)
+    )
+})

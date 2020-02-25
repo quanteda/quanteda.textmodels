@@ -1,7 +1,7 @@
 Package: quanteda.textmodels
 Type: Package
 Title: Scaling Models and Classifiers for Textual Data
-Version: 0.9.0
+Version: 0.9.1
 Description: Scaling models and classifiers for sparse matrix objects representing textual data in the form of a document-feature matrix. 
     Originally from the 'quanteda' package, these models take document-feature matrix objects as inputs.
 Authors@R: c( 

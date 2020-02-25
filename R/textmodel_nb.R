@@ -121,9 +121,9 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
 
     ## distribution
     if (distribution == "Bernoulli")
-        temp <- dfm_weight(temp, "boolean")
+        temp <- dfm_weight(temp, "boolean", force = TRUE)
 
-    temp <- dfm_group(temp, class)
+    temp <- dfm_group(temp, class, force = TRUE)
 
     freq <- rowSums(as.matrix(table(class)))
     if (prior == "uniform") {
@@ -138,7 +138,7 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
     }
 
     if (distribution == "multinomial") {
-        PwGc <- dfm_weight(dfm_smooth(temp, smooth), scheme = "prop")
+        PwGc <- dfm_weight(dfm_smooth(temp, smooth), scheme = "prop", force = TRUE)
     } else if (distribution == "Bernoulli") {
         # denominator here is same as IIR Fig 13.3 line 8 - see also Eq. 13.7
         PwGc <- (temp + smooth) / (freq + smooth * ndoc(temp))
