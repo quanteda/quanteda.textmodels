@@ -25,7 +25,7 @@ test_that("textmodel-wordfish works as expected: dense vs sparse vs sparse+mt", 
 test_that("print/show/summary method works as expected", {
     expect_output(
         print(wfm),
-        "^\\nCall:\\ntextmodel_wordfish\\.dfm\\(.*Dispersion.*14 documents; 5140 features\\.$"
+        "^\\nCall:\\ntextmodel_wordfish\\.dfm\\(.*Dispersion.*14 documents; 514\\d features\\.$"
     )
     expect_output(
         print(wfs),
@@ -114,4 +114,3 @@ test_that("raises error when dfm is empty (#1419)",  {
                  quanteda:::message_error("dfm_empty"))
 
 })
-

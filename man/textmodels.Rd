@@ -6,10 +6,10 @@
 \alias{_PACKAGE}
 \alias{quanteda.textmodels}
 \alias{quanteda.textmodels-package}
-\title{quanteda.textmodels: Scaling models and classifiers for textual data}
+\title{quanteda.textmodels: Scaling Models and Classifiers for Textual Data}
 \description{
-Scaling models and classifers for sparse matrix objects representing textual data in the form of a document-feature matrix. 
-    Originally from the quanteda package, these models take quanteda dfm (document-feature matrix) objects as inputs.
+Scaling models and classifiers for sparse matrix objects representing textual data in the form of a document-feature matrix. 
+    Originally from the 'quanteda' package, these models take document-feature matrix objects as inputs.
 }
 \seealso{
 Useful links:

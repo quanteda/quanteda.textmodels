@@ -10,13 +10,17 @@ nb_dfm <- dfm(txt, tolower = FALSE)
 nb_class <- factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)
 
 nb_multi_smooth <-
-    textmodel_nb(nb_dfm, nb_class, prior = "docfreq", distribution = "multinomial", smooth = 1)
+    textmodel_nb(nb_dfm, nb_class, prior = "docfreq",
+                 distribution = "multinomial", smooth = 1)
 nb_multi_nosmooth <-
-    textmodel_nb(nb_dfm, nb_class, prior = "docfreq", distribution = "multinomial", smooth = 0)
+    textmodel_nb(nb_dfm, nb_class, prior = "docfreq",
+                 distribution = "multinomial", smooth = 0)
 nb_bern_smooth <-
-    textmodel_nb(nb_dfm, nb_class, prior = "docfreq", distribution = "Bernoulli", smooth = 1)
+    textmodel_nb(nb_dfm, nb_class, prior = "docfreq",
+                 distribution = "Bernoulli", smooth = 1)
 nb_bern_nosmooth <-
-    textmodel_nb(nb_dfm, nb_class, prior = "docfreq", distribution = "Bernoulli", smooth = 0)
+    textmodel_nb(nb_dfm, nb_class, prior = "docfreq",
+                 distribution = "Bernoulli", smooth = 0)
 
 test_that("class priors are preserved in correct order", {
     expect_equal(textmodel_nb(nb_dfm, nb_class, prior = "uniform")$Pc,
@@ -183,5 +187,15 @@ test_that("constant predictor raises exception", {
     expect_error(
         textmodel_nb(x, y = factor(c("Y", "Y", "Y", "Y", NA), levels = c("Y", "N"))),
         "y cannot be constant"
+    )
+})
+
+test_that("textmodel_nb() works with weighted dfm", {
+    dfmat <- dfm_tfidf(data_dfm_lbgexample)
+    expect_silent(
+        tmod <- textmodel_nb(dfmat, y = c("N", "N", NA, "Y", "Y", NA))
+    )
+    expect_silent(
+        predict(tmod)
     )
 })

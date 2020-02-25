@@ -156,3 +156,20 @@ test_that("the svmlin model works", {
         "y must contain two values only"
     )
 })
+
+test_that("textmodel_svm/svmlin() work with weighted dfm", {
+    dfmat <- dfm_tfidf(data_dfm_lbgexample)
+    expect_silent(
+        tmod <- textmodel_svm(dfmat, y = c("N", "N", NA, "Y", "Y", NA))
+    )
+    expect_silent(
+        predict(tmod)
+    )
+    expect_silent(
+        tmod <- textmodel_svmlin(dfmat, y = c("N", "N", NA, "Y", "Y", NA))
+    )
+    expect_silent(
+        predict(tmod)
+    )
+})
+
