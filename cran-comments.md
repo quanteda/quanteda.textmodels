@@ -3,6 +3,8 @@
 After adding citation information about the methods in the Description: field, 
 including Author (year) <doi:> as per the request of Uwe Ligges.
 
+For a SECOND RESUBMISSION I single-quoted the namesd that the pre-check complained were "Possibly mis-spelled words in DESCRIPTION:".
+
 ## Summary
 
 A new package containing the scaling and classification "textmodels" split from the **quanteda** package.  This will make maintenance easier and bring the size of **quanteda** to within the CRAN 5MB limit.

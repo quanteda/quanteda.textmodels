@@ -10,11 +10,11 @@
 \description{
 Scaling models and classifiers for sparse matrix objects representing 
     textual data in the form of a document-feature matrix.  Includes original 
-    implementations of Laver, Benoit, and Garry's (2003) <doi:10.1017/S0003055403000698>,
-    Perry and Benoit's (2017) <arXiv:1710.08963> class affinity scaling model, and
-    Slapin and Proksch's (2008) <doi:10.1111/j.1540-5907.2008.00338.x> "wordfish"
+    implementations of 'Laver', 'Benoit', and Garry's (2003) <doi:10.1017/S0003055403000698>,
+    'Wordscores' model, Perry and 'Benoit's' (2017) <arXiv:1710.08963> class affinity scaling model, 
+    and 'Slapin' and 'Proksch's' (2008) <doi:10.1111/j.1540-5907.2008.00338.x> 'wordfish'
     model, as well as methods for correspondence analysis, latent semantic analysis,
-    and fast Naive Bayes and linear SVMs specially designed for sparse textual data.
+    and fast Naive Bayes and linear 'SVMs' specially designed for sparse textual data.
 }
 \seealso{
 Useful links:
