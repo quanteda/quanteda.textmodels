@@ -5,14 +5,6 @@ qatd_cpp_ca <- function(dfm, residual_floor) {
     .Call(`_quanteda_textmodels_qatd_cpp_ca`, dfm, residual_floor)
 }
 
-qatd_cpp_is_grouped_numeric <- function(values_, groups_) {
-    .Call(`_quanteda_textmodels_qatd_cpp_is_grouped_numeric`, values_, groups_)
-}
-
-qatd_cpp_is_grouped_character <- function(values_, groups_) {
-    .Call(`_quanteda_textmodels_qatd_cpp_is_grouped_character`, values_, groups_)
-}
-
 qatd_cpp_tbb_enabled <- function() {
     .Call(`_quanteda_textmodels_qatd_cpp_tbb_enabled`)
 }
