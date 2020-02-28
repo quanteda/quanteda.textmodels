@@ -5,11 +5,12 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/quanteda.textmodels)](https://CRAN.R-project.org/package=quanteda.textmodels)
-[![](https://img.shields.io/badge/devel%20version-0.9.0-royalblue.svg)](https://github.com/quanteda/quanteda.textmodels)  
+[![](https://img.shields.io/badge/devel%20version-0.9.0-royalblue.svg)](https://github.com/quanteda/quanteda.textmodels)
 [![Travis build
 status](https://travis-ci.org/quanteda/quanteda.textmodels.svg?branch=master)](https://travis-ci.org/quanteda/quanteda.textmodels)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/5to1am8gcaotww65?svg=true)](https://ci.appveyor.com/project/kbenoit/quanteda-textmodels)
+[![codecov](https://codecov.io/gh/quanteda/quanteda.textmodels/branch/master/graph/badge.svg)](https://codecov.io/gh/quanteda/quanteda.textmodels)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
