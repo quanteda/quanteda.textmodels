@@ -1,6 +1,7 @@
 # quanteda.textmodels 0.9.1
 
 * Adds `data_corpus_dailnoconf1991` and `data_corpus_irishbudget2010` corpus objects moved from the **quanteda** package.
+* Adds the Pang and Lee (2004) movie review polarity dataset as `data_corpus_moviereviews`.
 
 
 # quanteda.textmodels 0.9.0
