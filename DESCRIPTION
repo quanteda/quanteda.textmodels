@@ -53,7 +53,6 @@ Roxygen: list(markdown = TRUE)
 Collate: 
     'RcppExports.R'
     'quanteda.textmodels-package.R'
-    'aaa.R'
     'data-documentation.R'
     'data.R'
     'textmodel-methods.R'
