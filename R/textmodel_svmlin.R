@@ -49,7 +49,7 @@ textmodel_svmlin <- function(x, y, intercept = TRUE, ...) {
 
 #' @export
 textmodel_svmlin.default <- function(x, y, intercept = TRUE, ...) {
-    stop(quanteda:::friendly_class_undefined_message(class(x), "textmodel_svmlin"))
+    stop(friendly_class_undefined_message(class(x), "textmodel_svmlin"))
 }
 
 #' @export
@@ -57,7 +57,7 @@ textmodel_svmlin.default <- function(x, y, intercept = TRUE, ...) {
 #' @importFrom methods as
 textmodel_svmlin.dfm <- function(x, y, intercept = TRUE, ...) {
     x <- as.dfm(x)
-    if (!sum(x)) stop(quanteda:::message_error("dfm_empty"))
+    if (!sum(x)) stop(message_error("dfm_empty"))
     call <- match.call()
 
     y <- factor(y)
@@ -113,7 +113,7 @@ textmodel_svmlin.dfm <- function(x, y, intercept = TRUE, ...) {
 predict.textmodel_svmlin <- function(object, newdata = NULL,
                                   type = c("class", "probability"),
                                   force = FALSE, ...) {
-    quanteda:::unused_dots(...)
+    unused_dots(...)
 
     type <- match.arg(type)
 
@@ -127,7 +127,7 @@ predict.textmodel_svmlin <- function(object, newdata = NULL,
         data <- cbind(1, data)
         colnames(data)[1] <- "intercept"
     }
-    data <- quanteda:::force_conformance(data, names(object$weights), force)
+    data <- force_conformance(data, names(object$weights), force)
 
     pred_y <- as.numeric(data %*% object$weights)
     names(pred_y) <- docnames(data)

@@ -40,7 +40,7 @@ textmodel_svm <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), ..
 
 #' @export
 textmodel_svm.default <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), ...) {
-    stop(quanteda:::friendly_class_undefined_message(class(x), "textmodel_svm"))
+    stop(friendly_class_undefined_message(class(x), "textmodel_svm"))
 }
 
 #' @importFrom LiblineaR LiblineaR
@@ -49,7 +49,7 @@ textmodel_svm.default <- function(x, y, weight = c("uniform", "docfreq", "termfr
 #' @export
 textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), ...) {
     x <- as.dfm(x)
-    if (!sum(x)) stop(quanteda:::message_error("dfm_empty"))
+    if (!sum(x)) stop(message_error("dfm_empty"))
     call <- match.call()
     weight <- match.arg(weight)
 
@@ -111,7 +111,7 @@ textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq")
 predict.textmodel_svm <- function(object, newdata = NULL,
                                   type = c("class", "probability"),
                                   force = TRUE, ...) {
-    quanteda:::unused_dots(...)
+    unused_dots(...)
 
     type <- match.arg(type)
 
@@ -126,9 +126,9 @@ predict.textmodel_svm <- function(object, newdata = NULL,
     if (object$bias > 0) model_featnames <- model_featnames[-length(model_featnames)]
 
     data <- if (is.null(newdata))
-        suppressWarnings(quanteda:::force_conformance(data, model_featnames, force))
+        suppressWarnings(force_conformance(data, model_featnames, force))
     else
-        quanteda:::force_conformance(data, model_featnames, force)
+        force_conformance(data, model_featnames, force)
 
     pred_y <- predict(object$svmlinfitted,
                       newx = as.matrix.csr.dfm(data),

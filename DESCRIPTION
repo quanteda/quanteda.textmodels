@@ -67,3 +67,4 @@ Collate:
     'textmodel_wordscores.R'
     'textplot_influence.R'
     'textplot_scale1d.R'
+    'utils.R'
