@@ -20,7 +20,8 @@ contain only the training documents.}
 in \code{train}.  (These will be converted to factors if not already
 factors.)}
 
-\item{smooth}{smoothing parameter for feature counts by class}
+\item{smooth}{smoothing parameter for feature counts, added to the
+feature frequency totals by training class}
 
 \item{prior}{prior distribution on texts; one of \code{"uniform"},
 \code{"docfreq"}, or \code{"termfreq"}.  See Prior Distributions below.}
@@ -64,27 +65,36 @@ training labels.
 \section{Prior distributions}{
 
 
-Prior distributions refer to the prior probabilities assigned to the training
-classes, and the choice of prior distribution affects the calculation of the
-fitted probabilities.  The default is uniform priors, which sets the
-unconditional probability of observing the one class to be the same as
-observing any other class.
+Prior distributions refer to the prior probabilities assigned to the
+training classes, and the choice of prior distribution affects the
+calculation of the fitted probabilities.  The default is uniform priors,
+which sets the unconditional probability of observing the one class to be
+the same as observing any other class.
 
 "Document frequency" means that the class priors will be taken from the
 relative proportions of the class documents used in the training set.  This
-approach is so common that it is assumed in many examples, such as the worked
-example from Manning, Raghavan, and Schütze (2008) below.  It is not the
-default in \pkg{quanteda}, however, since there may be nothing informative in
-the relative numbers of documents used to train a classifier other than the
-relative availability of the documents.  When training classes are balanced
-in their number of documents (usually advisable), however, then the
-empirically computed "docfreq" would be equivalent to "uniform" priors.
+approach is so common that it is assumed in many examples, such as the
+worked example from Manning, Raghavan, and Schütze (2008) below.  It is not
+the default in \pkg{quanteda}, however, since there may be nothing
+informative in the relative numbers of documents used to train a classifier
+other than the relative availability of the documents.  When training
+classes are balanced in their number of documents (usually advisable),
+however, then the empirically computed "docfreq" would be equivalent to
+"uniform" priors.
 
-Setting \code{prior} to "termfreq" makes the priors equal to the proportions
-of total feature counts found in the grouped documents in each training
-class, so that the classes with the largest number of features are assigned
-the largest priors. If the total count of features in each training class was
+Setting \code{prior} to "termfreq" makes the priors equal to the proportions of
+total feature counts found in the grouped documents in each training class,
+so that the classes with the largest number of features are assigned the
+largest priors. If the total count of features in each training class was
 the same, then "uniform" and "termfreq" would be the same.
+}
+
+\section{Smoothing parameter}{
+
+
+The \code{smooth} value is added to the feature frequencies, aggregated by
+training class, to avoid zero frequencies in any class.  This has the
+effect of giving more weight to infrequent term occurrences.
 }
 
 \examples{

@@ -7,7 +7,8 @@
 #' @param y vector of training labels associated with each document identified
 #'   in `train`.  (These will be converted to factors if not already
 #'   factors.)
-#' @param smooth smoothing parameter for feature counts by class
+#' @param smooth smoothing parameter for feature counts, added to the
+#'   feature frequency totals by training class
 #' @param prior prior distribution on texts; one of `"uniform"`,
 #'   `"docfreq"`, or `"termfreq"`.  See Prior Distributions below.
 #' @param distribution count model for text features, can be `multinomial`
@@ -32,27 +33,33 @@
 #' @return \item{smooth}{the value of the smoothing parameter}
 #' @section Prior distributions:
 #'
-#' Prior distributions refer to the prior probabilities assigned to the training
-#' classes, and the choice of prior distribution affects the calculation of the
-#' fitted probabilities.  The default is uniform priors, which sets the
-#' unconditional probability of observing the one class to be the same as
-#' observing any other class.
+#'   Prior distributions refer to the prior probabilities assigned to the
+#'   training classes, and the choice of prior distribution affects the
+#'   calculation of the fitted probabilities.  The default is uniform priors,
+#'   which sets the unconditional probability of observing the one class to be
+#'   the same as observing any other class.
 #'
-#' "Document frequency" means that the class priors will be taken from the
-#' relative proportions of the class documents used in the training set.  This
-#' approach is so common that it is assumed in many examples, such as the worked
-#' example from Manning, Raghavan, and Schütze (2008) below.  It is not the
-#' default in \pkg{quanteda}, however, since there may be nothing informative in
-#' the relative numbers of documents used to train a classifier other than the
-#' relative availability of the documents.  When training classes are balanced
-#' in their number of documents (usually advisable), however, then the
-#' empirically computed "docfreq" would be equivalent to "uniform" priors.
+#'   "Document frequency" means that the class priors will be taken from the
+#'   relative proportions of the class documents used in the training set.  This
+#'   approach is so common that it is assumed in many examples, such as the
+#'   worked example from Manning, Raghavan, and Schütze (2008) below.  It is not
+#'   the default in \pkg{quanteda}, however, since there may be nothing
+#'   informative in the relative numbers of documents used to train a classifier
+#'   other than the relative availability of the documents.  When training
+#'   classes are balanced in their number of documents (usually advisable),
+#'   however, then the empirically computed "docfreq" would be equivalent to
+#'   "uniform" priors.
 #'
-#' Setting `prior` to "termfreq" makes the priors equal to the proportions
-#' of total feature counts found in the grouped documents in each training
-#' class, so that the classes with the largest number of features are assigned
-#' the largest priors. If the total count of features in each training class was
-#' the same, then "uniform" and "termfreq" would be the same.
+#'   Setting `prior` to "termfreq" makes the priors equal to the proportions of
+#'   total feature counts found in the grouped documents in each training class,
+#'   so that the classes with the largest number of features are assigned the
+#'   largest priors. If the total count of features in each training class was
+#'   the same, then "uniform" and "termfreq" would be the same.
+#' @section Smoothing parameter:
+#'
+#'   The `smooth` value is added to the feature frequencies, aggregated by
+#'   training class, to avoid zero frequencies in any class.  This has the
+#'   effect of giving more weight to infrequent term occurrences.
 #' @references Manning, C.D., Raghavan, P., & Schütze, H. (2008).
 #'   *An Introduction to Information Retrieval*. Cambridge: Cambridge University Press
 #'   (Chapter 13). Available at <https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf>.
