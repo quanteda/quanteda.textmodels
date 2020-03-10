@@ -11,9 +11,9 @@
 #'   feature frequency totals by training class
 #' @param prior prior distribution on texts; one of `"uniform"`,
 #'   `"docfreq"`, or `"termfreq"`.  See Prior Distributions below.
-#' @param distribution count model for text features, can be `multinomial`
-#'   or `Bernoulli`.  To fit a "binary multinomial" model, first convert
-#'   the dfm to a binary matrix using `[quanteda::dfm_weight](x, scheme = "boolean")`.
+#' @param distribution count model for text features, can be `multinomial` or
+#'   `Bernoulli`.  To fit a "binary multinomial" model, first convert the dfm to
+#'   a binary matrix using `[quanteda::dfm_weight](x, scheme = "boolean")`.
 #' @return
 #' `textmodel_nb()` returns a list consisting of the following (where
 #' \eqn{I} is the total number of documents, \eqn{J} is the total number of
@@ -60,14 +60,15 @@
 #'   The `smooth` value is added to the feature frequencies, aggregated by
 #'   training class, to avoid zero frequencies in any class.  This has the
 #'   effect of giving more weight to infrequent term occurrences.
-#' @references Manning, C.D., Raghavan, P., & Schütze, H. (2008).
-#'   *An Introduction to Information Retrieval*. Cambridge: Cambridge University Press
-#'   (Chapter 13). Available at <https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf>.
+#' @references Manning, C.D., Raghavan, P., & Schütze, H. (2008). *An
+#'   Introduction to Information Retrieval*. Cambridge: Cambridge University
+#'   Press (Chapter 13). Available at
+#'   <https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf>.
 #'
-#'   Jurafsky, D. & Martin, J.H. (2018).
-#'   From *Speech and Language Processing: An Introduction to Natural Language
-#'   Processing, Computational Linguistics, and Speech Recognition*. Draft of September 23, 2018
-#'   (Chapter 6, Naive Bayes). Available at <https://web.stanford.edu/~jurafsky/slp3/>.
+#'   Jurafsky, D. & Martin, J.H. (2018). From *Speech and Language Processing:
+#'   An Introduction to Natural Language Processing, Computational Linguistics,
+#'   and Speech Recognition*. Draft of September 23, 2018 (Chapter 6, Naive
+#'   Bayes). Available at <https://web.stanford.edu/~jurafsky/slp3/>.
 #'
 #' @seealso [predict.textmodel_nb()]
 #' @author Kenneth Benoit
@@ -124,9 +125,10 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
     call <- match.call()
 
     y <- as.factor(y)
-    if (stats::var(as.numeric(y), na.rm = TRUE) == 0) stop("y cannot be constant")
+    if (stats::var(as.numeric(y), na.rm = TRUE) == 0)
+        stop("y cannot be constant")
 
-    temp <- x[!is.na(y),]
+    temp <- x[!is.na(y), ]
     class <- y[!is.na(y)]
 
     if (distribution == "Bernoulli") {
@@ -150,7 +152,7 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
     if (distribution == "multinomial") {
         PwGc <- dfm_weight(dfm_smooth(temp, smooth), scheme = "prop", force = TRUE)
     } else if (distribution == "Bernoulli") {
-        PwGc <- (temp + smooth) / (freq + 2*smooth)
+        PwGc <- (temp + smooth) / (freq + 2 * smooth)
         PwGc <- as(PwGc, "dgeMatrix")
     }
 
@@ -163,7 +165,6 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
     # rename row dimensions
     names(dimnames(PcGw))[1] <- names(dimnames(PwGc))[1] <- "classes"
 
-    ## P(w)
     Pw <- t(PwGc) %*% as.numeric(Pc)
 
     result <- list(
@@ -222,7 +223,6 @@ predict.textmodel_nb <- function(object, newdata = NULL,
     } else if (object$distribution == "Bernoulli") {
 
         newdata <- dfm_weight(newdata, "boolean", force = TRUE)
-        Nc <- length(object$Pc)
 
         present <- log(object$PwGc)
         nonpresent <- log(1 - object$PwGc)
@@ -242,12 +242,12 @@ predict.textmodel_nb <- function(object, newdata = NULL,
     logpos <- t(apply(loglik, 1, "+", log(object$Pc)))
 
     # predict MAP class
-    nb.predicted <- colnames(logpos)[apply(logpos, 1, which.max)]
+    classpred <- colnames(logpos)[apply(logpos, 1, which.max)]
 
     if (type == "class") {
 
-        names(nb.predicted) <- docnames(newdata)
-        result <- factor(nb.predicted, levels = names(object$Pc))
+        names(classpred) <- docnames(newdata)
+        result <- factor(classpred, levels = names(object$Pc))
 
     } else if (type == "probability") {
 
@@ -289,9 +289,9 @@ print.textmodel_nb <- function(x, ...) {
 #' @export
 summary.textmodel_nb <- function(object, n = 30, ...) {
     result <- list(
-        'call' = object$call,
-        'class.priors' = as.coefficients_textmodel(object$Pc),
-        'estimated.feature.scores' = as.coefficients_textmodel(head(coef(object), n))
+        "call" = object$call,
+        "class.priors" = as.coefficients_textmodel(object$Pc),
+        "estimated.feature.scores" = as.coefficients_textmodel(head(coef(object), n))
     )
     as.summary.textmodel(result)
 }
