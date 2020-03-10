@@ -104,23 +104,24 @@ txt <- c(d1 = "Chinese Beijing Chinese",
          d3 = "Chinese Macao",
          d4 = "Tokyo Japan Chinese",
          d5 = "Chinese Chinese Chinese Tokyo Japan")
-trainingset <- quanteda::dfm(txt, tolower = FALSE)
-trainingclass <- factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)
+x <- quanteda::dfm(txt, tolower = FALSE)
+y <- factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)
 
 ## replicate IIR p261 prediction for test set (document 5)
-(tmod1 <- textmodel_nb(trainingset, y = trainingclass, prior = "docfreq"))
+(tmod1 <- textmodel_nb(x, y, prior = "docfreq"))
 summary(tmod1)
 coef(tmod1)
+predict(tmod1, type = "prob")
 predict(tmod1)
 
 # contrast with other priors
-predict(textmodel_nb(trainingset, y = trainingclass, prior = "uniform"))
-predict(textmodel_nb(trainingset, y = trainingclass, prior = "termfreq"))
+predict(textmodel_nb(x, y, prior = "uniform"))
+predict(textmodel_nb(x, y, prior = "termfreq"))
 
 ## replicate IIR p264 Bernoulli Naive Bayes
-tmod2 <- textmodel_nb(trainingset, y = trainingclass, distribution = "Bernoulli",
-                        prior = "docfreq")
-predict(tmod2, newdata = trainingset[5, ])
+tmod2 <- textmodel_nb(x, y, distribution = "Bernoulli", prior = "docfreq")
+predict(tmod2, newdata = x[5, ], type = "prob")
+predict(tmod2, newdata = x[5, ])
 }
 \references{
 Manning, C.D., Raghavan, P., & Schütze, H. (2008).

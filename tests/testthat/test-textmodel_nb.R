@@ -18,9 +18,6 @@ nb_multi_nosmooth <-
 nb_bern_smooth <-
     textmodel_nb(nb_dfm, nb_class, prior = "docfreq",
                  distribution = "Bernoulli", smooth = 1)
-nb_bern_nosmooth <-
-    textmodel_nb(nb_dfm, nb_class, prior = "docfreq",
-                 distribution = "Bernoulli", smooth = 0)
 
 test_that("class priors are preserved in correct order", {
     expect_equal(textmodel_nb(nb_dfm, nb_class, prior = "uniform")$Pc,
@@ -74,20 +71,6 @@ test_that("Bernoulli likelihoods and class posteriors are correct", {
     expect_identical(nb_bern_smooth$PwGc["N", "Beijing"], 1/3)
     expect_identical(nb_bern_smooth$PwGc["N", "Macao"], 1/3)
     expect_identical(nb_bern_smooth$PwGc["N", "Shanghai"], 1/3)
-
-    # without smoothing
-    expect_identical(nb_bern_nosmooth$PwGc["Y", "Chinese"], 3/3)
-    expect_identical(nb_bern_nosmooth$PwGc["Y", "Japan"], 0/3)
-    expect_identical(nb_bern_nosmooth$PwGc["Y", "Tokyo"], 0/3)
-    expect_identical(nb_bern_nosmooth$PwGc["Y", "Beijing"], 1/3)
-    expect_identical(nb_bern_nosmooth$PwGc["Y", "Macao"], 1/3)
-    expect_identical(nb_bern_nosmooth$PwGc["Y", "Shanghai"], 1/3)
-    expect_identical(nb_bern_nosmooth$PwGc["N", "Chinese"], 1/1)
-    expect_identical(nb_bern_nosmooth$PwGc["N", "Japan"], 1/1)
-    expect_identical(nb_bern_nosmooth$PwGc["N", "Tokyo"], 1/1)
-    expect_identical(nb_bern_nosmooth$PwGc["N", "Beijing"], 0/1)
-    expect_identical(nb_bern_nosmooth$PwGc["N", "Macao"], 0/1)
-    expect_identical(nb_bern_nosmooth$PwGc["N", "Shanghai"], 0/1)
 })
 
 test_that("Bernoulli nb predicted values are correct", {
@@ -197,5 +180,146 @@ test_that("textmodel_nb() works with weighted dfm", {
     )
     expect_silent(
         predict(tmod)
+    )
+})
+
+test_that("multinomial output matches fastNaiveBayes and naivebayes packages", {
+    skip_if_not_installed("fastNaiveBayes")
+    skip_if_not_installed("naivebayes")
+    library("fastNaiveBayes")
+    library("naivebayes")
+
+    x <- nb_dfm
+    y <- nb_class
+
+    suppressWarnings({
+        tmod_fnb <- fastNaiveBayes::fnb.multinomial(x, y, priors = as.numeric(prop.table(table(y))),
+                                                    laplace = 1, sparse = TRUE)
+        tmod_nb <- textmodel_nb(x, y, prior = "docfreq", distribution = "multinomial")
+        tmod_bnb <- naivebayes::multinomial_naive_bayes(x, y, laplace = 1)
+    })
+
+    expect_equivalent(
+        as.numeric(predict(tmod_fnb, x[5, ], sparse = TRUE, type = "raw")),
+        predict(tmod_nb, x[5, ], type = "prob")
+    )
+    # expect_equivalent(
+    #     predict(tmod_fnb, x[5, ], sparse = TRUE, type = "class"),
+    #     predict(tmod_nb, x[5, ], type = "class")
+    # )
+    expect_equivalent(
+        as.numeric(predict(tmod_bnb, newdata = as.matrix(x)[5, , drop = FALSE], type = "prob")),
+        predict(tmod_nb, x[5, ], type = "prob")
+    )
+    expect_equivalent(
+        predict(tmod_bnb, newdata = as.matrix(x)[5, , drop = FALSE], type = "prob"),
+        predict(tmod_nb, x[5, ], type = "prob")
+    )
+
+    suppressWarnings({
+        tmod_fnb <- fastNaiveBayes::fnb.multinomial(x, y, priors = as.numeric(prop.table(table(y))),
+                                                    laplace = 0.5, sparse = TRUE)
+        tmod_nb <- textmodel_nb(x, y, prior = "docfreq", smooth = 0.5, distribution = "multinomial")
+        tmod_bnb <- naivebayes::multinomial_naive_bayes(x, y, laplace = 0.5)
+    })
+
+    expect_equivalent(
+        as.numeric(predict(tmod_fnb, x[5, ], sparse = TRUE, type = "raw")),
+        predict(tmod_nb, x[5, ], type = "prob")
+    )
+    # expect_equivalent(
+    #     predict(tmod_fnb, x[5, ], sparse = TRUE, type = "class"),
+    #     predict(tmod_nb, x[5, ], type = "class")
+    # )
+    expect_equivalent(
+        as.numeric(predict(tmod_bnb, newdata = as.matrix(x)[5, , drop = FALSE], type = "prob")),
+        predict(tmod_nb, x[5, ], type = "prob")
+    )
+    expect_equivalent(
+        predict(tmod_bnb, newdata = as.matrix(x)[5, , drop = FALSE], type = "prob"),
+        predict(tmod_nb, x[5, ], type = "prob")
+    )
+})
+
+test_that("Bernoulli output matches fastNaiveBayes and naivebayes packages", {
+    skip_if_not_installed("fastNaiveBayes")
+    skip_if_not_installed("naivebayes")
+    library("fastNaiveBayes")
+    library("naivebayes")
+
+    xb <- quanteda::dfm_weight(nb_dfm, scheme = "boolean")
+    y <- nb_class
+
+    suppressWarnings({
+        tmod_fnb <- fastNaiveBayes::fnb.bernoulli(xb, y, priors = as.numeric(prop.table(table(y))),
+                                                  laplace = 1, sparse = TRUE)
+        tmod_nb <- textmodel_nb(xb, y, prior = "docfreq", distribution = "Bernoulli")
+        tmod_bnb <- naivebayes::bernoulli_naive_bayes(xb, y, laplace = 1)
+    })
+    expect_equivalent(
+        as.numeric(predict(tmod_fnb, xb[5, ], sparse = TRUE, type = "raw")),
+        predict(tmod_nb, xb[5, ], type = "prob")
+    )
+    expect_equivalent(
+        predict(tmod_fnb, xb[5, ], sparse = TRUE, type = "class"),
+        predict(tmod_nb, xb[5, ], type = "class")
+    )
+    expect_equivalent(
+        as.numeric(predict(tmod_bnb, newdata = as.matrix(xb)[5, , drop = FALSE], type = "prob")),
+        predict(tmod_nb, xb[5, ], type = "prob")
+    )
+    expect_equivalent(
+        predict(tmod_bnb, newdata = as.matrix(xb)[5, , drop = FALSE], type = "prob"),
+        predict(tmod_nb, xb[5, ], type = "prob")
+    )
+
+    suppressWarnings({
+        tmod_fnb <- fastNaiveBayes::fnb.bernoulli(xb, y, priors = as.numeric(prop.table(table(y))),
+                                                  laplace = 0, sparse = TRUE)
+        tmod_nb <- textmodel_nb(xb, y, prior = "docfreq", smooth = 0, distribution = "Bernoulli")
+        tmod_bnb <- naivebayes::bernoulli_naive_bayes(xb, y, laplace = 0)
+    })
+    expect_equivalent(
+        as.numeric(predict(tmod_fnb, xb[5, ], sparse = TRUE, type = "raw")),
+        predict(tmod_nb, xb[5, ], type = "prob")
+    )
+    expect_equivalent(
+        predict(tmod_fnb, xb[5, ], sparse = TRUE, type = "class"),
+        predict(tmod_nb, xb[5, ], type = "class")
+    )
+    expect_equivalent(
+        as.numeric(predict(tmod_bnb, newdata = as.matrix(xb)[5, , drop = FALSE], type = "prob")),
+        predict(tmod_nb, xb[5, ], type = "prob"),
+        tol = .000001
+    )
+    expect_equivalent(
+        predict(tmod_bnb, newdata = as.matrix(xb)[5, , drop = FALSE], type = "prob"),
+        predict(tmod_nb, xb[5, ], type = "prob"),
+        tol = .000001
+    )
+
+    suppressWarnings({
+        tmod_fnb <- fastNaiveBayes::fnb.bernoulli(xb, y, priors = as.numeric(prop.table(table(y))),
+                                                  laplace = 0.5, sparse = TRUE)
+        tmod_nb <- textmodel_nb(xb, y, prior = "docfreq", smooth = 0.5, distribution = "Bernoulli")
+        tmod_bnb <- naivebayes::bernoulli_naive_bayes(xb, y, laplace = 0.5)
+    })
+    expect_equivalent(
+        as.numeric(predict(tmod_fnb, xb[5, ], sparse = TRUE, type = "raw")),
+        predict(tmod_nb, xb[5, ], type = "prob")
+    )
+    expect_equivalent(
+        predict(tmod_fnb, xb[5, ], sparse = TRUE, type = "class"),
+        predict(tmod_nb, xb[5, ], type = "class")
+    )
+    expect_equivalent(
+        as.numeric(predict(tmod_bnb, newdata = as.matrix(xb)[5, , drop = FALSE], type = "prob")),
+        predict(tmod_nb, xb[5, ], type = "prob"),
+        tol = .000001
+    )
+    expect_equivalent(
+        predict(tmod_bnb, newdata = as.matrix(xb)[5, , drop = FALSE], type = "prob"),
+        predict(tmod_nb, xb[5, ], type = "prob"),
+        tol = .000001
     )
 })

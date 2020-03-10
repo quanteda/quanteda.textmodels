@@ -79,23 +79,24 @@
 #'          d3 = "Chinese Macao",
 #'          d4 = "Tokyo Japan Chinese",
 #'          d5 = "Chinese Chinese Chinese Tokyo Japan")
-#' trainingset <- quanteda::dfm(txt, tolower = FALSE)
-#' trainingclass <- factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)
+#' x <- quanteda::dfm(txt, tolower = FALSE)
+#' y <- factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)
 #'
 #' ## replicate IIR p261 prediction for test set (document 5)
-#' (tmod1 <- textmodel_nb(trainingset, y = trainingclass, prior = "docfreq"))
+#' (tmod1 <- textmodel_nb(x, y, prior = "docfreq"))
 #' summary(tmod1)
 #' coef(tmod1)
+#' predict(tmod1, type = "prob")
 #' predict(tmod1)
 #'
 #' # contrast with other priors
-#' predict(textmodel_nb(trainingset, y = trainingclass, prior = "uniform"))
-#' predict(textmodel_nb(trainingset, y = trainingclass, prior = "termfreq"))
+#' predict(textmodel_nb(x, y, prior = "uniform"))
+#' predict(textmodel_nb(x, y, prior = "termfreq"))
 #'
 #' ## replicate IIR p264 Bernoulli Naive Bayes
-#' tmod2 <- textmodel_nb(trainingset, y = trainingclass, distribution = "Bernoulli",
-#'                         prior = "docfreq")
-#' predict(tmod2, newdata = trainingset[5, ])
+#' tmod2 <- textmodel_nb(x, y, distribution = "Bernoulli", prior = "docfreq")
+#' predict(tmod2, newdata = x[5, ], type = "prob")
+#' predict(tmod2, newdata = x[5, ])
 #' @export
 textmodel_nb <- function(x, y, smooth = 1,
                          prior = c("uniform", "docfreq", "termfreq"),
@@ -111,7 +112,7 @@ textmodel_nb.default <- function(x, y, smooth = 1,
 }
 
 #' @export
-#' @importFrom quanteda colSums rowSums
+#' @importFrom quanteda colSums rowSums dfm_weight
 textmodel_nb.dfm <- function(x, y, smooth = 1,
                              prior = c("uniform", "docfreq", "termfreq"),
                              distribution = c("multinomial", "Bernoulli")) {
@@ -128,9 +129,9 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
     temp <- x[!is.na(y),]
     class <- y[!is.na(y)]
 
-    ## distribution
-    if (distribution == "Bernoulli")
+    if (distribution == "Bernoulli") {
         temp <- dfm_weight(temp, "boolean", force = TRUE)
+    }
 
     temp <- dfm_group(temp, class, force = TRUE)
 
@@ -149,8 +150,7 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
     if (distribution == "multinomial") {
         PwGc <- dfm_weight(dfm_smooth(temp, smooth), scheme = "prop", force = TRUE)
     } else if (distribution == "Bernoulli") {
-        # denominator here is same as IIR Fig 13.3 line 8 - see also Eq. 13.7
-        PwGc <- (temp + smooth) / (freq + smooth * ndoc(temp))
+        PwGc <- (temp + smooth) / (freq + 2*smooth)
         PwGc <- as(PwGc, "dgeMatrix")
     }
 
@@ -209,78 +209,59 @@ predict.textmodel_nb <- function(object, newdata = NULL,
                                  type = c("class", "probability", "logposterior"),
                                  force = FALSE, ...) {
     unused_dots(...)
-
     type <- match.arg(type)
 
-    if (!is.null(newdata)) {
-        data <- as.dfm(newdata)
-    } else {
-        data <- as.dfm(object$x)
-    }
-
-    # # remove any words with zero probabilities (this should be done in fitting)
-    # is_zero <- colSums(object$PwGc) == 0
-    # if (any(is_zero)) {
-    #     object$PwGc <- object$PwGc[,!is_zero,drop = FALSE]
-    #     object$PcGw <- object$PcGw[,!is_zero,drop = FALSE]
-    #     object$Pw <- object$Pw[!is_zero,,drop = FALSE]
-    # }
-    data <- force_conformance(data, colnames(object$PwGc), force)
+    newdata <- if (!is.null(newdata)) as.dfm(newdata) else as.dfm(object$x)
+    newdata <- force_conformance(newdata, colnames(object$PwGc), force)
 
     if (object$distribution == "multinomial") {
 
         # log P(d|c) class conditional document likelihoods
-        log_lik <- data %*% t(log(object$PwGc))
-        # weight by class priors
-        logpos <- t(apply(log_lik, 1, "+", log(object$Pc)))
+        loglik <- newdata %*% t(log(object$PwGc))
 
     } else if (object$distribution == "Bernoulli") {
 
-        data <- dfm_weight(data, "boolean")
+        newdata <- dfm_weight(newdata, "boolean", force = TRUE)
         Nc <- length(object$Pc)
 
-        # initialize log posteriors with class priors
-        logpos <- matrix(log(object$Pc), byrow = TRUE,
-                            ncol = Nc, nrow = nrow(data),
-                            dimnames = list(rownames(data), names(object$Pc)))
-        # APPLYBERNOULLINB from IIR Fig 13.3
-        for (c in seq_len(Nc)) {
-            tmp1 <- log(t(data) * object$PwGc[c, ])
-            tmp1[is.infinite(tmp1)] <- 0
-            tmp0 <- log(t(!data) * (1 - object$PwGc[c, ]))
-            tmp0[is.infinite(tmp0)] <- 0
-            logpos[, c] <- logpos[, c] + colSums(tmp0) + colSums(tmp1)
-        }
+        present <- log(object$PwGc)
+        nonpresent <- log(1 - object$PwGc)
+        threshold <- .Machine$double.eps
+        present[is.infinite(present)] <- max(-100000, log(threshold))
+        nonpresent[is.infinite(nonpresent)] <- max(-100000, log(threshold))
+
+        presence_prob <- newdata %*% t(present)
+        nonpresence_prob <- matrix(base::colSums(t(nonpresent)),
+                                   nrow = nrow(presence_prob),
+                                   ncol = ncol(presence_prob), byrow = TRUE) - newdata %*% t(nonpresent)
+        loglik <- presence_prob + nonpresence_prob
+
     }
+
+    # weight by class priors
+    logpos <- t(apply(loglik, 1, "+", log(object$Pc)))
 
     # predict MAP class
     nb.predicted <- colnames(logpos)[apply(logpos, 1, which.max)]
 
-
     if (type == "class") {
-        names(nb.predicted) <- docnames(data)
-        return(factor(nb.predicted, levels = names(object$Pc)))
+
+        names(nb.predicted) <- docnames(newdata)
+        result <- factor(nb.predicted, levels = names(object$Pc))
+
     } else if (type == "probability") {
 
-        ## compute class posterior probabilities
-        post_prob <- matrix(NA, ncol = ncol(logpos), nrow = nrow(logpos),
+        result <- matrix(NA, ncol = ncol(logpos), nrow = nrow(logpos),
                             dimnames = dimnames(logpos))
-
-        # compute posterior probabilities
         for (j in seq_len(ncol(logpos))) {
             base_lpl <- logpos[, j]
-            post_prob[, j] <- 1 / (1 + rowSums(exp(logpos[, -j, drop = FALSE] - base_lpl)))
+            result[, j] <- 1 / (1 + rowSums(exp(logpos[, -j, drop = FALSE] - base_lpl)))
         }
 
-        # result <- list(probability = post_prob)
-        result <- post_prob
-
     } else if (type == "logposterior") {
-
-        # result <- list(logposterior = logpos)
         result <- logpos
     }
-    # class(result) <- c("predict.textmodel_nb", "list")
+
     result
 }
 
