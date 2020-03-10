@@ -193,10 +193,10 @@ test_that("multinomial output matches fastNaiveBayes and naivebayes packages", {
     y <- nb_class
 
     suppressWarnings({
-        tmod_fnb <- fastNaiveBayes::fnb.multinomial(x, y, priors = as.numeric(prop.table(table(y))),
+        tmod_fnb <- fnb.multinomial(x, y, priors = as.numeric(prop.table(table(y))),
                                                     laplace = 1, sparse = TRUE)
         tmod_nb <- textmodel_nb(x, y, prior = "docfreq", distribution = "multinomial")
-        tmod_bnb <- naivebayes::multinomial_naive_bayes(x, y, laplace = 1)
+        tmod_bnb <- multinomial_naive_bayes(x, y, laplace = 1)
     })
 
     expect_equivalent(
@@ -217,10 +217,10 @@ test_that("multinomial output matches fastNaiveBayes and naivebayes packages", {
     )
 
     suppressWarnings({
-        tmod_fnb <- fastNaiveBayes::fnb.multinomial(x, y, priors = as.numeric(prop.table(table(y))),
+        tmod_fnb <- fnb.multinomial(x, y, priors = as.numeric(prop.table(table(y))),
                                                     laplace = 0.5, sparse = TRUE)
         tmod_nb <- textmodel_nb(x, y, prior = "docfreq", smooth = 0.5, distribution = "multinomial")
-        tmod_bnb <- naivebayes::multinomial_naive_bayes(x, y, laplace = 0.5)
+        tmod_bnb <- multinomial_naive_bayes(x, y, laplace = 0.5)
     })
 
     expect_equivalent(
@@ -251,10 +251,10 @@ test_that("Bernoulli output matches fastNaiveBayes and naivebayes packages", {
     y <- nb_class
 
     suppressWarnings({
-        tmod_fnb <- fastNaiveBayes::fnb.bernoulli(xb, y, priors = as.numeric(prop.table(table(y))),
+        tmod_fnb <- fnb.bernoulli(xb, y, priors = as.numeric(prop.table(table(y))),
                                                   laplace = 1, sparse = TRUE)
         tmod_nb <- textmodel_nb(xb, y, prior = "docfreq", distribution = "Bernoulli")
-        tmod_bnb <- naivebayes::bernoulli_naive_bayes(xb, y, laplace = 1)
+        tmod_bnb <- bernoulli_naive_bayes(xb, y, laplace = 1)
     })
     expect_equivalent(
         as.numeric(predict(tmod_fnb, xb[5, ], sparse = TRUE, type = "raw")),
@@ -274,10 +274,10 @@ test_that("Bernoulli output matches fastNaiveBayes and naivebayes packages", {
     )
 
     suppressWarnings({
-        tmod_fnb <- fastNaiveBayes::fnb.bernoulli(xb, y, priors = as.numeric(prop.table(table(y))),
+        tmod_fnb <- fnb.bernoulli(xb, y, priors = as.numeric(prop.table(table(y))),
                                                   laplace = 0, sparse = TRUE)
         tmod_nb <- textmodel_nb(xb, y, prior = "docfreq", smooth = 0, distribution = "Bernoulli")
-        tmod_bnb <- naivebayes::bernoulli_naive_bayes(xb, y, laplace = 0)
+        tmod_bnb <- bernoulli_naive_bayes(xb, y, laplace = 0)
     })
     expect_equivalent(
         as.numeric(predict(tmod_fnb, xb[5, ], sparse = TRUE, type = "raw")),
@@ -299,10 +299,10 @@ test_that("Bernoulli output matches fastNaiveBayes and naivebayes packages", {
     )
 
     suppressWarnings({
-        tmod_fnb <- fastNaiveBayes::fnb.bernoulli(xb, y, priors = as.numeric(prop.table(table(y))),
+        tmod_fnb <- fnb.bernoulli(xb, y, priors = as.numeric(prop.table(table(y))),
                                                   laplace = 0.5, sparse = TRUE)
         tmod_nb <- textmodel_nb(xb, y, prior = "docfreq", smooth = 0.5, distribution = "Bernoulli")
-        tmod_bnb <- naivebayes::bernoulli_naive_bayes(xb, y, laplace = 0.5)
+        tmod_bnb <- bernoulli_naive_bayes(xb, y, laplace = 0.5)
     })
     expect_equivalent(
         as.numeric(predict(tmod_fnb, xb[5, ], sparse = TRUE, type = "raw")),
