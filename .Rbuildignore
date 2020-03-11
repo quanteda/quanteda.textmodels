@@ -5,6 +5,8 @@
 ^\.github/
 ^\.travis\.yml$
 ^appveyor\.yml$
-
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^revdep/
+^doc$
+^Meta$

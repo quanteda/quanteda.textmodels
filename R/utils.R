@@ -85,3 +85,19 @@ message_error <- function(key = NULL) {
 catm <- function(..., sep = " ", appendLF = FALSE) {
     message(paste(..., sep = sep), appendLF = appendLF)
 }
+
+
+## make cols add up to one
+colNorm <- function(x) {
+    x / outer(rep(1, nrow(x)), colSums(x))
+}
+
+## fast way to group by class for sparse matrix
+## outputs a dense matrix
+group_classes <- function(x, y, smooth = 0) {
+    levels <- levels(as.factor(y))
+    x <- lapply(levels, function(lev) Matrix::colSums(x[y == lev, , drop = FALSE]) + smooth)
+    names(x) <- levels
+    do.call("rbind", x)
+}
+

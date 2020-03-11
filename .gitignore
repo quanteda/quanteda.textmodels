@@ -33,3 +33,7 @@ vignettes/*.pdf
 .Renviron
 *.Rproj
 .DS_Store
+revdep/
+inst/doc
+doc
+Meta
