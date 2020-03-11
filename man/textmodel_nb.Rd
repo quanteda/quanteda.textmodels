@@ -26,9 +26,9 @@ feature frequency totals by training class}
 \item{prior}{prior distribution on texts; one of \code{"uniform"},
 \code{"docfreq"}, or \code{"termfreq"}.  See Prior Distributions below.}
 
-\item{distribution}{count model for text features, can be \code{multinomial}
-or \code{Bernoulli}.  To fit a "binary multinomial" model, first convert
-the dfm to a binary matrix using \verb{[quanteda::dfm_weight](x, scheme = "boolean")}.}
+\item{distribution}{count model for text features, can be \code{multinomial} or
+\code{Bernoulli}.  To fit a "binary multinomial" model, first convert the dfm to
+a binary matrix using \verb{[quanteda::dfm_weight](x, scheme = "boolean")}.}
 }
 \value{
 \code{textmodel_nb()} returns a list consisting of the following (where
@@ -37,26 +37,19 @@ features, and \eqn{k} is the total number of training classes):
 
 \item{call}{original function call}
 
-\item{PwGc}{\eqn{k \times J}; probability of the word given the class
-(empirical likelihood)}
+\item{param}{\eqn{k \times V}; class conditional posterior estimates}
 
-\item{Pc}{\eqn{k}-length named numeric vector of class prior
-probabilities}
+\item{x}{the \eqn{N \times V} training dfm \code{x}}
 
-\item{PcGw}{\eqn{k \times J}; posterior class probability given the
-word}
+\item{y}{the \eqn{N}-length \code{y} training class vector, where NAs will
+not be used will be retained in the saved \code{x} matrix}
 
-\item{Pw}{\eqn{J \times 1}; baseline probability of the word}
+\item{distribution}{character; the distribution of \code{x} for the NB
+model}
 
-\item{x}{the \eqn{I \times J} training dfm \code{x}}
+\item{priors}{numeric; the class prior probabilities}
 
-\item{y}{the \eqn{I}-length \code{y} training class vector}
-
-\item{distribution}{the distribution argument}
-
-\item{prior}{the prior argument}
-
-\item{smooth}{the value of the smoothing parameter}
+\item{smooth}{numeric; the value of the smoothing parameter}
 }
 \description{
 Fit a multinomial or Bernoulli Naive Bayes model, given a dfm and some
@@ -124,14 +117,15 @@ predict(tmod2, newdata = x[5, ], type = "prob")
 predict(tmod2, newdata = x[5, ])
 }
 \references{
-Manning, C.D., Raghavan, P., & Schütze, H. (2008).
-\emph{An Introduction to Information Retrieval}. Cambridge: Cambridge University Press
-(Chapter 13). Available at \url{https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf}.
+Manning, C.D., Raghavan, P., & Schütze, H. (2008). \emph{An
+Introduction to Information Retrieval}. Cambridge: Cambridge University
+Press (Chapter 13). Available at
+\url{https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf}.
 
-Jurafsky, D. & Martin, J.H. (2018).
-From \emph{Speech and Language Processing: An Introduction to Natural Language
-Processing, Computational Linguistics, and Speech Recognition}. Draft of September 23, 2018
-(Chapter 6, Naive Bayes). Available at \url{https://web.stanford.edu/~jurafsky/slp3/}.
+Jurafsky, D. & Martin, J.H. (2018). From \emph{Speech and Language Processing:
+An Introduction to Natural Language Processing, Computational Linguistics,
+and Speech Recognition}. Draft of September 23, 2018 (Chapter 6, Naive
+Bayes). Available at \url{https://web.stanford.edu/~jurafsky/slp3/}.
 }
 \seealso{
 \code{\link[=predict.textmodel_nb]{predict.textmodel_nb()}}

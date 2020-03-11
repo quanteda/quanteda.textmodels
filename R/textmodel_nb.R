@@ -19,18 +19,14 @@
 #' \eqn{I} is the total number of documents, \eqn{J} is the total number of
 #' features, and \eqn{k} is the total number of training classes):
 #' @return \item{call}{original function call}
-#' @return \item{PwGc}{\eqn{k \times J}; probability of the word given the class
-#'   (empirical likelihood)}
-#' @return \item{Pc}{\eqn{k}-length named numeric vector of class prior
-#'   probabilities}
-#' @return \item{PcGw}{\eqn{k \times J}; posterior class probability given the
-#'   word}
-#' @return \item{Pw}{\eqn{J \times 1}; baseline probability of the word}
-#' @return \item{x}{the \eqn{I \times J} training dfm `x`}
-#' @return \item{y}{the \eqn{I}-length `y` training class vector}
-#' @return \item{distribution}{the distribution argument}
-#' @return \item{prior}{the prior argument}
-#' @return \item{smooth}{the value of the smoothing parameter}
+#' @return \item{param}{\eqn{k \times V}; class conditional posterior estimates}
+#' @return \item{x}{the \eqn{N \times V} training dfm `x`}
+#' @return \item{y}{the \eqn{N}-length `y` training class vector, where NAs will
+#'   not be used will be retained in the saved `x` matrix}
+#' @return \item{distribution}{character; the distribution of `x` for the NB
+#'   model}
+#' @return \item{priors}{numeric; the class prior probabilities}
+#' @return \item{smooth}{numeric; the value of the smoothing parameter}
 #' @section Prior distributions:
 #'
 #'   Prior distributions refer to the prior probabilities assigned to the
@@ -118,66 +114,63 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
                              prior = c("uniform", "docfreq", "termfreq"),
                              distribution = c("multinomial", "Bernoulli")) {
     x <- as.dfm(x)
+    y <- as.factor(y)
     if (!sum(x)) stop(message_error("dfm_empty"))
 
     prior <- match.arg(prior)
     distribution <- match.arg(distribution)
-    call <- match.call()
 
-    y <- as.factor(y)
     if (stats::var(as.numeric(y), na.rm = TRUE) == 0)
         stop("y cannot be constant")
 
-    temp <- x[!is.na(y), ]
-    class <- y[!is.na(y)]
+    result <- list(
+        call = match.call(),
+        x = x, y = y,
+        distribution = distribution,
+        smooth = smooth
+    )
 
-    if (distribution == "Bernoulli") {
-        temp <- dfm_weight(temp, "boolean", force = TRUE)
+    if (anyNA(y)) {
+        x <- x[!is.na(y), ]
+        y <- y[!is.na(y)]
     }
 
-    temp <- dfm_group(temp, class, force = TRUE)
+    if (distribution == "Bernoulli") {
+        x <- dfm_weight(x, "boolean", force = TRUE)
+    }
 
-    freq <- rowSums(as.matrix(table(class)))
+    x <- dfm_group(x, groups = y, force = TRUE)
+
+    freq <- rowSums(as.matrix(table(y)))
     if (prior == "uniform") {
-        Pc <- rep(1 / ndoc(temp), ndoc(temp))
-        names(Pc) <- docnames(temp)
+        Pc <- rep(1 / ndoc(x), ndoc(x))
+        names(Pc) <- docnames(x)
     } else if (prior == "docfreq") {
         Pc <- freq
         Pc <- Pc / sum(Pc)
     } else if (prior == "termfreq") {
-        Pc <- rowSums(temp)
+        Pc <- rowSums(x)
         Pc <- Pc / sum(Pc)
     }
 
     if (distribution == "multinomial") {
-        PwGc <- dfm_weight(dfm_smooth(temp, smooth), scheme = "prop", force = TRUE)
+        PwGc <- dfm_weight(dfm_smooth(x, smooth), scheme = "prop", force = TRUE)
     } else if (distribution == "Bernoulli") {
-        PwGc <- (temp + smooth) / (freq + 2 * smooth)
+        PwGc <- (x + smooth) / (freq + 2 * smooth)
         PwGc <- as(PwGc, "dgeMatrix")
     }
 
-    # order Pc so that these are the same order as rows of PwGc
-    Pc <- Pc[rownames(PwGc)]
+    Pc <- Pc[rownames(PwGc)]      # make sure Pc order matches the rows of PwGc
+    PwGc <- as.matrix(PwGc)       # convert to ordinary matrix
+    names(dimnames(PwGc)) <- NULL # remove dimname labels
 
-    ## posterior: class x words, cols sum to 1
-    PcGw <- colNorm(PwGc * base::outer(Pc, rep(1, ncol(PwGc))))
+    ## other quantities no longer computed
+    # PcGw <- colNorm(PwGc * base::outer(Pc, rep(1, ncol(PwGc))))
+    # names(dimnames(PcGw))[1] <- names(dimnames(PwGc))[1] <- "classes"
+    # Pw <- t(PwGc) %*% as.numeric(Pc)
 
-    # rename row dimensions
-    names(dimnames(PcGw))[1] <- names(dimnames(PwGc))[1] <- "classes"
-
-    Pw <- t(PwGc) %*% as.numeric(Pc)
-
-    result <- list(
-        PwGc = as.matrix(PwGc),
-        Pc = Pc,
-        PcGw = as.matrix(PcGw),
-        Pw = as.matrix(Pw),
-        x = x, y = y,
-        distribution = distribution,
-        prior = prior,
-        smooth = smooth,
-        call = call
-    )
+    result[["priors"]] <- Pc
+    result[["param"]] <- PwGc
     class(result) <- c("textmodel_nb", "textmodel", "list")
     result
 }
@@ -213,41 +206,40 @@ predict.textmodel_nb <- function(object, newdata = NULL,
     type <- match.arg(type)
 
     newdata <- if (!is.null(newdata)) as.dfm(newdata) else as.dfm(object$x)
-    newdata <- force_conformance(newdata, colnames(object$PwGc), force)
+    newdata <- force_conformance(newdata, colnames(object$param), force)
 
     if (object$distribution == "multinomial") {
 
         # log P(d|c) class conditional document likelihoods
-        loglik <- newdata %*% t(log(object$PwGc))
+        loglik <- Matrix::tcrossprod(newdata, log(object$param))
 
     } else if (object$distribution == "Bernoulli") {
 
         newdata <- dfm_weight(newdata, "boolean", force = TRUE)
 
-        present <- log(object$PwGc)
-        nonpresent <- log(1 - object$PwGc)
+        present <- log(object$param)
+        nonpresent <- log(1 - object$param)
         threshold <- .Machine$double.eps
         present[is.infinite(present)] <- max(-100000, log(threshold))
         nonpresent[is.infinite(nonpresent)] <- max(-100000, log(threshold))
 
-        presence_prob <- newdata %*% t(present)
+        presence_prob <- Matrix::tcrossprod(newdata, present)
         nonpresence_prob <- matrix(base::colSums(t(nonpresent)),
                                    nrow = nrow(presence_prob),
-                                   ncol = ncol(presence_prob), byrow = TRUE) - newdata %*% t(nonpresent)
+                                   ncol = ncol(presence_prob), byrow = TRUE) -
+            Matrix::tcrossprod(newdata, nonpresent)
         loglik <- presence_prob + nonpresence_prob
 
     }
 
     # weight by class priors
-    logpos <- t(apply(loglik, 1, "+", log(object$Pc)))
-
-    # predict MAP class
-    classpred <- colnames(logpos)[apply(logpos, 1, which.max)]
+    logpos <- t(t(loglik) + log(object$priors))
 
     if (type == "class") {
 
+        classpred <- colnames(logpos)[max.col(logpos, ties.method = "first")]
         names(classpred) <- docnames(newdata)
-        result <- factor(classpred, levels = names(object$Pc))
+        result <- factor(classpred, levels = names(object$priors))
 
     } else if (type == "probability") {
 
@@ -259,7 +251,7 @@ predict.textmodel_nb <- function(object, newdata = NULL,
         }
 
     } else if (type == "logposterior") {
-        result <- logpos
+        result <- as.matrix(logpos)
     }
 
     result
@@ -271,13 +263,12 @@ print.textmodel_nb <- function(x, ...) {
     cat("\nCall:\n")
     print(x$call)
     cat("\n",
-        "Distribution: ", x$distribution, "; ",
-        "prior: ", x$prior, "; ",
-        "smoothing value: ", x$smooth, "; ",
-        length(na.omit(x$y)), " training documents; ",
-        nfeat(na.omit(x)), " fitted features.",
-        "\n",
-        sep = "")
+        "Distribution:", x$distribution, ";",
+        "priors:", x$prior, ";",
+        "smoothing value:", x$smooth, ";",
+        length(na.omit(x$y)), "training documents; ",
+        nfeat(na.omit(x)), "fitted features.",
+        "\n", sep = " ")
 }
 
 #' summary method for textmodel_nb objects
@@ -290,7 +281,7 @@ print.textmodel_nb <- function(x, ...) {
 summary.textmodel_nb <- function(object, n = 30, ...) {
     result <- list(
         "call" = object$call,
-        "class.priors" = as.coefficients_textmodel(object$Pc),
+        "class.priors" = as.coefficients_textmodel(object$priors),
         "estimated.feature.scores" = as.coefficients_textmodel(head(coef(object), n))
     )
     as.summary.textmodel(result)
@@ -300,7 +291,7 @@ summary.textmodel_nb <- function(object, n = 30, ...) {
 #' @method coef textmodel_nb
 #' @export
 coef.textmodel_nb <- function(object, ...) {
-    t(object$PcGw)
+    t(object$param)
 }
 
 #' @noRd
@@ -313,10 +304,4 @@ coefficients.textmodel_nb <- function(object, ...) {
 ## make cols add up to one
 colNorm <- function(x) {
     x / outer(rep(1, nrow(x)), colSums(x))
-}
-
-#' @export
-#' @method print predict.textmodel_nb
-print.predict.textmodel_nb <- function(x, ...) {
-    print(unclass(x))
 }
