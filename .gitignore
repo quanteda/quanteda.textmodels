@@ -37,3 +37,4 @@ tests/data-creation/poldata.README.2.0
 tests/data-creation/txt_sentoken/
 tests/data-creation/review_polarity.tar.gz
 Meta
+revdep

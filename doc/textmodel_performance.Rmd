@@ -1,0 +1,120 @@
+---
+title: "textmodel Performance Comparisons"
+author: Kenneth Benoit
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{textmodel Performance Comparisons}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "##"
+)
+```
+
+```{r setup}
+library("quanteda.textmodels")
+library("quanteda")
+```
+
+## Naive Bayes
+
+**quanteda.textmodels** implements fast methods for fitting and predicting Naive Bayes textmodels built especially for sparse document-feature matrices from textual data.  It implements two models: multinomial and Bernoulli.  (See Manning, Raghavan, and Schütze 2008, Chapter 13.)
+
+Here, we compare performance for the two models, and then to the performance from two other packages for fitting these models.
+
+For these tests, we will choose the dataset of 50,000 movie reviews from Maas et. al. (2011).  We will use their partition into test and training sets for training and fitting our models.
+
+```{r}
+# large movie review database of 50,000 movie reviews
+load(url("https://www.dropbox.com/s/sjdfmx8ggwfda5o/data_corpus_LMRD.rda?dl=1"))
+
+dfmat <- dfm(data_corpus_LMRD)
+dfmat_train <- dfm_subset(dfmat, set == "train")
+dfmat_test <- dfm_subset(dfmat, set == "test")
+```
+
+Comparing the performance of fitting the model:
+```{r}
+library("microbenchmark")
+microbenchmark(
+    multi = textmodel_nb(dfmat_train, dfmat_train$polarity, distribution = "multinomial"),
+    bern = textmodel_nb(dfmat_train, dfmat_train$polarity, distribution = "Bernoulli"),
+    times = 50
+)
+```
+
+And for prediction:
+```{r}
+microbenchmark(
+    multi = predict(textmodel_nb(dfmat_train, dfmat_train$polarity, distribution = "multinomial"),
+                    newdata = dfmat_test),
+    bern = predict(textmodel_nb(dfmat_train, dfmat_train$polarity, distribution = "Bernoulli"),
+                   newdata = dfmat_test),
+    times = 50
+)
+```
+
+Now let's see how `textmodel_nb()` compares to equivalent functions from other packages.  Multinomial:
+```{r}
+library("fastNaiveBayes")
+library("naivebayes")
+
+microbenchmark(
+    textmodels = {
+      tmod <-  textmodel_nb(dfmat_train, dfmat_train$polarity, smooth = 1, distribution = "multinomial")
+      pred <- predict(tmod, newdata = dfmat_test)
+    },
+    fastNaiveBayes = { 
+      tmod <- fnb.multinomial(as(dfmat_train, "dgCMatrix"), y = dfmat_train$polarity, laplace = 1, sparse = TRUE)
+      pred <- predict(tmod, newdata = as(dfmat_test, "dgCMatrix"))
+    },
+    naivebayes = {
+      tmod = multinomial_naive_bayes(as(dfmat_train, "dgCMatrix"), dfmat_train$polarity, laplace = 1)
+      pred <- predict(tmod, newdata = as(dfmat_test, "dgCMatrix"))
+    },
+    times = 50
+)
+```
+
+And Bernoulli.  Note here that while we are supplying the boolean matrix to `textmodel_nb()`, this re-weighting from the count matrix would have been performed automatically within the function had we not done so in advance - it's done here just for comparison.
+```{r}
+dfmat_train_bern <- dfm_weight(dfmat_train, scheme = "boolean")
+dfmat_test_bern <- dfm_weight(dfmat_test, scheme = "boolean")
+
+microbenchmark(
+    textmodels = {
+      tmod <-  textmodel_nb(dfmat_train_bern, dfmat_train$polarity, smooth = 1, distribution = "Bernoulli")
+      pred <- predict(tmod, newdata = dfmat_test)
+    },
+    fastNaiveBayes = { 
+      tmod <- fnb.bernoulli(as(dfmat_train_bern, "dgCMatrix"), y = dfmat_train$polarity, laplace = 1, sparse = TRUE)
+      pred <- predict(tmod, newdata = as(dfmat_test_bern, "dgCMatrix"))
+    },
+    naivebayes = {
+      tmod = bernoulli_naive_bayes(as(dfmat_train_bern, "dgCMatrix"), dfmat_train$polarity, laplace = 1)
+      pred <- predict(tmod, newdata = as(dfmat_test_bern, "dgCMatrix"))
+    },
+    times = 50
+)
+```
+
+😎
+
+
+## References
+
+Maas, Andrew L., Raymond E. Daly, Peter T. Pham, Dan Huang, Andrew Y. Ng, and Christopher Potts (2011). "Learning Word Vectors for Sentiment Analysis". The 49th Annual Meeting of the Association for Computational Linguistics (ACL 2011).
+
+Majka M (2020). _naivebayes: High Performance Implementation of the Naive Bayes Algorithm in R_. R package version 0.9.7, <URL:
+https://CRAN.R-project.org/package=naivebayes>.  Date: 2020-03-08.
+
+Manning, Christopher D., Prabhakar Raghavan, and Hinrich Schütze (2008). _Introduction to Information Retrieval_. Cambridge University Press.
+
+Skogholt, Martin (2020). _fastNaiveBayes: Extremely Fast Implementation of a Naive Bayes Classifier_. R package version 2.2.0.
+  https://github.com/mskogholt/fastNaiveBayes.  Date: 2020-02-23.
+
+
