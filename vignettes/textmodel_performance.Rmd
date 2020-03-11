@@ -20,7 +20,7 @@ library("quanteda.textmodels")
 library("quanteda")
 ```
 
-# Naive Bayes
+## Naive Bayes
 
 **quanteda.textmodels** implements fast methods for fitting and predicting Naive Bayes textmodels built especially for sparse document-feature matrices from textual data.  It implements two models: multinomial and Bernoulli.  (See Manning, Raghavan, and Schütze 2008, Chapter 13.)
 
@@ -43,7 +43,7 @@ library("microbenchmark")
 microbenchmark(
     multi = textmodel_nb(dfmat_train, dfmat_train$polarity, distribution = "multinomial"),
     bern = textmodel_nb(dfmat_train, dfmat_train$polarity, distribution = "Bernoulli"),
-    times = 10
+    times = 50
 )
 ```
 
@@ -54,11 +54,11 @@ microbenchmark(
                     newdata = dfmat_test),
     bern = predict(textmodel_nb(dfmat_train, dfmat_train$polarity, distribution = "Bernoulli"),
                    newdata = dfmat_test),
-    times = 10
+    times = 50
 )
 ```
 
-Now let's see how `textmodel_nb()` compares to equivalent functions from other packages.
+Now let's see how `textmodel_nb()` compares to equivalent functions from other packages.  Multinomial:
 ```{r}
 library("fastNaiveBayes")
 library("naivebayes")
@@ -76,10 +76,33 @@ microbenchmark(
       tmod = multinomial_naive_bayes(as(dfmat_train, "dgCMatrix"), dfmat_train$polarity, laplace = 1)
       pred <- predict(tmod, newdata = as(dfmat_test, "dgCMatrix"))
     },
-    times = 10
+    times = 50
 )
 ```
-Pretty good, but room to improve still.
+
+And Bernoulli.  Note here that while we are supplying the boolean matrix to `textmodel_nb()`, this re-weighting from the count matrix would have been performed automatically within the function had we not done so in advance - it's done here just for comparison.
+```{r}
+dfmat_train_bern <- dfm_weight(dfmat_train, scheme = "boolean")
+dfmat_test_bern <- dfm_weight(dfmat_test, scheme = "boolean")
+
+microbenchmark(
+    textmodels = {
+      tmod <-  textmodel_nb(dfmat_train_bern, dfmat_train$polarity, smooth = 1, distribution = "Bernoulli")
+      pred <- predict(tmod, newdata = dfmat_test)
+    },
+    fastNaiveBayes = { 
+      tmod <- fnb.bernoulli(as(dfmat_train_bern, "dgCMatrix"), y = dfmat_train$polarity, laplace = 1, sparse = TRUE)
+      pred <- predict(tmod, newdata = as(dfmat_test_bern, "dgCMatrix"))
+    },
+    naivebayes = {
+      tmod = bernoulli_naive_bayes(as(dfmat_train_bern, "dgCMatrix"), dfmat_train$polarity, laplace = 1)
+      pred <- predict(tmod, newdata = as(dfmat_test_bern, "dgCMatrix"))
+    },
+    times = 50
+)
+```
+
+😎
 
 
 ## References
