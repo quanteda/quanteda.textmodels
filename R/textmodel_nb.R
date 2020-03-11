@@ -68,7 +68,7 @@
 #'
 #' @seealso [predict.textmodel_nb()]
 #' @author Kenneth Benoit
-#' @importFrom quanteda dfm_weight dfm_group dfm_smooth as.dfm
+#' @importFrom quanteda dfm_weight as.dfm
 #' @examples
 #' ## Example from 13.1 of _An Introduction to Information Retrieval_
 #' txt <- c(d1 = "Chinese Beijing Chinese",
@@ -139,12 +139,14 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
         x <- dfm_weight(x, "boolean", force = TRUE)
     }
 
-    x <- dfm_group(x, groups = y, force = TRUE)
+    # x <- dfm_group(x, groups = y, force = TRUE)
+    x <- group_classes(x, y,
+                       smooth = if (distribution == "multinomial") smooth else 0)
 
     freq <- rowSums(as.matrix(table(y)))
     if (prior == "uniform") {
-        Pc <- rep(1 / ndoc(x), ndoc(x))
-        names(Pc) <- docnames(x)
+        Pc <- rep(1 / nrow(x), nrow(x))
+        names(Pc) <- rownames(x)
     } else if (prior == "docfreq") {
         Pc <- freq
         Pc <- Pc / sum(Pc)
@@ -154,7 +156,9 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
     }
 
     if (distribution == "multinomial") {
-        PwGc <- dfm_weight(dfm_smooth(x, smooth), scheme = "prop", force = TRUE)
+        # PwGc <- dfm_weight(dfm_smooth(x, smooth), scheme = "prop", force = TRUE)
+        # PwGc <- (x + smooth) / (rowSums(x) + ncol(x) * smooth)
+        PwGc <- x / rowSums(x)
     } else if (distribution == "Bernoulli") {
         PwGc <- (x + smooth) / (freq + 2 * smooth)
         PwGc <- as(PwGc, "dgeMatrix")
@@ -162,7 +166,7 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
 
     Pc <- Pc[rownames(PwGc)]      # make sure Pc order matches the rows of PwGc
     PwGc <- as.matrix(PwGc)       # convert to ordinary matrix
-    names(dimnames(PwGc)) <- NULL # remove dimname labels
+    # names(dimnames(PwGc)) <- NULL # remove dimname labels
 
     ## other quantities no longer computed
     # PcGw <- colNorm(PwGc * base::outer(Pc, rep(1, ncol(PwGc))))
@@ -238,7 +242,7 @@ predict.textmodel_nb <- function(object, newdata = NULL,
     if (type == "class") {
 
         classpred <- colnames(logpos)[max.col(logpos, ties.method = "first")]
-        names(classpred) <- docnames(newdata)
+        names(classpred) <- rownames(newdata)
         result <- factor(classpred, levels = names(object$priors))
 
     } else if (type == "probability") {
@@ -267,7 +271,7 @@ print.textmodel_nb <- function(x, ...) {
         "priors:", x$prior, ";",
         "smoothing value:", x$smooth, ";",
         length(na.omit(x$y)), "training documents; ",
-        nfeat(na.omit(x)), "fitted features.",
+        ncol(na.omit(x)), "fitted features.",
         "\n", sep = " ")
 }
 
@@ -299,9 +303,4 @@ coef.textmodel_nb <- function(object, ...) {
 #' @export
 coefficients.textmodel_nb <- function(object, ...) {
     UseMethod("coef")
-}
-
-## make cols add up to one
-colNorm <- function(x) {
-    x / outer(rep(1, nrow(x)), colSums(x))
 }
