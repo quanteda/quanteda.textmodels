@@ -58,7 +58,6 @@ Collate:
     'RcppExports.R'
     'quanteda.textmodels-package.R'
     'data-documentation.R'
-    'data.R'
     'textmodel-methods.R'
     'textmodel_affinity.R'
     'textmodel_ca.R'

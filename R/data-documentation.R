@@ -79,3 +79,74 @@
 #' }
 "data_corpus_dailnoconf1991"
 
+#' Crowd-labelled sentence corpus from a 2010 EP debate on coal subsidies
+#'
+#' @description A multilingual text corpus of speeches from a European
+#'   Parliament debate on coal subsidies in 2010, with individual crowd codings
+#'   as the unit of observation.  The sentences are drawn from officially
+#'   translated speeches from a debate over a European Parliament debate
+#'   concerning a Commission report proposing an extension to a regulation
+#'   permitting state aid to uncompetitive coal mines.
+#'
+#' @description Each speech is available in six languages: English, German,
+#'   Greek, Italian, Polish and Spanish. The unit of observation is the
+#'   individual crowd coding of each natural sentence. For more information on
+#'   the coding approach see
+#'   \href{https://doi.org/10.1017/S0003055416000058}{Benoit et al. (2016)}.
+#' @format
+#'   The corpus consists of 16,806 documents (i.e. codings of a sentence) and includes the following
+#'   document-level variables: \describe{
+#'   \item{sentence_id}{character; a unique identifier for each sentence}
+#'   \item{crowd_subsidy_label}{factor; whether a coder labelled the sentence
+#'   as "Pro-Subsidy", "Anti-Subsidy" or "Neutral or inapplicable"}
+#'   \item{language}{factor; the language (translation) of the speech}
+#'   \item{name_last}{character; speaker's last name}
+#'   \item{name_first}{character; speaker's first name}
+#'   \item{ep_group}{factor; abbreviation of the EP party group of the speaker}
+#'   \item{country}{factor; the speaker's country of origin}
+#'   \item{vote}{factor; the speaker's vote on the proposal (For/Against/Abstain/NA)}
+#'   \item{coder_id}{character; a unique identifier for each crowd coder}
+#'   \item{coder_trust}{numeric; the "trust score" from the Crowdflower platform used to code the
+#'    sentences, which can theoretically range between 0 and 1. Only coders with trust scores above
+#'    0.8 are included in the corpus.}
+#'   }
+#' @references Benoit, K., Conway, D., Lauderdale, B.E., Laver, M., & Mikhaylov,
+#'   S. (2016). \href{https://doi.org/10.1017/S0003055416000058}{Crowd-sourced
+#'   Text Analysis: Reproducible and Agile Production of Political Data}.
+#'   \emph{American Political Science Review}, 100,(2), 278--295.
+#' @format
+#'  A \link[quanteda]{corpus} object.
+#' @keywords data
+"data_corpus_EPcoaldebate"
+
+#' Movie reviews with polarity from Pang and Lee (2004)
+#'
+#' A corpus object containing 2,000 movie reviews classified by positive or negative sentiment.
+#'
+#' For more information, see `cat(meta(data_corpus_moviereviews, "readme"))`.
+#'
+#' @format
+#'   The corpus includes the following document variables: \describe{
+#'   \item{sentiment}{factor indicating whether a review was manually classified as
+#'   positive \code{pos} or negative \code{neg}.}
+#'   \item{id1}{Character counting the position in the corpus.}
+#'   \item{id2}{Random number for each review.}
+#'   }
+#'
+#' @references
+#' Pang, B., Lee, L.  (2004)
+#' "\href{https://www.cs.cornell.edu/home/llee/papers/cutsent.pdf}{A Sentimental
+#' Education: Sentiment Analysis Using Subjectivity Summarization Based on
+#' Minimum Cuts.}", Proceedings of the ACL.
+#'
+#' @source \url{https://www.cs.cornell.edu/people/pabo/movie-review-data/}
+#' @keywords data
+#' @examples
+#' # check polarities
+#' table(data_corpus_moviereviews$sentiment)
+#'
+#' # make the data into sentences, because each line is a sentence
+#' data_corpus_moviereviewsents <-
+#'     quanteda::corpus_segment(data_corpus_moviereviews, "\n", extract_pattern = FALSE)
+#' print(data_corpus_moviereviewsents, max_ndoc = 3)
+"data_corpus_moviereviews"

@@ -1,29 +1,17 @@
-## RESUBMISSION
+## Purpose
 
-After adding citation information about the methods in the Description: field, 
-including Author (year) <doi:> as per the request of Uwe Ligges.
-
-For a SECOND RESUBMISSION I single-quoted the namesd that the pre-check complained were "Possibly mis-spelled words in DESCRIPTION:".
-
-## Summary
-
-A new package containing the scaling and classification "textmodels" split from the **quanteda** package.  This will make maintenance easier and bring the size of **quanteda** to within the CRAN 5MB limit.
-
-When this package has been accepted and published, we will update **quanteda** to a v2 major release soon after.
+Minor compatibility improvements with respect to the splitting from this package originally from **quanteda**, and adds new data objects.
 
 ## Test environments
 
 * local R installation, R 3.6.2
 * ubuntu 16.04 (on travis-ci), R 3.6.2
-* win-builder (devel)
+* win-builder (devel, release)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-* This is a new release.
+No ERRORs, WARNINGS or NOTEs.
 
 ## Reverse dependency and other package conflicts
 
-None - this is a new package.  The existing functions mask all of the `quanteda::textmodel_*()` functions, but this will cease to be the case once we update **quanteda** after this package has been published.
-
+None, according to revdepcheck::revdep_check().

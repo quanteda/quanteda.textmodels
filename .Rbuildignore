@@ -2,11 +2,13 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^\.github/workflows/R-CMD-check\.yaml$
-^\.github/
+^\.github
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^revdep
+^codecov\.yml$
 ^revdep/
 ^doc$
 ^Meta$
