@@ -36,11 +36,15 @@ Imports:
 Suggests:
     ca,
     covr,
+    fastNaiveBayes,
     knitr,
     lsa,
+    microbenchmark,
+    naivebayes,
     spelling,
     RColorBrewer,
-    testthat
+    testthat,
+    rmarkdown
 LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
 URL: https://github.com/quanteda/quanteda.textmodels
 License: GPL-3
@@ -66,3 +70,4 @@ Collate:
     'textplot_influence.R'
     'textplot_scale1d.R'
     'utils.R'
+VignetteBuilder: knitr
