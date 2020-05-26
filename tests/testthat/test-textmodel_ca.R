@@ -105,5 +105,5 @@ test_that("ca textplot_scale1d method works", {
 test_that("raises error when dfm is empty (#1419)",  {
     mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_ca(mx),
-                 quanteda:::message_error("dfm_empty"))
+                 quanteda.textmodels:::message_error("dfm_empty"))
 })

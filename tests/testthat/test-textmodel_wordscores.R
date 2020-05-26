@@ -232,7 +232,7 @@ test_that("textmodel_wordscores does not use NA wordscores scores", {
 test_that("raises error when dfm is empty (#1419)",  {
     mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_wordscores(mx, y = c(-1, NA, NA, NA, 1, NA)),
-                 quanteda:::message_error("dfm_empty"))
+                 quanteda.textmodels:::message_error("dfm_empty"))
 })
 
 test_that("works with different predicted object in different shapes (#1440)",  {

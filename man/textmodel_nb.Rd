@@ -20,14 +20,15 @@ contain only the training documents.}
 in \code{train}.  (These will be converted to factors if not already
 factors.)}
 
-\item{smooth}{smoothing parameter for feature counts by class}
+\item{smooth}{smoothing parameter for feature counts, added to the
+feature frequency totals by training class}
 
 \item{prior}{prior distribution on texts; one of \code{"uniform"},
 \code{"docfreq"}, or \code{"termfreq"}.  See Prior Distributions below.}
 
-\item{distribution}{count model for text features, can be \code{multinomial}
-or \code{Bernoulli}.  To fit a "binary multinomial" model, first convert
-the dfm to a binary matrix using \verb{[quanteda::dfm_weight](x, scheme = "boolean")}.}
+\item{distribution}{count model for text features, can be \code{multinomial} or
+\code{Bernoulli}.  To fit a "binary multinomial" model, first convert the dfm to
+a binary matrix using \verb{[quanteda::dfm_weight](x, scheme = "boolean")}.}
 }
 \value{
 \code{textmodel_nb()} returns a list consisting of the following (where
@@ -36,26 +37,19 @@ features, and \eqn{k} is the total number of training classes):
 
 \item{call}{original function call}
 
-\item{PwGc}{\eqn{k \times J}; probability of the word given the class
-(empirical likelihood)}
+\item{param}{\eqn{k \times V}; class conditional posterior estimates}
 
-\item{Pc}{\eqn{k}-length named numeric vector of class prior
-probabilities}
+\item{x}{the \eqn{N \times V} training dfm \code{x}}
 
-\item{PcGw}{\eqn{k \times J}; posterior class probability given the
-word}
+\item{y}{the \eqn{N}-length \code{y} training class vector, where NAs will
+not be used will be retained in the saved \code{x} matrix}
 
-\item{Pw}{\eqn{J \times 1}; baseline probability of the word}
+\item{distribution}{character; the distribution of \code{x} for the NB
+model}
 
-\item{x}{the \eqn{I \times J} training dfm \code{x}}
+\item{priors}{numeric; the class prior probabilities}
 
-\item{y}{the \eqn{I}-length \code{y} training class vector}
-
-\item{distribution}{the distribution argument}
-
-\item{prior}{the prior argument}
-
-\item{smooth}{the value of the smoothing parameter}
+\item{smooth}{numeric; the value of the smoothing parameter}
 }
 \description{
 Fit a multinomial or Bernoulli Naive Bayes model, given a dfm and some
@@ -64,27 +58,36 @@ training labels.
 \section{Prior distributions}{
 
 
-Prior distributions refer to the prior probabilities assigned to the training
-classes, and the choice of prior distribution affects the calculation of the
-fitted probabilities.  The default is uniform priors, which sets the
-unconditional probability of observing the one class to be the same as
-observing any other class.
+Prior distributions refer to the prior probabilities assigned to the
+training classes, and the choice of prior distribution affects the
+calculation of the fitted probabilities.  The default is uniform priors,
+which sets the unconditional probability of observing the one class to be
+the same as observing any other class.
 
 "Document frequency" means that the class priors will be taken from the
 relative proportions of the class documents used in the training set.  This
-approach is so common that it is assumed in many examples, such as the worked
-example from Manning, Raghavan, and Schütze (2008) below.  It is not the
-default in \pkg{quanteda}, however, since there may be nothing informative in
-the relative numbers of documents used to train a classifier other than the
-relative availability of the documents.  When training classes are balanced
-in their number of documents (usually advisable), however, then the
-empirically computed "docfreq" would be equivalent to "uniform" priors.
+approach is so common that it is assumed in many examples, such as the
+worked example from Manning, Raghavan, and Schütze (2008) below.  It is not
+the default in \pkg{quanteda}, however, since there may be nothing
+informative in the relative numbers of documents used to train a classifier
+other than the relative availability of the documents.  When training
+classes are balanced in their number of documents (usually advisable),
+however, then the empirically computed "docfreq" would be equivalent to
+"uniform" priors.
 
-Setting \code{prior} to "termfreq" makes the priors equal to the proportions
-of total feature counts found in the grouped documents in each training
-class, so that the classes with the largest number of features are assigned
-the largest priors. If the total count of features in each training class was
+Setting \code{prior} to "termfreq" makes the priors equal to the proportions of
+total feature counts found in the grouped documents in each training class,
+so that the classes with the largest number of features are assigned the
+largest priors. If the total count of features in each training class was
 the same, then "uniform" and "termfreq" would be the same.
+}
+
+\section{Smoothing parameter}{
+
+
+The \code{smooth} value is added to the feature frequencies, aggregated by
+training class, to avoid zero frequencies in any class.  This has the
+effect of giving more weight to infrequent term occurrences.
 }
 
 \examples{
@@ -94,33 +97,35 @@ txt <- c(d1 = "Chinese Beijing Chinese",
          d3 = "Chinese Macao",
          d4 = "Tokyo Japan Chinese",
          d5 = "Chinese Chinese Chinese Tokyo Japan")
-trainingset <- quanteda::dfm(txt, tolower = FALSE)
-trainingclass <- factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)
+x <- quanteda::dfm(txt, tolower = FALSE)
+y <- factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)
 
 ## replicate IIR p261 prediction for test set (document 5)
-(tmod1 <- textmodel_nb(trainingset, y = trainingclass, prior = "docfreq"))
+(tmod1 <- textmodel_nb(x, y, prior = "docfreq"))
 summary(tmod1)
 coef(tmod1)
+predict(tmod1, type = "prob")
 predict(tmod1)
 
 # contrast with other priors
-predict(textmodel_nb(trainingset, y = trainingclass, prior = "uniform"))
-predict(textmodel_nb(trainingset, y = trainingclass, prior = "termfreq"))
+predict(textmodel_nb(x, y, prior = "uniform"))
+predict(textmodel_nb(x, y, prior = "termfreq"))
 
 ## replicate IIR p264 Bernoulli Naive Bayes
-tmod2 <- textmodel_nb(trainingset, y = trainingclass, distribution = "Bernoulli",
-                        prior = "docfreq")
-predict(tmod2, newdata = trainingset[5, ])
+tmod2 <- textmodel_nb(x, y, distribution = "Bernoulli", prior = "docfreq")
+predict(tmod2, newdata = x[5, ], type = "prob")
+predict(tmod2, newdata = x[5, ])
 }
 \references{
-Manning, C.D., Raghavan, P., & Schütze, H. (2008).
-\emph{An Introduction to Information Retrieval}. Cambridge: Cambridge University Press
-(Chapter 13). Available at \url{https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf}.
+Manning, C.D., Raghavan, P., & Schütze, H. (2008). \emph{An
+Introduction to Information Retrieval}. Cambridge: Cambridge University
+Press (Chapter 13). Available at
+\url{https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf}.
 
-Jurafsky, D. & Martin, J.H. (2018).
-From \emph{Speech and Language Processing: An Introduction to Natural Language
-Processing, Computational Linguistics, and Speech Recognition}. Draft of September 23, 2018
-(Chapter 6, Naive Bayes). Available at \url{https://web.stanford.edu/~jurafsky/slp3/}.
+Jurafsky, D. & Martin, J.H. (2018). From \emph{Speech and Language Processing:
+An Introduction to Natural Language Processing, Computational Linguistics,
+and Speech Recognition}. Draft of September 23, 2018 (Chapter 6, Naive
+Bayes). Available at \url{https://web.stanford.edu/~jurafsky/slp3/}.
 }
 \seealso{
 \code{\link[=predict.textmodel_nb]{predict.textmodel_nb()}}

@@ -110,5 +110,5 @@ test_that("test wordfish predict methods", {
 test_that("raises error when dfm is empty (#1419)",  {
     mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_wordfish(mx),
-                 quanteda:::message_error("dfm_empty"))
+                 quanteda.textmodels:::message_error("dfm_empty"))
 })

@@ -84,6 +84,6 @@ test_that("textmodel-lsa works with margin argument", {
 test_that("raises error when dfm is empty (#1419)",  {
     mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_lsa(mx),
-                 quanteda:::message_error("dfm_empty"))
+                 quanteda.textmodels:::message_error("dfm_empty"))
 
 })
