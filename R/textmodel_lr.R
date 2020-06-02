@@ -12,11 +12,11 @@
 #' @seealso \code{\link[glmnet]{cv.glmnet}}
 #' @examples
 #' \dontrun{
-#' library(quanteda.textmodels)
+#' library("quanteda")
 #' # use party leaders for govt and opposition classes
-#' quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
+#' docvars(data_corpus_irishbudget2010, "govtopp") <-
 #'     c(rep(NA, 4), "Govt", "Opp", NA, "Opp", NA, NA, NA, NA, NA, NA)
-#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+#' dfmat <- dfm(data_corpus_irishbudget2010)
 #' tmod <- textmodel_lr(dfmat, y = docvars(dfmat, "govtopp"))
 #' predict(tmod)
 #' predict(tmod, type = "probability")
@@ -40,7 +40,6 @@ textmodel_lr.default <- function(x, y, nfolds = 10, ...) {
 
 #' @export
 #' @importFrom glmnet cv.glmnet
-#' @importFrom SparseM as.matrix.csr
 textmodel_lr.dfm <- function(x, y, nfolds = 10, ...) {
 
     x <- as.dfm(x)
@@ -88,7 +87,6 @@ textmodel_lr.dfm <- function(x, y, nfolds = 10, ...) {
     )
     class(result) <- c("textmodel_lr", "textmodel", "list")
     result
-
 }
 
 # helper methods ----------------
@@ -108,14 +106,11 @@ textmodel_lr.dfm <- function(x, y, nfolds = 10, ...) {
 #'   "probability"}).
 #' @seealso \code{\link{textmodel_lr}}
 #' @keywords textmodel internal
-#' @import glmnet
 #' @importFrom stats predict
-#' @importFrom SparseM as.matrix.csr
 #' @export
 predict.textmodel_lr <- function(object, newdata = NULL,
                                  type = c("class", "probability"),
                                  force = TRUE, ...) {
-
     type <- match.arg(type)
     if (type == "probability") {
         type <- "response"
@@ -172,7 +167,6 @@ print.textmodel_lr <- function(x, ...) {
 
 #' @noRd
 #' @method coef textmodel_lr
-#' @import glmnet
 #' @importFrom stats coef
 #' @export
 coef.textmodel_lr <- function(object, ...) {
@@ -212,4 +206,3 @@ summary.textmodel_lr <- function(object, n = 30, ...) {
     )
     as.summary.textmodel(result)
 }
-
