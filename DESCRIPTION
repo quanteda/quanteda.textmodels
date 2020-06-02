@@ -25,6 +25,7 @@ Depends:
     methods
 Imports:
     ggplot2,
+    glmnet,
     LiblineaR,
     Matrix (>= 1.2),
     quanteda (>= 2.0),
@@ -52,7 +53,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Language: en-GB
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 SystemRequirements: C++11
 Roxygen: list(markdown = TRUE)
 Collate: 
@@ -63,6 +64,7 @@ Collate:
     'textmodel_affinity.R'
     'textmodel_ca.R'
     'textmodel_lsa.R'
+    'textmodel_lr.R'
     'textmodel_nb.R'
     'textmodel_svm.R'
     'textmodel_svmlin.R'
