@@ -42,6 +42,7 @@ test_that("the lr model works with binomal classification", {
         tol = .1
     )
 })
+
 test_that("the lr model works with multinomial classification", {
     corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
                                d2 = "Chinese Chinese Shanghai",
