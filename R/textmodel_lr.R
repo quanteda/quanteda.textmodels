@@ -7,7 +7,8 @@
 #' @param y vector of training labels associated with each document identified
 #'   in \code{train}.  (These will be converted to factors if not already
 #'   factors.)
-#' @param nfolds .
+#' @param nfolds number of folds used to search an optimal lambda value -
+#'   default is 10. See \link[glmnet]{cv.glmnet} for details.
 #' @param ... additional arguments passed to \code{\link[glmnet]{cv.glmnet}}
 #' @seealso \code{\link[glmnet]{cv.glmnet}}
 #' @examples
@@ -20,13 +21,13 @@
 #'                            d6 = "Chinese Chinese Chinese Tokyo Japan"),
 #'                          docvars = data.frame(train = factor(c("Y", "Y", "Y",
 #'                                                                "N", "N", NA))))
-#' 
+#'
 #' dfmat <- quanteda::dfm(corp, tolower = FALSE)
-#' 
+#'
 #' ## simulate bigger sample as classification on small samples is problematic
 #' set.seed(1)
 #' dfmat <- quanteda::dfm_sample(dfmat, 50, replace = TRUE)
-#' 
+#'
 #' ## train model
 #' (tmod1 <- textmodel_lr(dfmat, quanteda::docvars(dfmat, "train")))
 #' summary(tmod1)

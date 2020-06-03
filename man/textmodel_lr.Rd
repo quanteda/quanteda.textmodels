@@ -14,7 +14,8 @@ contain only the training documents.}
 in \code{train}.  (These will be converted to factors if not already
 factors.)}
 
-\item{nfolds}{.}
+\item{nfolds}{number of folds used to search an optimal lambda value -
+default is 10. See \link[glmnet]{cv.glmnet} for details.}
 
 \item{...}{additional arguments passed to \code{\link[glmnet]{cv.glmnet}}}
 }
