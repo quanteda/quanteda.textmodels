@@ -14,7 +14,8 @@ contain only the training documents.}
 in \code{train}.  (These will be converted to factors if not already
 factors.)}
 
-\item{nfolds}{.}
+\item{nfolds}{number of folds used to search an optimal lambda value -
+default is 10. See \link[glmnet]{cv.glmnet} for details.}
 
 \item{...}{additional arguments passed to \code{\link[glmnet]{cv.glmnet}}}
 }
@@ -23,23 +24,30 @@ Fit a fast logistic regression classifier for texts, using the \pkg{glmnet}
 package.
 }
 \examples{
-\dontrun{
-library(quanteda.textmodels)
-# use party leaders for govt and opposition classes
-quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
-    c(rep(NA, 4), "Govt", "Opp", NA, "Opp", NA, NA, NA, NA, NA, NA)
-dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
-tmod <- textmodel_lr(dfmat, y = docvars(dfmat, "govtopp"))
-predict(tmod)
-predict(tmod, type = "probability")
+## Example from 13.1 of _An Introduction to Information Retrieval_
+corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
+                           d2 = "Chinese Chinese Shanghai",
+                           d3 = "Chinese Macao",
+                           d4 = "Tokyo Japan Chinese",
+                           d5 = "London England Chinese",
+                           d6 = "Chinese Chinese Chinese Tokyo Japan"),
+                         docvars = data.frame(train = factor(c("Y", "Y", "Y",
+                                                               "N", "N", NA))))
 
-# multiclass problem - all party leaders
-tmod2 <- textmodel_lr(dfmat,
-                      y = c(rep(NA, 3), "SF", "FF", "FG", NA, "LAB",
-                           NA, NA, "Green", rep(NA, 3)))
-predict(tmod2)
-predict(tmod2, type = "probability")
-}
+dfmat <- quanteda::dfm(corp, tolower = FALSE)
+
+## simulate bigger sample as classification on small samples is problematic
+set.seed(1)
+dfmat <- quanteda::dfm_sample(dfmat, 50, replace = TRUE)
+
+## train model
+(tmod1 <- textmodel_lr(dfmat, quanteda::docvars(dfmat, "train")))
+summary(tmod1)
+coef(tmod1)
+
+## predict probability and classes
+predict(tmod1, type = "prob")
+predict(tmod1)
 }
 \seealso{
 \code{\link[glmnet]{cv.glmnet}}
