@@ -12,3 +12,4 @@
 ^revdep/
 ^doc$
 ^Meta$
+tests/data-creation

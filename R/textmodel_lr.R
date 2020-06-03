@@ -21,7 +21,6 @@
 #'                            d6 = "Chinese Chinese Chinese Tokyo Japan"),
 #'                          docvars = data.frame(train = factor(c("Y", "Y", "Y",
 #'                                                                "N", "N", NA))))
-#'
 #' dfmat <- quanteda::dfm(corp, tolower = FALSE)
 #'
 #' ## simulate bigger sample as classification on small samples is problematic
@@ -48,7 +47,6 @@ textmodel_lr.default <- function(x, y, nfolds = 10, ...) {
 
 #' @export
 #' @importFrom glmnet cv.glmnet
-#' @importFrom SparseM as.matrix.csr
 textmodel_lr.dfm <- function(x, y, nfolds = 10, ...) {
 
     x <- as.dfm(x)
@@ -96,7 +94,6 @@ textmodel_lr.dfm <- function(x, y, nfolds = 10, ...) {
     )
     class(result) <- c("textmodel_lr", "textmodel", "list")
     result
-
 }
 
 # helper methods ----------------
@@ -116,14 +113,11 @@ textmodel_lr.dfm <- function(x, y, nfolds = 10, ...) {
 #'   "probability"}).
 #' @seealso \code{\link{textmodel_lr}}
 #' @keywords textmodel internal
-#' @import glmnet
 #' @importFrom stats predict
-#' @importFrom SparseM as.matrix.csr
 #' @export
 predict.textmodel_lr <- function(object, newdata = NULL,
                                  type = c("class", "probability"),
                                  force = TRUE, ...) {
-
     type <- match.arg(type)
     if (type == "probability") {
         type <- "response"
@@ -180,7 +174,6 @@ print.textmodel_lr <- function(x, ...) {
 
 #' @noRd
 #' @method coef textmodel_lr
-#' @import glmnet
 #' @importFrom stats coef
 #' @export
 coef.textmodel_lr <- function(object, ...) {
@@ -220,4 +213,3 @@ summary.textmodel_lr <- function(object, n = 30, ...) {
     )
     as.summary.textmodel(result)
 }
-
