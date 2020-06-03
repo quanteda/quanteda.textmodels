@@ -5,7 +5,7 @@ test_that("the lr model works with binomal classification", {
                                d2 = "Chinese Chinese Shanghai",
                                d3 = "Chinese Macao",
                                d4 = "Tokyo Japan Chinese",
-                               d5 = "Pizza Burger Chinese",
+                               d5 = "London England Chinese",
                                d6 = "Chinese Chinese Chinese Tokyo Japan"),
                              docvars = data.frame(train = factor(c("Y", "Y", "Y",
                                                                    "N", "N", NA))))
@@ -21,12 +21,12 @@ test_that("the lr model works with binomal classification", {
     )
     expect_equal(
         as.matrix(coef(tmod)),
-        matrix(c(6.60662, 0.577683, 0, 0, 0, -12.042569, -2.236915,
+        matrix(c(6.60662, 0.577683, 0, 0, 0, -12.042569, -2.236915, 
                  -14.280884, 0), ncol = 1,
-               dimnames = list(c("(Intercept)",
-                                 "Chinese", "Beijing", "Shanghai",
-                                 "Macao", "Tokyo", "Japan",
-                                 "Pizza", "Burger"), "Y")),
+               dimnames = list(c("(Intercept)", "Chinese", 
+                                 "Beijing", "Shanghai", "Macao", 
+                                 "Tokyo", "Japan", "London", "England"
+               ), "Y")),
         tol = .0000001
     )
 
