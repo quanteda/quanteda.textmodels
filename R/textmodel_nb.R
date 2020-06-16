@@ -208,7 +208,12 @@ predict.textmodel_nb <- function(object, newdata = NULL,
                                  force = FALSE, ...) {
     unused_dots(...)
     type <- match.arg(type)
-
+    if ("Pc" %in% names(object) {
+      names(object)[which(names(object) == "Pc")] <- "priors"
+    }
+    if ("PwGc" %in% names(object) {
+      names(object)[which(names(object) == "PwGc")] <- "param"
+    }
     newdata <- if (!is.null(newdata)) as.dfm(newdata) else as.dfm(object$x)
     newdata <- force_conformance(newdata, colnames(object$param), force)
 
