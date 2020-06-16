@@ -2,6 +2,8 @@
 % Please edit documentation in R/textmodel_nb.R
 \name{predict.textmodel_nb}
 \alias{predict.textmodel_nb}
+\alias{coef.textmodel_nb}
+\alias{coefficients.textmodel_nb}
 \title{Prediction from a fitted textmodel_nb object}
 \usage{
 \method{predict}{textmodel_nb}(
@@ -11,6 +13,10 @@
   force = FALSE,
   ...
 )
+
+\method{coef}{textmodel_nb}(object, ...)
+
+\method{coefficients}{textmodel_nb}(object, ...)
 }
 \arguments{
 \item{object}{a fitted Naive Bayes textmodel}
@@ -27,6 +33,10 @@
 \code{predict.textmodel_nb} returns either a vector of class
 predictions for each row of \code{newdata} (when \code{type = "class"}), or
 a document-by-class matrix of class probabilities (when \code{type = "probability"}) or log posterior likelihoods (when \code{type = "logposterior"}).
+
+\code{coef.textmodel_nb()} returns a matrix of estimated
+word likelihoods given the class.  (In earlier versions,
+this was named \code{PwGc}.)
 }
 \description{
 \code{predict.textmodel_nb()} implements class predictions from a fitted
