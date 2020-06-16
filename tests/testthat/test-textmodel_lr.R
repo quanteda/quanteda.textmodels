@@ -21,10 +21,10 @@ test_that("the lr model works with binomal classification", {
     )
     expect_equal(
         as.matrix(coef(tmod)),
-        matrix(c(6.60662, 0.577683, 0, 0, 0, -12.042569, -2.236915, 
+        matrix(c(6.60662, 0.577683, 0, 0, 0, -12.042569, -2.236915,
                  -14.280884, 0), ncol = 1,
-               dimnames = list(c("(Intercept)", "Chinese", 
-                                 "Beijing", "Shanghai", "Macao", 
+               dimnames = list(c("(Intercept)", "Chinese",
+                                 "Beijing", "Shanghai", "Macao",
                                  "Tokyo", "Japan", "London", "England"
                ), "Y")),
         tol = .0000001
@@ -54,7 +54,7 @@ test_that("the lr model works with multinomial classification", {
                                                                    "J", "J", "G"))))
     dfmat <- quanteda::dfm(corp, tolower = FALSE)
     dfmat_test <- dfmat
-    #
+
     set.seed(1)
     dfmat <- quanteda::dfm_sample(dfmat, 100, replace = TRUE)
     tmod <- textmodel_lr(dfmat, y = quanteda::docvars(dfmat, "train"), nfolds = 3)

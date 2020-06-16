@@ -1,16 +1,24 @@
 #' Logistic regression classifier for texts
 #'
-#' Fit a fast logistic regression classifier for texts, using the \pkg{glmnet}
-#' package.
+#' Fits a fast penalized maximum likelihood estimator to predict discrete
+#' categories from sparse [dfm][quanteda::dfm] objects. Using the \pkg{glmnet}
+#' package, the function computes the regularization path for the lasso or
+#' elasticnet penalty at a grid of values for the regularization parameter
+#' lambda.  This is done automatically by testing on several folds of the data
+#' at estimation time.
 #' @param x the \link{dfm} on which the model will be fit.  Does not need to
 #'   contain only the training documents.
 #' @param y vector of training labels associated with each document identified
 #'   in \code{train}.  (These will be converted to factors if not already
 #'   factors.)
-#' @param nfolds number of folds used to search an optimal lambda value -
-#'   default is 10. See \link[glmnet]{cv.glmnet} for details.
-#' @param ... additional arguments passed to \code{\link[glmnet]{cv.glmnet}}
-#' @seealso \code{\link[glmnet]{cv.glmnet}}
+#' @param ... additional arguments passed to [`cv.glmnet()`][glmnet::cv.glmnet()]
+#' @seealso [`cv.glmnet()`][glmnet::cv.glmnet()], [predict.textmodel_lr()],
+#'   [coef.textmodel_lr()]
+#' @references
+#' Friedman, J., Hastie, T., & Tibshirani, R. (2010). [Regularization Paths for
+#' Generalized Linear Models via Coordinate
+#' Descent](http://dx.doi.org/10.18637/jss.v033.i01). _Journal of Statistical
+#' Software_ 33(1), 1-22.
 #' @examples
 #' ## Example from 13.1 of _An Introduction to Information Retrieval_
 #' corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
@@ -36,18 +44,18 @@
 #' predict(tmod1, type = "prob")
 #' predict(tmod1)
 #' @export
-textmodel_lr <- function(x, y, nfolds = 10, ...) {
+textmodel_lr <- function(x, y, ...) {
     UseMethod("textmodel_lr")
 }
 
 #' @export
-textmodel_lr.default <- function(x, y, nfolds = 10, ...) {
+textmodel_lr.default <- function(x, y, ...) {
     stop(quanteda:::friendly_class_undefined_message(class(x), "textmodel_lr"))
 }
 
 #' @export
 #' @importFrom glmnet cv.glmnet
-textmodel_lr.dfm <- function(x, y, nfolds = 10, ...) {
+textmodel_lr.dfm <- function(x, y, ...) {
 
     x <- as.dfm(x)
     if (!sum(x)) stop(quanteda:::message_error("dfm_empty"))
@@ -78,14 +86,12 @@ textmodel_lr.dfm <- function(x, y, nfolds = 10, ...) {
         x = x_train,
         y = y_train,
         family = family,
-        nfolds = nfolds,
         maxit = 10000,
         ...
     )
 
     result <- list(
         x = x, y = y,
-        nfolds = nfolds,
         algorithm = paste(family, "logistic regression"),
         type = family,
         classnames = lrfitted[["glmnet.fit"]][["classnames"]],
@@ -107,11 +113,11 @@ textmodel_lr.dfm <- function(x, y, nfolds = 10, ...) {
 #' @param type the type of predicted values to be returned; see Value
 #' @param force make newdata's feature set conformant to the model terms
 #' @param ... not used
-#' @return \code{predict.textmodel_lr} returns either a vector of class
-#'   predictions for each row of \code{newdata} (when \code{type = "class"}), or
-#'   a document-by-class matrix of class probabilities (when \code{type =
-#'   "probability"}).
-#' @seealso \code{\link{textmodel_lr}}
+#' @return `predict.textmodel_lr()` returns either a vector of class
+#'   predictions for each row of `newdata` (when `type = "class"`), or
+#'   a document-by-class matrix of class probabilities (when `type =
+#'   "probability"``).
+#' @seealso [textmodel_lr()]
 #' @keywords textmodel internal
 #' @importFrom stats predict
 #' @export
@@ -172,8 +178,13 @@ print.textmodel_lr <- function(x, ...) {
         sep = "")
 }
 
-#' @noRd
+#' @rdname predict.textmodel_lr
 #' @method coef textmodel_lr
+#' @return `coef.textmodel_lr()` returns a (sparse) matrix of coefficients for
+#'   each feature, computed at the value of the penalty parameter fitted in the
+#'   model.  For binary outcomes, results are returned only for the class
+#'   corresponding to the second level of the factor response; for multinomial
+#'   outcomes, these are computed for each class.
 #' @importFrom stats coef
 #' @export
 coef.textmodel_lr <- function(object, ...) {
@@ -188,7 +199,7 @@ coef.textmodel_lr <- function(object, ...) {
     out
 }
 
-#' @noRd
+#' @rdname predict.textmodel_lr
 #' @method coefficients textmodel_lr
 #' @importFrom stats coefficients
 #' @export
@@ -206,7 +217,7 @@ coefficients.textmodel_lr <- function(object, ...) {
 summary.textmodel_lr <- function(object, n = 30, ...) {
     result <- list(
         "call" = object$call,
-        "folds" = object$nfolds,
+        # "folds" = object$nfolds,
         "lambda min" = object$lrfitted$lambda.min,
         "lambda 1se" = object$lrfitted$lambda.1se,
         "estimated.feature.scores" = as.matrix(head(coef(object), n))

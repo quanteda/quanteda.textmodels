@@ -4,7 +4,7 @@
 \alias{textmodel_lr}
 \title{Logistic regression classifier for texts}
 \usage{
-textmodel_lr(x, y, nfolds = 10, ...)
+textmodel_lr(x, y, ...)
 }
 \arguments{
 \item{x}{the \link{dfm} on which the model will be fit.  Does not need to
@@ -14,14 +14,15 @@ contain only the training documents.}
 in \code{train}.  (These will be converted to factors if not already
 factors.)}
 
-\item{nfolds}{number of folds used to search an optimal lambda value -
-default is 10. See \link[glmnet]{cv.glmnet} for details.}
-
-\item{...}{additional arguments passed to \code{\link[glmnet]{cv.glmnet}}}
+\item{...}{additional arguments passed to \code{\link[glmnet:cv.glmnet]{cv.glmnet()}}}
 }
 \description{
-Fit a fast logistic regression classifier for texts, using the \pkg{glmnet}
-package.
+Fits a fast penalized maximum likelihood estimator to predict discrete
+categories from sparse \link[quanteda:dfm]{dfm} objects. Using the \pkg{glmnet}
+package, the function computes the regularization path for the lasso or
+elasticnet penalty at a grid of values for the regularization parameter
+lambda.  This is done automatically by testing on several folds of the data
+at estimation time.
 }
 \examples{
 ## Example from 13.1 of _An Introduction to Information Retrieval_
@@ -49,5 +50,6 @@ predict(tmod1, type = "prob")
 predict(tmod1)
 }
 \seealso{
-\code{\link[glmnet]{cv.glmnet}}
+\code{\link[glmnet:cv.glmnet]{cv.glmnet()}}, \code{\link[=predict.textmodel_lr]{predict.textmodel_lr()}},
+\code{\link[=coef.textmodel_lr]{coef.textmodel_lr()}}
 }

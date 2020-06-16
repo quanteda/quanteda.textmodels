@@ -2,6 +2,8 @@
 % Please edit documentation in R/textmodel_lr.R
 \name{predict.textmodel_lr}
 \alias{predict.textmodel_lr}
+\alias{coef.textmodel_lr}
+\alias{coefficients.textmodel_lr}
 \title{Prediction from a fitted textmodel_lr object}
 \usage{
 \method{predict}{textmodel_lr}(
@@ -11,6 +13,10 @@
   force = TRUE,
   ...
 )
+
+\method{coef}{textmodel_lr}(object, ...)
+
+\method{coefficients}{textmodel_lr}(object, ...)
 }
 \arguments{
 \item{object}{a fitted logistic regression textmodel}
@@ -24,17 +30,23 @@
 \item{...}{not used}
 }
 \value{
-\code{predict.textmodel_lr} returns either a vector of class
+\code{predict.textmodel_lr()} returns either a vector of class
 predictions for each row of \code{newdata} (when \code{type = "class"}), or
-a document-by-class matrix of class probabilities (when \code{type =
-  "probability"}).
+a document-by-class matrix of class probabilities (when `type =
+"probability"``).
+
+\code{coef.textmodel_lr()} returns a (sparse) matrix of coefficients for
+each feature, computed at the value of the penalty parameter fitted in the
+model.  For binary outcomes, results are returned only for the class
+corresponding to the second level of the factor response; for multinomial
+outcomes, these are computed for each class.
 }
 \description{
 \code{predict.textmodel_lr()} implements class predictions from a fitted
 logistic regression model.
 }
 \seealso{
-\code{\link{textmodel_lr}}
+\code{\link[=textmodel_lr]{textmodel_lr()}}
 }
 \keyword{internal}
 \keyword{textmodel}

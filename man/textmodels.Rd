@@ -30,11 +30,11 @@ Authors:
 \itemize{
   \item Kohei Watanabe \email{watanabe.kohei@gmail.com} (\href{https://orcid.org/0000-0001-6519-5265}{ORCID})
   \item Haiyan Wang \email{whyinsa@yahoo.com} (\href{https://orcid.org/0000-0003-4992-4311}{ORCID})
-  \item Stefan Müller \email{mullers@tcd.ie} (\href{https://orcid.org/0000-0002-6315-4125}{ORCID})
+  \item Stefan Müller \email{stefan.mueller@ucd.ie} (\href{https://orcid.org/0000-0002-6315-4125}{ORCID})
   \item Patrick O. Perry \email{patperry@gmail.com} (\href{https://orcid.org/0000-0001-7460-127X}{ORCID})
-  \item Johannes Gruber \email{j.gruber.1@research.gla.ac.uk}
-  \item Benjamin Lauderdale \email{b.e.lauderdale@lse.ac.uk} (\href{https://orcid.org/0000-0003-3090-0969}{ORCID})
-  \item William Lowe \email{wlowe@princeton.edu} (\href{https://orcid.org/0000-0002-1549-6163}{ORCID})
+  \item Johannes Gruber \email{j.gruber.1@research.gla.ac.uk} (\href{https://orcid.org/0000-0001-9177-1772}{ORCID})
+  \item Benjamin Lauderdale \email{b.lauderdale@ucl.ac.uk} (\href{https://orcid.org/0000-0003-3090-0969}{ORCID})
+  \item William Lowe \email{lowe@hertie-school.org} (\href{https://orcid.org/0000-0002-1549-6163}{ORCID})
 }
 
 Other contributors:
