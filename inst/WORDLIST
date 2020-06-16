@@ -16,6 +16,7 @@ docnames
 docvars
 doi
 Dumais
+elasticnet
 ERC
 Fáil
 fastNaiveBayes
@@ -34,6 +35,7 @@ Landauer
 LBG
 LIBLINEAR
 Lifecycle
+lr
 lsa
 LSA
 Maas

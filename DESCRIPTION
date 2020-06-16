@@ -13,10 +13,11 @@ Authors@R: c(
     person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role = c("cre", "aut", "cph"), comment = c(ORCID = "0000-0002-0797-564X")), 
     person("Kohei", "Watanabe", email = "watanabe.kohei@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-6519-5265")), 
     person("Haiyan", "Wang", email = "whyinsa@yahoo.com", role = "aut", comment = c(ORCID = "0000-0003-4992-4311")),
-    person("Stefan", "Müller", email = "mullers@tcd.ie", role = "aut", comment = c(ORCID = "0000-0002-6315-4125")),
+    person("Stefan", "Müller", email = "stefan.mueller@ucd.ie", role = "aut", comment = c(ORCID = "0000-0002-6315-4125")),
     person("Patrick O.", "Perry", email = "patperry@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-7460-127X")),
-    person("Benjamin", "Lauderdale", email = "b.e.lauderdale@lse.ac.uk", role = "aut", comment = c(ORCID = "0000-0003-3090-0969")),    
-    person("William", "Lowe", email = "wlowe@princeton.edu", role = "aut", comment = c(ORCID = "0000-0002-1549-6163")),
+    person("Johannes", "Gruber", email = "j.gruber.1@research.gla.ac.uk", role = "aut", comment = c(ORCID = "0000-0001-9177-1772")),
+    person("Benjamin", "Lauderdale", email = "b.lauderdale@ucl.ac.uk", role = "aut", comment = c(ORCID = "0000-0003-3090-0969")),    
+    person("William", "Lowe", email = "lowe@hertie-school.org", role = "aut", comment = c(ORCID = "0000-0002-1549-6163")),
     person("European Research Council", role = "fnd", comment = "ERC-2011-StG 283794-QUANTESS")
     )
 Depends:
@@ -24,6 +25,7 @@ Depends:
     methods
 Imports:
     ggplot2,
+    glmnet,
     LiblineaR,
     Matrix (>= 1.2),
     quanteda (>= 2.0),
@@ -62,6 +64,7 @@ Collate:
     'textmodel_affinity.R'
     'textmodel_ca.R'
     'textmodel_lsa.R'
+    'textmodel_lr.R'
     'textmodel_nb.R'
     'textmodel_svm.R'
     'textmodel_svmlin.R'
