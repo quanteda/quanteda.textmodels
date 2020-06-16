@@ -4,12 +4,14 @@
 \name{data_corpus_moviereviews}
 \alias{data_corpus_moviereviews}
 \title{Movie reviews with polarity from Pang and Lee (2004)}
-\format{The corpus includes the following document variables: \describe{
+\format{
+The corpus includes the following document variables: \describe{
 \item{sentiment}{factor indicating whether a review was manually classified as
 positive \code{pos} or negative \code{neg}.}
 \item{id1}{Character counting the position in the corpus.}
 \item{id2}{Random number for each review.}
-}}
+}
+}
 \source{
 \url{https://www.cs.cornell.edu/people/pabo/movie-review-data/}
 }
