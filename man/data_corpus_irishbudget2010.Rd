@@ -4,9 +4,11 @@
 \name{data_corpus_irishbudget2010}
 \alias{data_corpus_irishbudget2010}
 \title{Irish budget speeches from 2010}
-\format{The corpus object for the 2010 budget speeches, with document-level
+\format{
+The corpus object for the 2010 budget speeches, with document-level
 variables for year, debate, serial number, first and last name of the
-speaker, and the speaker's party.}
+speaker, and the speaker's party.
+}
 \source{
 Dáil Éireann Debate,
 \href{http://oireachtasdebates.oireachtas.ie/debates\%20authoring/debateswebpack.nsf/takes/dail2009120900022?opendocument}{Budget Statement 2010.}

@@ -24,11 +24,11 @@ package.
 }
 \examples{
 \dontrun{
-library(quanteda.textmodels)
+library("quanteda")
 # use party leaders for govt and opposition classes
-quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
+docvars(data_corpus_irishbudget2010, "govtopp") <-
     c(rep(NA, 4), "Govt", "Opp", NA, "Opp", NA, NA, NA, NA, NA, NA)
-dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+dfmat <- dfm(data_corpus_irishbudget2010)
 tmod <- textmodel_lr(dfmat, y = docvars(dfmat, "govtopp"))
 predict(tmod)
 predict(tmod, type = "probability")
