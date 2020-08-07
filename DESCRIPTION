@@ -56,21 +56,4 @@ Language: en-GB
 RoxygenNote: 7.1.0
 SystemRequirements: C++11
 Roxygen: list(markdown = TRUE)
-Collate: 
-    'RcppExports.R'
-    'quanteda.textmodels-package.R'
-    'data-documentation.R'
-    'textmodel-methods.R'
-    'textmodel_affinity.R'
-    'textmodel_ca.R'
-    'textmodel_lsa.R'
-    'textmodel_lr.R'
-    'textmodel_nb.R'
-    'textmodel_svm.R'
-    'textmodel_svmlin.R'
-    'textmodel_wordfish.R'
-    'textmodel_wordscores.R'
-    'textplot_influence.R'
-    'textplot_scale1d.R'
-    'utils.R'
 VignetteBuilder: knitr

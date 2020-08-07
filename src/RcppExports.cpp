@@ -65,11 +65,14 @@ BEGIN_RCPP
 END_RCPP
 }
 
+RcppExport SEXP rGibbslda(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+
 static const R_CallMethodDef CallEntries[] = {
     {"_quanteda_textmodels_qatd_cpp_ca", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_ca, 2},
     {"_quanteda_textmodels_qatd_cpp_tbb_enabled", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_tbb_enabled, 0},
     {"_quanteda_textmodels_qatd_cpp_wordfish_dense", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_wordfish_dense, 7},
     {"_quanteda_textmodels_qatd_cpp_wordfish", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_wordfish, 9},
+    {"rGibbslda", (DL_FUNC) &rGibbslda, 13},
     {NULL, NULL, 0}
 };
 
