@@ -402,7 +402,6 @@ arma::mat model::get_model_phi() {
     arma::mat res(K, V);
     for (int k = 0; k < K; k++) {
         for (int w = 0; w < V; w++) {
-            printf("%f ",  phi[k][w]);
             res(k, w) = phi[k][w];
         }
     }
@@ -414,7 +413,6 @@ arma::mat model::get_model_theta() {
     arma::mat res(M, K);
     for (int m = 0; m < M; m++) {
         for (int k = 0; k < K; k++) {
-            printf("%f ",  theta[m][k]);
             res(m, k) = theta[m][k];
         }
     }
@@ -674,7 +672,7 @@ int model::init_est() {
     	    z[m][n] = topic;
     	    
     	    // number of instances of word i assigned to topic j
-    	    nw[ptrndata->docs[m]->words[n]][topic] += 1;
+    	    nw[ptrndata->docs[m]->words[n]][topic] += 1; // NOTE Captures frequency of words
     	    // number of words in document i assigned to topic j
     	    nd[m][topic] += 1;
     	    // total number of words assigned to topic j

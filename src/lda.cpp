@@ -35,6 +35,7 @@ List qatd_cpp_lda(arma::sp_mat &mt, int k, std::string dir) {
     lda.dir = dir;
     Rcpp::NumericMatrix phi, theta;
     if (lda.init_est() == 0) {
+        lda.estimate();
         phi = wrap(lda.get_model_phi());
         theta = wrap(lda.get_model_theta());
     }
