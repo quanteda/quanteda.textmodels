@@ -109,6 +109,8 @@ int dataset::read_wordmap(string wordmapfile, mapid2word * pid2word) {
     return 0;
 }
 
+
+// NOTE Modify this to load a marirx
 int dataset::read_trndata(string dfile, string wordmapfile) {
     mapword2id word2id;
     

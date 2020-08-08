@@ -31,6 +31,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 List qatd_cpp_lda(arma::sp_mat &mt, int k, std::string dir) {
     model lda;
+    lda.set_data(mt);
     lda.K = k;
     lda.dir = dir;
     Rcpp::NumericMatrix phi, theta;

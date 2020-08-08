@@ -95,6 +95,10 @@ public:
     int * newndsum;
     double ** newtheta;
     double ** newphi;
+    
+    // NOTE added for
+    arma::sp_mat data;
+    
     // --------------------------------------
     
     model() {
@@ -107,55 +111,58 @@ public:
     void set_default_values();   
 
     // parse command line to get options
-    int parse_args(int argc, char ** argv);
+    //int parse_args(int argc, char ** argv);
     
     // initialize the model
     int init(int argc, char ** argv);
     
     // load LDA model to continue estimating or to do inference
-    int load_model(string model_name);
+    //int load_model(string model_name);
     
     // save LDA model to files
     // model_name.tassign: topic assignments for words in docs
     // model_name.theta: document-topic distributions
     // model_name.phi: topic-word distributions
     // model_name.others: containing other parameters of the model (alpha, beta, M, V, K)
-    int save_model(string model_name);
-    int save_model_tassign(string filename);
-    int save_model_theta(string filename);
-    int save_model_phi(string filename);
-    int save_model_others(string filename);
-    int save_model_twords(string filename);
+    // int save_model(string model_name);
+    // int save_model_tassign(string filename);
+    // int save_model_theta(string filename);
+    // int save_model_phi(string filename);
+    // int save_model_others(string filename);
+    // int save_model_twords(string filename);
     
     // NOTE added for Rcpp
+    void set_data(arma::sp_mat &mt);
     arma::mat get_model_phi();
     arma::mat get_model_theta();
     
+    // NOTE all removed
     // saving inference outputs
-    int save_inf_model(string model_name);
-    int save_inf_model_tassign(string filename);
-    int save_inf_model_newtheta(string filename);
-    int save_inf_model_newphi(string filename);
-    int save_inf_model_others(string filename);
-    int save_inf_model_twords(string filename);
+    // int save_inf_model(string model_name);
+    // int save_inf_model_tassign(string filename);
+    // int save_inf_model_newtheta(string filename);
+    // int save_inf_model_newphi(string filename);
+    // int save_inf_model_others(string filename);
+    // int save_inf_model_twords(string filename);
     
     // init for estimation
     int init_est();
-    int init_estc();
+    // int init_estc(); // NOTE removed
 	
     // estimate LDA model using Gibbs sampling
     void estimate();
-    int sampling(int m, int n);
+    int sampling(int m, int n, int w);
     void compute_theta();
     void compute_phi();
     
+    // NOTE all removed
     // init for inference
-    int init_inf();
+    // int init_inf();
     // inference for new (unseen) data based on the estimated LDA model
-    void inference();
-    int inf_sampling(int m, int n);
-    void compute_newtheta();
-    void compute_newphi();
+    // void inference();
+    // int inf_sampling(int m, int n);
+    // void compute_newtheta();
+    // void compute_newphi();
 };
 
 #endif
