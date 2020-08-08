@@ -397,7 +397,30 @@ int model::save_model_others(string filename) {
     return 0;
 }
 
-// NOTE call this method to get topic words
+// NOTE added for Rcpp
+arma::mat model::get_model_phi() {
+    arma::mat res(K, V);
+    for (int k = 0; k < K; k++) {
+        for (int w = 0; w < V; w++) {
+            printf("%f ",  phi[k][w]);
+            res(k, w) = phi[k][w];
+        }
+    }
+    return res;    
+}
+
+// NOTE added for Rcpp
+arma::mat model::get_model_theta() {
+    arma::mat res(M, K);
+    for (int m = 0; m < M; m++) {
+        for (int k = 0; k < K; k++) {
+            printf("%f ",  theta[m][k]);
+            res(m, k) = theta[m][k];
+        }
+    }
+    return res;    
+}
+
 int model::save_model_twords(string filename) {
     FILE * fout = fopen(filename.c_str(), "w");
     if (!fout) {
@@ -607,6 +630,8 @@ int model::init_est() {
     // alpha, beta: from command line or default values
     // niters, savestep: from command line or default values
     
+    printf("M = %d, V = %d\n", M, V);
+
     // NOTE topic-word distribution
     nw = new int*[V];
     for (w = 0; w < V; w++) {

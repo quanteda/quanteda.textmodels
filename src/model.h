@@ -32,6 +32,7 @@
 #ifndef	_MODEL_H
 #define	_MODEL_H
 
+#include <armadillo>
 #include "constants.h"
 #include "dataset.h"
 
@@ -125,6 +126,10 @@ public:
     int save_model_phi(string filename);
     int save_model_others(string filename);
     int save_model_twords(string filename);
+    
+    // NOTE added for Rcpp
+    arma::mat get_model_phi();
+    arma::mat get_model_theta();
     
     // saving inference outputs
     int save_inf_model(string model_name);

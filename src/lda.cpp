@@ -21,22 +21,25 @@
  * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
  */
 
-#include "model.h"
 #include "lib.h"
+#include "model.h"
 using namespace quanteda;
 using namespace arma;
 using namespace std;
 using namespace Rcpp;
 
-void show_help();
-
 // [[Rcpp::export]]
-List qatd_cpp_lda(arma::sp_mat &mt) {
+List qatd_cpp_lda(arma::sp_mat &mt, int k, std::string dir) {
     model lda;
-    
-    lda.init_est(); // fresh estimation
-    
-    return Rcpp::List::create();
+    lda.K = k;
+    lda.dir = dir;
+    Rcpp::NumericMatrix phi, theta;
+    if (lda.init_est() == 0) {
+        phi = wrap(lda.get_model_phi());
+        theta = wrap(lda.get_model_theta());
+    }
+    return List::create(Rcpp::Named("phi") = phi,
+                        Rcpp::Named("theta") = theta);
 }
 
 /*
