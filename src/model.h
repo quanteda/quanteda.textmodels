@@ -97,7 +97,7 @@ public:
     // --------------------------------------
     
     model() {
-	set_default_values();
+	    set_default_values();
     }
           
     ~model();
