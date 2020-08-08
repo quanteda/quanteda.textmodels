@@ -18,6 +18,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// qatd_cpp_lda
+List qatd_cpp_lda(arma::sp_mat& mt);
+RcppExport SEXP _quanteda_textmodels_qatd_cpp_lda(SEXP mtSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::sp_mat& >::type mt(mtSEXP);
+    rcpp_result_gen = Rcpp::wrap(qatd_cpp_lda(mt));
+    return rcpp_result_gen;
+END_RCPP
+}
 // qatd_cpp_tbb_enabled
 bool qatd_cpp_tbb_enabled();
 RcppExport SEXP _quanteda_textmodels_qatd_cpp_tbb_enabled() {
@@ -67,6 +78,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_quanteda_textmodels_qatd_cpp_ca", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_ca, 2},
+    {"_quanteda_textmodels_qatd_cpp_lda", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_lda, 1},
     {"_quanteda_textmodels_qatd_cpp_tbb_enabled", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_tbb_enabled, 0},
     {"_quanteda_textmodels_qatd_cpp_wordfish_dense", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_wordfish_dense, 7},
     {"_quanteda_textmodels_qatd_cpp_wordfish", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_wordfish, 9},

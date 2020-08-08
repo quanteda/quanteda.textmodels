@@ -210,10 +210,10 @@ int model::init(int argc, char ** argv) {
     }
     
     if (model_status == MODEL_STATUS_EST) {
-	// estimating the model from scratch
-	if (init_est()) {
-	    return 1;
-	}
+    	// estimating the model from scratch
+    	if (init_est()) {
+    	    return 1;
+    	}
 	
     } else if (model_status == MODEL_STATUS_ESTC) {
     	// estimating the model from a previously estimated one
@@ -586,7 +586,7 @@ int model::save_inf_model_twords(string filename) {
     return 0;    
 }
 
-// NOTE call this method to fit the model
+// NOTE modify this method to fit the model with a matrix
 int model::init_est() {
     int m, n, w, k;
 
@@ -594,6 +594,7 @@ int model::init_est() {
 
     // + read training data
     ptrndata = new dataset;
+    // NOTE change to load from memory
     if (ptrndata->read_trndata(dir + dfile, dir + wordmapfile)) {
         printf("Fail to read training data!\n");
         return 1;

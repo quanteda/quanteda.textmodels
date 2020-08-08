@@ -22,11 +22,24 @@
  */
 
 #include "model.h"
-
+#include "lib.h"
+using namespace quanteda;
+using namespace arma;
 using namespace std;
+using namespace Rcpp;
 
 void show_help();
 
+// [[Rcpp::export]]
+List qatd_cpp_lda(arma::sp_mat &mt) {
+    model lda;
+    
+    lda.init_est(); // fresh estimation
+    
+    return Rcpp::List::create();
+}
+
+/*
 int main(int argc, char ** argv) {
     model lda;
 
@@ -48,11 +61,11 @@ int main(int argc, char ** argv) {
     return 0;
 }
 
-// void show_help() {
-//     printf("Command line usage:\n");
-//     printf("\tlda -est -alpha <double> -beta <double> -ntopics <int> -niters <int> -savestep <int> -twords <int> -dfile <string>\n");
-//     printf("\tlda -estc -dir <string> -model <string> -niters <int> -savestep <int> -twords <int>\n");
-//     printf("\tlda -inf -dir <string> -model <string> -niters <int> -twords <int> -dfile <string>\n");
-//     // printf("\tlda -inf -dir <string> -model <string> -niters <int> -twords <int> -dfile <string> -withrawdata\n");
-// }
-
+void show_help() {
+    printf("Command line usage:\n");
+    printf("\tlda -est -alpha <double> -beta <double> -ntopics <int> -niters <int> -savestep <int> -twords <int> -dfile <string>\n");
+    printf("\tlda -estc -dir <string> -model <string> -niters <int> -savestep <int> -twords <int>\n");
+    printf("\tlda -inf -dir <string> -model <string> -niters <int> -twords <int> -dfile <string>\n");
+    // printf("\tlda -inf -dir <string> -model <string> -niters <int> -twords <int> -dfile <string> -withrawdata\n");
+}
+*/
