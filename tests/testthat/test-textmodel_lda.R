@@ -5,7 +5,7 @@ char <- readLines("tests/data/trndocs.txt")
 toks <- tokens(char, what = "fastestword")
 dfmt <- dfm(toks)
 
-result <- quanteda.textmodels:::qatd_cpp_lda(toks, types(toks), 10, 2000)
+result <- quanteda.textmodels:::qatd_cpp_lda(toks, types(toks), 20, 2000)
 dim(result$phi)
 colnames(result$phi) <- types(toks)
 
@@ -14,6 +14,7 @@ terms2 <- function(x, n = 6) {
 }
 
 terms2(result)
+write.csv(t(terms2(lda)), file = "~/Documents/terms-k20-tokens.txt")
 
 require(quanteda.corpora)
 corp_news <- download('data_corpus_guardian')

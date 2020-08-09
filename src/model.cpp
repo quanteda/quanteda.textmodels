@@ -148,8 +148,8 @@ int model::sampling(int m, int n, int w) {
     double Kalpha = K * alpha;    
     // do multinomial sampling via cumulative method
     for (int k = 0; k < K; k++) {
-        p[k] = (nw(w, topic) + beta) / (nwsum[k] + Vbeta) *
-               (nd(m, topic) + alpha) / (ndsum[m] + Kalpha);
+        p[k] = (nw(w, k) + beta) / (nwsum[k] + Vbeta) *
+               (nd(m, k) + alpha) / (ndsum[m] + Kalpha);
     }
     // cumulate multinomial parameters
     for (int k = 1; k < K; k++) {
