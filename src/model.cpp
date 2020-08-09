@@ -61,14 +61,18 @@ int model::init_est() {
     std::uniform_int_distribution<int> random_topic(0, K - 1);
     
     z = Texts(M);
+    
     p = arma::vec(K);
+    theta = arma::mat(M, K, arma::fill::zeros);
+    phi = arma::mat(K, V, arma::fill::zeros);
+    
     nw = arma::umat(V, K, arma::fill::zeros);
     nd = arma::umat(M, K, arma::fill::zeros);
     nwsum = arma::urowvec(K, arma::fill::zeros);
     ndsum = arma::conv_to<arma::ucolvec>::from(arma::mat(arma::sum(data, 0)));
     
-    dev::Timer timer;
-    dev::start_timer("Set z", timer);
+    //dev::Timer timer;
+    //dev::start_timer("Set z", timer);
     srandom(time(0)); // initialize for random number generation
     
     for (int m = 0; m < M; m++) {
@@ -83,7 +87,6 @@ int model::init_est() {
             int F = *it;
             for (int f = 0; f < F; f++) {
                 int topic = random_topic(generator);
-                //int topic = rand() % K + 1;
                 z[m][n] = topic;
                 // number of instances of word i assigned to topic j
                 nw(w, topic) += 1;
@@ -95,9 +98,8 @@ int model::init_est() {
             }
         }
     }
-    dev::stop_timer("Set z", timer);
-    theta = arma::mat(M, K, arma::fill::zeros);
-    phi = arma::mat(K, V, arma::fill::zeros);
+    //dev::stop_timer("Set z", timer);
+    
     return 0;
 }
 
@@ -134,7 +136,6 @@ void model::estimate() {
     compute_theta();
     compute_phi();
     liter--;
-    
 }
 
 int model::sampling(int m, int n, int w) {
@@ -158,7 +159,6 @@ int model::sampling(int m, int n, int w) {
         p[k] += p[k - 1];
     }
     // scaled sample because of unnormalized p[]
-    //double u = (random() / RAND_MAX) * p[K - 1];
     double u = random_prob(generator) * p[K - 1];
     
     for (int k = 0; k < K; k++) {
