@@ -59,7 +59,7 @@ int model::init_est() {
     
     std::uniform_real_distribution<double> random_prob(0, 1);
     std::uniform_int_distribution<int> random_topic(0, K - 1);
-        
+    
     z = Texts(M);
     p = arma::vec(K);
     nw = arma::umat(V, K, arma::fill::zeros);
@@ -128,7 +128,6 @@ void model::estimate() {
                 }
             }
         }
-        
     }
     
     printf("Gibbs sampling completed!\n");
@@ -162,8 +161,9 @@ int model::sampling(int m, int n, int w) {
     //double u = (random() / RAND_MAX) * p[K - 1];
     double u = random_prob(generator) * p[K - 1];
     
-    for (topic = 0; topic < K; topic++) {
-        if (p[topic] > u) {
+    for (int k = 0; k < K; k++) {
+        topic = k;
+        if (p[k] > u) {
             break;
         }
     }
