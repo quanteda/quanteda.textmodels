@@ -107,7 +107,11 @@ void model::estimate() {
     
     int last_iter = liter;
     for (liter = last_iter + 1; liter <= niters + last_iter; liter++) {
-        printf("Iteration %d ...\n", liter);
+        
+        if (liter % 100 == 0) {
+            checkUserInterrupt();
+            printf("Iteration %d ...\n", liter);
+        }
         
         // for all z_i
         for (int m = 0; m < M; m++) {
@@ -124,8 +128,7 @@ void model::estimate() {
                 }
             }
         }
-        if (liter % 100 == 0)
-            checkUserInterrupt();
+        
     }
     
     printf("Gibbs sampling completed!\n");
