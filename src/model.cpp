@@ -74,14 +74,13 @@ int model::init_est() {
     
     for (int m = 0; m < M; m++) {
         
-        Text text = data[m];
-        int N = text.size();
+        int N = data[m].size();
         z[m] = Text(N);
         ndsum[m] = N;
         for(int n = 0; n < N; ++n) {
-            if (text[n] == 0) 
+            if (data[m][n] == 0) 
                 throw std::range_error("Tokens object has padding");
-            int w = text[n] - 1;
+            int w = data[m][n] - 1;
             int topic = random_topic(generator);
             //int topic = rand() % K + 1;
             z[m][n] = topic;
@@ -91,8 +90,6 @@ int model::init_est() {
             nd(m, topic) += 1;
             // total number of words assigned to topic j
             nwsum[topic] += 1;
-                
-            //}
         }
     }
     dev::stop_timer("Set z", timer);
@@ -115,15 +112,11 @@ void model::estimate() {
         
         // for all z_i
         for (int m = 0; m < M; m++) {
-            Text text = data[m];
-            int N = text.size();
-            z[m] = Text(N);
-            ndsum[m] = N;
+            int N = data[m].size();
             for(int n = 0; n < N; ++n) {
-                int w = text[n] - 1;
+                int w = data[m][n] - 1;
                 //printf("Sampling %d %d %d %d\n", liter, m, w, F);
                 z[m][n] = sampling(m, n, w);
-                n++;
             }
         }
     }
