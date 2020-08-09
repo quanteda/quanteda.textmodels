@@ -151,7 +151,7 @@ int model::sampling(int m, int n, int w) {
     // do multinomial sampling via cumulative method
     for (int k = 0; k < K; k++) {
         p[k] = (nw(w, k) + beta) / (nwsum[k] + Vbeta) *
-               (nd(m, k) + alpha) / (ndsum[m] + Kalpha);
+            (nd(m, k) + alpha) / (ndsum[m] + Kalpha);
     }
     // cumulate multinomial parameters
     for (int k = 1; k < K; k++) {
