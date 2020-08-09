@@ -19,15 +19,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // qatd_cpp_lda
-List qatd_cpp_lda(arma::sp_mat& mt, int k, std::string dir);
-RcppExport SEXP _quanteda_textmodels_qatd_cpp_lda(SEXP mtSEXP, SEXP kSEXP, SEXP dirSEXP) {
+List qatd_cpp_lda(arma::sp_mat& mt, int k, int max_iter);
+RcppExport SEXP _quanteda_textmodels_qatd_cpp_lda(SEXP mtSEXP, SEXP kSEXP, SEXP max_iterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::sp_mat& >::type mt(mtSEXP);
     Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    Rcpp::traits::input_parameter< std::string >::type dir(dirSEXP);
-    rcpp_result_gen = Rcpp::wrap(qatd_cpp_lda(mt, k, dir));
+    Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
+    rcpp_result_gen = Rcpp::wrap(qatd_cpp_lda(mt, k, max_iter));
     return rcpp_result_gen;
 END_RCPP
 }
