@@ -46,10 +46,10 @@ void model::set_default_values() {
     
 }
 
-void model::set_data(arma::sp_mat mt) {
-    data = mt.t();
-    M = data.n_cols; 
-    V = data.n_rows;
+void model::set_data(const Texts &texts, const Types &types) {
+    M = texts.size(); 
+    V = types.size();
+    data = texts;
     printf("M = %d, V = %d\n", M, V);
 }
 
@@ -57,6 +57,7 @@ int model::init_est() {
     
     printf("Initialize\n");
     
+    // random number generator
     std::uniform_real_distribution<double> random_prob(0, 1);
     std::uniform_int_distribution<int> random_topic(0, K - 1);
     
@@ -65,7 +66,7 @@ int model::init_est() {
     nw = arma::umat(V, K, arma::fill::zeros);
     nd = arma::umat(M, K, arma::fill::zeros);
     nwsum = arma::urowvec(K, arma::fill::zeros);
-    ndsum = arma::conv_to<arma::ucolvec>::from(arma::mat(arma::sum(data, 0)));
+    ndsum = arma::ucolvec(M, arma::fill::zeros);
     
     dev::Timer timer;
     dev::start_timer("Set z", timer);
@@ -73,26 +74,25 @@ int model::init_est() {
     
     for (int m = 0; m < M; m++) {
         
-        z[m] = Text(ndsum[m]);
-        int n = 0;
-        
-        arma::sp_mat::const_col_iterator it = data.begin_col(m);
-        arma::sp_mat::const_col_iterator it_end = data.end_col(m);
-        for(; it != it_end; ++it) {
-            int w = it.row();
-            int F = *it;
-            for (int f = 0; f < F; f++) {
-                int topic = random_topic(generator);
-                //int topic = rand() % K + 1;
-                z[m][n] = topic;
-                // number of instances of word i assigned to topic j
-                nw(w, topic) += 1;
-                // number of words in document i assigned to topic j
-                nd(m, topic) += 1;
-                // total number of words assigned to topic j
-                nwsum[topic] += 1;
-                n++;
-            }
+        Text text = data[m];
+        int N = text.size();
+        z[m] = Text(N);
+        ndsum[m] = N;
+        for(int n = 0; n < N; ++n) {
+            if (text[n] == 0) 
+                throw std::range_error("Tokens object has padding");
+            int w = text[n] - 1;
+            int topic = random_topic(generator);
+            //int topic = rand() % K + 1;
+            z[m][n] = topic;
+            // number of instances of word i assigned to topic j
+            nw(w, topic) += 1;
+            // number of words in document i assigned to topic j
+            nd(m, topic) += 1;
+            // total number of words assigned to topic j
+            nwsum[topic] += 1;
+                
+            //}
         }
     }
     dev::stop_timer("Set z", timer);
@@ -115,17 +115,15 @@ void model::estimate() {
         
         // for all z_i
         for (int m = 0; m < M; m++) {
-            int n = 0;
-            arma::sp_mat::const_col_iterator it = data.begin_col(m);
-            arma::sp_mat::const_col_iterator it_end = data.end_col(m);
-            for(; it != it_end; ++it) {
-                int w = it.row();
-                int F = *it;
+            Text text = data[m];
+            int N = text.size();
+            z[m] = Text(N);
+            ndsum[m] = N;
+            for(int n = 0; n < N; ++n) {
+                int w = text[n] - 1;
                 //printf("Sampling %d %d %d %d\n", liter, m, w, F);
-                for (int f = 0; f < F; f++) {
-                    z[m][n] = sampling(m, n, w);
-                    n++;
-                }
+                z[m][n] = sampling(m, n, w);
+                n++;
             }
         }
     }

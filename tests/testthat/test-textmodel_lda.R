@@ -5,25 +5,25 @@ char <- readLines("tests/data/trndocs.txt")
 toks <- tokens(char, what = "fastestword")
 dfmt <- dfm(toks)
 
-result <- quanteda.textmodels:::qatd_cpp_lda(dfmt, 10, 2000)
+result <- quanteda.textmodels:::qatd_cpp_lda(toks, types(toks), 10, 2000)
 dim(result$phi)
-colnames(result$phi) <- colnames(dfmt)
+colnames(result$phi) <- types(toks)
 
-ge_terms <- function(x, n = 6) {
+terms2 <- function(x, n = 6) {
     apply(x$phi, 1, function(x, y, z) head(y[order(x, decreasing = TRUE)], z), colnames(x$phi), n)
 }
 
+terms2(result)
+
 require(quanteda.corpora)
 corp_news <- download('data_corpus_guardian')
-dfmt_news <- dfm(corp_news, remove_punct = TRUE, remove = stopwords('en')) %>% 
-    dfm_remove(c('*-time', '*-timeUpdated', 'GMT', 'BST')) %>% 
-    dfm_trim(min_termfreq = 0.95, termfreq_type = "quantile", 
-             max_docfreq = 0.1, docfreq_type = "prop")
-dfmt_news <- dfmt_news[ntoken(dfmt_news) > 0,]
-dfmt_news <- dfm_weight(dfmt_news, "boolean")
-lda <- quanteda.textmodels:::qatd_cpp_lda(dfmt_news, 10, 2000)
-colnames(lda$phi) <- colnames(dfmt_news)
-ge_terms(lda)
+toks_news <- tokens(corp_news, remove_punct = TRUE) %>% 
+    tokens_remove(stopwords('en')) %>% 
+    tokens_remove(c('*-time', '*-timeUpdated', 'GMT', 'BST'))
+
+lda_news <- quanteda.textmodels:::qatd_cpp_lda(toks_news, types(toks_news), 10, 2000)
+colnames(lda_news$phi) <- types(toks_news)
+terms2(lda_news)
 dim(lda$phi)
 
 require(topicmodels)

@@ -50,9 +50,9 @@ public:
     int niters; // number of Gibbs sampling iterations
     int liter; // the iteration at which the model was saved
     
-    arma::sp_mat data; // transposed document-feature matrix
-    arma::vec p; // temp variable for sampling
+    Texts data; // vector of integer vectors (zero is reserved for padding)
     Texts z; // topic assignments for words, size M x doc.size()
+    arma::vec p; // temp variable for sampling
     arma::umat nw; // cwt[i][j]: number of instances of word/term i assigned to topic j, size V x K
     arma::umat nd; // na[i][j]: number of words in document i assigned to topic j, size M x K
     arma::urowvec nwsum; // nwsum[j]: total number of words assigned to topic j, size K
@@ -73,7 +73,7 @@ public:
           
     // set default values for variables
     void set_default_values();   
-    void set_data(arma::sp_mat mt);
+    void set_data(const Texts &texts, const Types &types);
 
     // init for estimation
     int init_est();

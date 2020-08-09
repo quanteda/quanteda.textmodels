@@ -19,15 +19,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // qatd_cpp_lda
-List qatd_cpp_lda(arma::sp_mat& mt, int k, int max_iter);
-RcppExport SEXP _quanteda_textmodels_qatd_cpp_lda(SEXP mtSEXP, SEXP kSEXP, SEXP max_iterSEXP) {
+List qatd_cpp_lda(const List& texts_, const CharacterVector& types_, int k, int max_iter);
+RcppExport SEXP _quanteda_textmodels_qatd_cpp_lda(SEXP texts_SEXP, SEXP types_SEXP, SEXP kSEXP, SEXP max_iterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::sp_mat& >::type mt(mtSEXP);
+    Rcpp::traits::input_parameter< const List& >::type texts_(texts_SEXP);
+    Rcpp::traits::input_parameter< const CharacterVector& >::type types_(types_SEXP);
     Rcpp::traits::input_parameter< int >::type k(kSEXP);
     Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
-    rcpp_result_gen = Rcpp::wrap(qatd_cpp_lda(mt, k, max_iter));
+    rcpp_result_gen = Rcpp::wrap(qatd_cpp_lda(texts_, types_, k, max_iter));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -80,7 +81,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_quanteda_textmodels_qatd_cpp_ca", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_ca, 2},
-    {"_quanteda_textmodels_qatd_cpp_lda", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_lda, 3},
+    {"_quanteda_textmodels_qatd_cpp_lda", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_lda, 4},
     {"_quanteda_textmodels_qatd_cpp_tbb_enabled", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_tbb_enabled, 0},
     {"_quanteda_textmodels_qatd_cpp_wordfish_dense", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_wordfish_dense, 7},
     {"_quanteda_textmodels_qatd_cpp_wordfish", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_wordfish, 9},

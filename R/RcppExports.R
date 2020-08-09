@@ -5,8 +5,8 @@ qatd_cpp_ca <- function(dfm, residual_floor) {
     .Call(`_quanteda_textmodels_qatd_cpp_ca`, dfm, residual_floor)
 }
 
-qatd_cpp_lda <- function(mt, k, max_iter) {
-    .Call(`_quanteda_textmodels_qatd_cpp_lda`, mt, k, max_iter)
+qatd_cpp_lda <- function(texts_, types_, k, max_iter) {
+    .Call(`_quanteda_textmodels_qatd_cpp_lda`, texts_, types_, k, max_iter)
 }
 
 qatd_cpp_tbb_enabled <- function() {
