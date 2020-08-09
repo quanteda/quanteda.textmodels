@@ -1,17 +1,18 @@
 require(quanteda)
 require(quanteda.textmodels)
+terms2 <- function(x, n = 6) {
+    apply(x$phi, 1, function(x, y, z) head(y[order(x, decreasing = TRUE)], z), colnames(x$phi), n)
+}
 
 char <- readLines("tests/data/trndocs.txt")
 toks <- tokens(char, what = "fastestword")
 dfmt <- dfm(toks)
 
-result <- quanteda.textmodels:::qatd_cpp_lda(dfmt, 10, 2000)
+result <- quanteda.textmodels:::qatd_cpp_lda(dfmt, 20, 2000)
 dim(result$phi)
 colnames(result$phi) <- colnames(dfmt)
+terms2(result)
 
-terms2 <- function(x, n = 6) {
-    apply(x$phi, 1, function(x, y, z) head(y[order(x, decreasing = TRUE)], z), colnames(x$phi), n)
-}
 
 require(quanteda.corpora)
 corp_news <- download('data_corpus_guardian')
@@ -25,6 +26,8 @@ lda <- quanteda.textmodels:::qatd_cpp_lda(dfmt_news, 10, 2000)
 colnames(lda$phi) <- colnames(dfmt_news)
 terms2(lda)
 dim(lda$phi)
+
+write.csv(t(terms2(lda)), file = "~/Documents/terms-k20.txt")
 
 require(topicmodels)
 dtm <- convert(dfmat_news, to = "topicmodels")
