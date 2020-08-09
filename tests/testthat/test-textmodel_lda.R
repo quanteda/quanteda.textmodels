@@ -9,7 +9,7 @@ result <- quanteda.textmodels:::qatd_cpp_lda(dfmt, 10, 2000)
 dim(result$phi)
 colnames(result$phi) <- colnames(dfmt)
 
-ge_terms <- function(x, n = 6) {
+terms2 <- function(x, n = 6) {
     apply(x$phi, 1, function(x, y, z) head(y[order(x, decreasing = TRUE)], z), colnames(x$phi), n)
 }
 
@@ -23,7 +23,7 @@ dfmt_news <- dfmt_news[ntoken(dfmt_news) > 0,]
 dfmt_news <- dfm_weight(dfmt_news, "boolean")
 lda <- quanteda.textmodels:::qatd_cpp_lda(dfmt_news, 10, 2000)
 colnames(lda$phi) <- colnames(dfmt_news)
-ge_terms(lda)
+terms2(lda)
 dim(lda$phi)
 
 require(topicmodels)
