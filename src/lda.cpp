@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 List qatd_cpp_lda(arma::sp_mat &mt, int k, int max_iter, double alpha, double beta,
-                  bool verbose) {
+                  arma::sp_mat &seeds, bool verbose) {
     model lda;
     lda.set_data(mt);
     
@@ -22,6 +22,8 @@ List qatd_cpp_lda(arma::sp_mat &mt, int k, int max_iter, double alpha, double be
     if (verbose)
         lda.verbose = verbose;
     if (lda.init_est() == 0) {
+        if (arma::size(seeds) == arma::size(lda.nw) && arma::accu(seeds) > 0)
+            lda.nw = lda.nw + arma::conv_to<arma::umat>::from(arma::mat(seeds));
         lda.estimate();
     }
 
