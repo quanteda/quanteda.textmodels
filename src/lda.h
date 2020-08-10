@@ -5,7 +5,12 @@
  *	hieuxuan@ecei.tohoku.ac.jp or pxhieu@gmail.com
  * 	Graduate School of Information Sciences
  * 	Tohoku University
- *
+ * 	
+ * Copyright (C) 2020 by
+ * 
+ * 	Kohei Watanabe
+ * 	watanabe.kohei@gmail.com
+ * 	
  * GibbsLDA++ is a free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation; either version 2 of the License,
