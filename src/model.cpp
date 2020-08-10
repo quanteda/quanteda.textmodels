@@ -73,7 +73,7 @@ int model::init_est() {
     
     //dev::Timer timer;
     //dev::start_timer("Set z", timer);
-    srandom(time(0)); // initialize for random number generation
+    //srandom(time(0)); // initialize for random number generation
     
     for (int m = 0; m < M; m++) {
         
@@ -89,9 +89,9 @@ int model::init_est() {
                 int topic = random_topic(generator);
                 z[m][n] = topic;
                 // number of instances of word i assigned to topic j
-                nw(w, topic) += 1;
+                nw.at(w, topic) += 1;
                 // number of words in document i assigned to topic j
-                nd(m, topic) += 1;
+                nd.at(m, topic) += 1;
                 // total number of words assigned to topic j
                 nwsum[topic] += 1;
                 n++;
@@ -112,7 +112,7 @@ void model::estimate() {
         
         if (liter % 100 == 0) {
             checkUserInterrupt();
-            printf("Iteration %d ...\n", liter);
+            //printf("Iteration %d ...\n", liter);
         }
         
         // for all z_i
@@ -142,8 +142,8 @@ int model::sampling(int m, int n, int w) {
     
     // remove z_i from the count variables
     int topic = z[m][n];
-    nw(w, topic) -= 1;
-    nd(m, topic) -= 1;
+    nw.at(w, topic) -= 1;
+    nd.at(m, topic) -= 1;
     nwsum[topic] -= 1;
     ndsum[m] -= 1;
     
@@ -151,8 +151,8 @@ int model::sampling(int m, int n, int w) {
     double Kalpha = K * alpha;    
     // do multinomial sampling via cumulative method
     for (int k = 0; k < K; k++) {
-        p[k] = (nw(w, k) + beta) / (nwsum[k] + Vbeta) *
-            (nd(m, k) + alpha) / (ndsum[m] + Kalpha);
+        p[k] = (nw.at(w, k) + beta) / (nwsum[k] + Vbeta) *
+               (nd.at(m, k) + alpha) / (ndsum[m] + Kalpha);
     }
     // cumulate multinomial parameters
     for (int k = 1; k < K; k++) {
@@ -169,8 +169,8 @@ int model::sampling(int m, int n, int w) {
     }
     
     // add newly estimated z_i to count variables
-    nw(w, topic) += 1;
-    nd(m, topic) += 1;
+    nw.at(w, topic) += 1;
+    nd.at(m, topic) += 1;
     nwsum[topic] += 1;
     ndsum[m] += 1;    
     
@@ -180,7 +180,7 @@ int model::sampling(int m, int n, int w) {
 void model::compute_theta() {
     for (int m = 0; m < M; m++) {
         for (int k = 0; k < K; k++) {
-            theta(m, k) = (nd(m, k) + alpha) / (ndsum[m] + K * alpha);
+            theta.at(m, k) = (nd.at(m, k) + alpha) / (ndsum[m] + K * alpha);
         }
     }
 }
@@ -188,7 +188,7 @@ void model::compute_theta() {
 void model::compute_phi() {
     for (int k = 0; k < K; k++) {
         for (int w = 0; w < V; w++) {
-            phi(k, w) = (nw(w, k) + beta) / (nwsum[k] + V * beta);
+            phi.at(k, w) = (nw.at(w, k) + beta) / (nwsum[k] + V * beta);
         }
     }
 }
