@@ -9,13 +9,29 @@ textmodel_lda(
   k = 10,
   max_iter = 2000,
   seeds = NULL,
-  alpha = NULL,
-  beta = NULL,
+  alpha = 50/k,
+  beta = 0.1,
   verbose = quanteda_options("verbose")
 )
 }
+\arguments{
+\item{x}{the dfm on which the model will be fit}
+
+\item{k}{the number of topics}
+
+\item{max_iter}{the maximum number of iteration in Gibbs sampling}
+
+\item{seeds}{seed words that define topics to be identified in seeded LDA.}
+
+\item{verbose}{logical; if \code{TRUE} print diagnostic information during
+fitting.}
+}
 \description{
-Latent Dirichlet allocation
+Implements Latent Dirichlet allocation (LDA) based on Gibbs sampling. The
+code adopted from the GibbsLDA++ library.
+}
+\seealso{
+\link[=LDA]{topicmodels}
 }
 \keyword{experimental}
 \keyword{textmodel}

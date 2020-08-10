@@ -1,8 +1,19 @@
 #' Latent Dirichlet allocation
+#'
+#' Implements Latent Dirichlet allocation (LDA) based on Gibbs sampling. The
+#' code adopted from the GibbsLDA++ library.
+#' @param x the dfm on which the model will be fit
+#' @param k the number of topics
+#' @param max_iter the maximum number of iteration in Gibbs sampling
+#' @param verbose logical; if `TRUE` print diagnostic information during
+#'   fitting.
+#' @param seeds seed words that define topics to be identified in seeded LDA.
+#' @alpha the hyper parameter for
 #' @keywords textmodel experimental
+#' @seealso [topicmodels][topicmodels::LDA]
 #' @export
 textmodel_lda <- function(
-    x, k = 10, max_iter = 2000, seeds = NULL, alpha = NULL, beta = NULL, 
+    x, k = 10, max_iter = 2000, seeds = NULL, alpha = 50 / k, beta = 0.1, 
     verbose = quanteda_options("verbose")
 ) {
     UseMethod("textmodel_lda")
@@ -10,7 +21,7 @@ textmodel_lda <- function(
 
 #' @export
 textmodel_lda.dfm <- function(
-    x, k = 10, max_iter = 2000, seeds = NULL, alpha = NULL, beta = NULL,
+    x, k = 10, max_iter = 2000, seeds = NULL, alpha = 50 / k, beta = 0.1,
     verbose = quanteda_options("verbose")
 ) {
     if (is.null(alpha))
