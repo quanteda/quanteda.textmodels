@@ -31,8 +31,57 @@
 
 #include "lib.h"
 #include "dev.h"
-#include "model.h"
+
+using namespace std;
 using namespace Rcpp;
+using namespace quanteda;
+
+// LDA model
+class model {
+public:
+    // --- model parameters and variables ---    
+    int M; // dataset size (i.e., number of docs)
+    int V; // vocabulary size
+    int K; // number of topics
+    double alpha, beta; // LDA hyperparameters 
+    int niters; // number of Gibbs sampling iterations
+    int liter; // the iteration at which the model was saved
+    
+    arma::sp_mat data; // transposed document-feature matrix
+    arma::vec p; // temp variable for sampling
+    Texts z; // topic assignments for words, size M x doc.size()
+    arma::umat nw; // cwt[i][j]: number of instances of word/term i assigned to topic j, size V x K
+    arma::umat nd; // na[i][j]: number of words in document i assigned to topic j, size M x K
+    arma::urowvec nwsum; // nwsum[j]: total number of words assigned to topic j, size K
+    arma::ucolvec ndsum; // nasum[i]: total number of words in document i, size M
+    arma::mat theta; // theta: document-topic distributions, size M x K
+    arma::mat phi; // phi: topic-word distributions, size K x V
+    
+    // random number generators
+    std::default_random_engine generator;
+    std::uniform_real_distribution<double> random_prob;
+    std::uniform_int_distribution<int> random_topic;
+    
+    // --------------------------------------
+    
+    model() {
+	    set_default_values();
+    }
+          
+    // set default values for variables
+    void set_default_values();   
+    void set_data(arma::sp_mat mt);
+
+    // init for estimation
+    int init_est();
+	
+    // estimate LDA model using Gibbs sampling
+    void estimate();
+    int sampling(int m, int n, int w);
+    void compute_theta();
+    void compute_phi();
+    
+};
 
 void model::set_default_values() {
     
@@ -152,7 +201,7 @@ int model::sampling(int m, int n, int w) {
     // do multinomial sampling via cumulative method
     for (int k = 0; k < K; k++) {
         p[k] = (nw.at(w, k) + beta) / (nwsum[k] + Vbeta) *
-               (nd.at(m, k) + alpha) / (ndsum[m] + Kalpha);
+            (nd.at(m, k) + alpha) / (ndsum[m] + Kalpha);
     }
     // cumulate multinomial parameters
     for (int k = 1; k < K; k++) {
