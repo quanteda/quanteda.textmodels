@@ -64,6 +64,7 @@ Collate:
     'textmodel_affinity.R'
     'textmodel_ca.R'
     'textmodel_lsa.R'
+    'textmodel_lda.R'
     'textmodel_lr.R'
     'textmodel_nb.R'
     'textmodel_svm.R'

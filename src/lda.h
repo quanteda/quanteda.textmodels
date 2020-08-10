@@ -38,48 +38,49 @@ using namespace quanteda;
 
 // LDA model
 class model {
-public:
-    // --- model parameters and variables ---    
-    int M; // dataset size (i.e., number of docs)
-    int V; // vocabulary size
-    int K; // number of topics
-    double alpha, beta; // LDA hyperparameters 
-    int niters; // number of Gibbs sampling iterations
-    int liter; // the iteration at which the model was saved
+    public:
+        // --- model parameters and variables ---    
+        int M; // dataset size (i.e., number of docs)
+        int V; // vocabulary size
+        int K; // number of topics
+        double alpha, beta; // LDA hyperparameters 
+        int niters; // number of Gibbs sampling iterations
+        int liter; // the iteration at which the model was saved
+        bool verbose; // print progress message
+        
+        arma::sp_mat data; // transposed document-feature matrix
+        arma::vec p; // temp variable for sampling
+        Texts z; // topic assignments for words, size M x doc.size()
+        arma::umat nw; // cwt[i][j]: number of instances of word/term i assigned to topic j, size V x K
+        arma::umat nd; // na[i][j]: number of words in document i assigned to topic j, size M x K
+        arma::urowvec nwsum; // nwsum[j]: total number of words assigned to topic j, size K
+        arma::ucolvec ndsum; // nasum[i]: total number of words in document i, size M
+        arma::mat theta; // theta: document-topic distributions, size M x K
+        arma::mat phi; // phi: topic-word distributions, size K x V
+        
+        // random number generators
+        std::default_random_engine generator;
+        std::uniform_real_distribution<double> random_prob;
+        std::uniform_int_distribution<int> random_topic;
+        
+        // --------------------------------------
+        
+        model() {
+    	    set_default_values();
+        }
+              
+        // set default values for variables
+        void set_default_values();   
+        void set_data(arma::sp_mat mt);
     
-    arma::sp_mat data; // transposed document-feature matrix
-    arma::vec p; // temp variable for sampling
-    Texts z; // topic assignments for words, size M x doc.size()
-    arma::umat nw; // cwt[i][j]: number of instances of word/term i assigned to topic j, size V x K
-    arma::umat nd; // na[i][j]: number of words in document i assigned to topic j, size M x K
-    arma::urowvec nwsum; // nwsum[j]: total number of words assigned to topic j, size K
-    arma::ucolvec ndsum; // nasum[i]: total number of words in document i, size M
-    arma::mat theta; // theta: document-topic distributions, size M x K
-    arma::mat phi; // phi: topic-word distributions, size K x V
-    
-    // random number generators
-    std::default_random_engine generator;
-    std::uniform_real_distribution<double> random_prob;
-    std::uniform_int_distribution<int> random_topic;
-    
-    // --------------------------------------
-    
-    model() {
-	    set_default_values();
-    }
-          
-    // set default values for variables
-    void set_default_values();   
-    void set_data(arma::sp_mat mt);
-
-    // init for estimation
-    int init_est();
-	
-    // estimate LDA model using Gibbs sampling
-    void estimate();
-    int sampling(int m, int n, int w);
-    void compute_theta();
-    void compute_phi();
+        // init for estimation
+        int init_est();
+    	
+        // estimate LDA model using Gibbs sampling
+        void estimate();
+        int sampling(int m, int n, int w);
+        void compute_theta();
+        void compute_phi();
     
 };
 
@@ -92,20 +93,22 @@ void model::set_default_values() {
     beta = 0.1;
     niters = 2000;
     liter = 0;
-    
+    verbose = false;
 }
 
 void model::set_data(arma::sp_mat mt) {
     data = mt.t();
     M = data.n_cols; 
     V = data.n_rows;
-    printf("M = %d, V = %d\n", M, V);
+    //printf("M = %d, V = %d\n", M, V);
 }
 
 int model::init_est() {
     
-    printf("Initialize\n");
-    
+    if (verbose) {
+        Rprintf("Fitting LDA with %d topics\n", K);
+        Rprintf("   ...initializing\n");
+    }
     std::uniform_real_distribution<double> random_prob(0, 1);
     std::uniform_int_distribution<int> random_topic(0, K - 1);
     
@@ -122,8 +125,6 @@ int model::init_est() {
     
     //dev::Timer timer;
     //dev::start_timer("Set z", timer);
-    //srandom(time(0)); // initialize for random number generation
-    
     for (int m = 0; m < M; m++) {
         
         z[m] = Text(ndsum[m]);
@@ -154,14 +155,16 @@ int model::init_est() {
 
 void model::estimate() {
     
-    printf("Sampling %d iterations!\n", niters);
+    if (verbose)
+        Rprintf("   ...Gibbs sampling in %d itterations\n", niters);
     
     int last_iter = liter;
     for (liter = last_iter + 1; liter <= niters + last_iter; liter++) {
         
         if (liter % 100 == 0) {
             checkUserInterrupt();
-            //printf("Iteration %d ...\n", liter);
+            if (verbose)
+                Rprintf("   ...iteration %d\n", liter);
         }
         
         // for all z_i
@@ -181,10 +184,13 @@ void model::estimate() {
         }
     }
     
-    printf("Gibbs sampling completed!\n");
+    if (verbose)
+        Rprintf("   ...computing theta and phi\n");
     compute_theta();
     compute_phi();
     liter--;
+    if (verbose)
+        Rprintf("   ...complete\n");
 }
 
 int model::sampling(int m, int n, int w) {
