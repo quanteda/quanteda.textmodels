@@ -22,8 +22,11 @@ List qatd_cpp_lda(arma::sp_mat &mt, int k, int max_iter, double alpha, double be
     if (verbose)
         lda.verbose = verbose;
     if (lda.init_est() == 0) {
-        if (arma::size(seeds) == arma::size(lda.nw) && arma::accu(seeds) > 0)
-            lda.nw = lda.nw + arma::conv_to<arma::umat>::from(arma::mat(seeds));
+        if (arma::size(seeds) == arma::size(lda.nw) && arma::accu(seeds) > 0) {
+            arma::umat s = arma::conv_to<arma::umat>::from(arma::mat(seeds));
+            lda.nw = lda.nw + s;
+            //lda.nwsum = lda.nwsum + arma::sum(s, 0);
+        }
         lda.estimate();
     }
 
