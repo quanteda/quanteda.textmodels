@@ -212,7 +212,7 @@ int model::sampling(int m, int n, int w) {
     // do multinomial sampling via cumulative method
     for (int k = 0; k < K; k++) {
         p[k] = (nw.at(w, k) + beta) / (nwsum[k] + Vbeta) *
-            (nd.at(m, k) + alpha) / (ndsum[m] + Kalpha);
+               (nd.at(m, k) + alpha) / (ndsum[m] + Kalpha);
     }
     // cumulate multinomial parameters
     for (int k = 1; k < K; k++) {
