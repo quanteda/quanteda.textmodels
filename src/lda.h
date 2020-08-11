@@ -42,7 +42,7 @@ using namespace Rcpp;
 using namespace quanteda;
 
 // LDA model
-class model {
+class LDA {
     public:
         // --- model parameters and variables ---    
         int M; // dataset size (i.e., number of docs)
@@ -52,7 +52,7 @@ class model {
         int niters; // number of Gibbs sampling iterations
         int liter; // the iteration at which the model was saved
         int seed; // seed for random number generation
-        bool verbose; // print progress message
+        bool verbose; // print progress messages
         
         arma::sp_mat data; // transposed document-feature matrix
         arma::vec p; // temp variable for sampling
@@ -71,7 +71,7 @@ class model {
         
         // --------------------------------------
         
-        model() {
+        LDA() {
     	    set_default_values();
         }
               
@@ -91,7 +91,7 @@ class model {
     
 };
 
-void model::set_default_values() {
+void LDA::set_default_values() {
     
     M = 0;
     V = 0;
@@ -104,14 +104,14 @@ void model::set_default_values() {
     seed = rand();
 }
 
-void model::set_data(arma::sp_mat mt) {
+void LDA::set_data(arma::sp_mat mt) {
     data = mt.t();
     M = data.n_cols; 
     V = data.n_rows;
     //printf("M = %d, V = %d\n", M, V);
 }
 
-int model::init_est() {
+int LDA::init_est() {
     
     if (verbose) {
         Rprintf("Fitting LDA with %d topics\n", K);
@@ -163,7 +163,7 @@ int model::init_est() {
     return 0;
 }
 
-void model::estimate() {
+void LDA::estimate() {
     
     if (verbose)
         Rprintf("   ...Gibbs sampling in %d itterations\n", niters);
@@ -203,7 +203,7 @@ void model::estimate() {
         Rprintf("   ...complete\n");
 }
 
-int model::sampling(int m, int n, int w) {
+int LDA::sampling(int m, int n, int w) {
     
     // remove z_i from the count variables
     int topic = z[m][n];
@@ -242,7 +242,7 @@ int model::sampling(int m, int n, int w) {
     return topic;
 }
 
-void model::compute_theta() {
+void LDA::compute_theta() {
     for (int m = 0; m < M; m++) {
         for (int k = 0; k < K; k++) {
             theta.at(m, k) = (nd.at(m, k) + alpha) / (ndsum[m] + K * alpha);
@@ -250,7 +250,7 @@ void model::compute_theta() {
     }
 }
 
-void model::compute_phi() {
+void LDA::compute_phi() {
     for (int k = 0; k < K; k++) {
         for (int w = 0; w < V; w++) {
             phi.at(k, w) = (nw.at(w, k) + beta) / (nwsum[k] + V * beta);

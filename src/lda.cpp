@@ -9,7 +9,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 List qatd_cpp_lda(arma::sp_mat &mt, int k, int max_iter, double alpha, double beta,
                   arma::sp_mat &seeds, int seed, bool verbose) {
-    model lda;
+    LDA lda;
     lda.set_data(mt);
     lda.seed = seed;
     lda.K = k;
