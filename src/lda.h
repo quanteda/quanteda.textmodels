@@ -101,7 +101,7 @@ void LDA::set_default_values() {
     niters = 2000;
     liter = 0;
     verbose = false;
-    seed = rand();
+    seed = 1234;
 }
 
 void LDA::set_data(arma::sp_mat mt) {

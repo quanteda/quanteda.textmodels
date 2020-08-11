@@ -58,7 +58,7 @@ number of words in \code{x}.}
 \code{textmodel_lda()} implements Latent Dirichlet allocation (LDA) based on Gibbs
 sampling. The code adopted from the GibbsLDA++ library (Xuan-Hieu Phan,
 2007). \code{textmodel_seededlda()} allows identification of pre-defined topics by
-semisupervided learning with a seed word dictionary.
+semisupervised learning with a seed word dictionary.
 }
 \references{
 Lu, Bin et al. (2011).
