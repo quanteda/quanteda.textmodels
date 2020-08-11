@@ -51,6 +51,7 @@ class model {
         double alpha, beta; // LDA hyperparameters 
         int niters; // number of Gibbs sampling iterations
         int liter; // the iteration at which the model was saved
+        int seed; // seed for random number generation
         bool verbose; // print progress message
         
         arma::sp_mat data; // transposed document-feature matrix
@@ -76,6 +77,7 @@ class model {
               
         // set default values for variables
         void set_default_values();   
+        void set_random_seed(int seed);
         void set_data(arma::sp_mat mt);
     
         // init for estimation
@@ -99,6 +101,7 @@ void model::set_default_values() {
     niters = 2000;
     liter = 0;
     verbose = false;
+    seed = rand();
 }
 
 void model::set_data(arma::sp_mat mt) {
@@ -114,8 +117,10 @@ int model::init_est() {
         Rprintf("Fitting LDA with %d topics\n", K);
         Rprintf("   ...initializing\n");
     }
-    std::uniform_real_distribution<double> random_prob(0, 1);
-    std::uniform_int_distribution<int> random_topic(0, K - 1);
+    
+    std::default_random_engine generator(seed);
+    std::uniform_real_distribution< double > random_prob(0, 1);
+    std::uniform_int_distribution< int > random_topic(0, K - 1);
     
     z = Texts(M);
     

@@ -8,10 +8,10 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 List qatd_cpp_lda(arma::sp_mat &mt, int k, int max_iter, double alpha, double beta,
-                  arma::sp_mat &seeds, bool verbose) {
+                  arma::sp_mat &seeds, int seed, bool verbose) {
     model lda;
     lda.set_data(mt);
-    
+    lda.seed = seed;
     lda.K = k;
     if (max_iter > 0)
         lda.niters = max_iter;
@@ -23,6 +23,7 @@ List qatd_cpp_lda(arma::sp_mat &mt, int k, int max_iter, double alpha, double be
         lda.verbose = verbose;
     if (lda.init_est() == 0) {
         if (arma::size(seeds) == arma::size(lda.nw) && arma::accu(seeds) > 0) {
+            // set pseudo count as weak supervision
             arma::umat s = arma::conv_to<arma::umat>::from(arma::mat(seeds));
             lda.nw = lda.nw + s;
             //lda.nwsum = lda.nwsum + arma::sum(s, 0);
