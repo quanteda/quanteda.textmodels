@@ -3,7 +3,7 @@
 #' `textmodel_lda()` implements Latent Dirichlet allocation (LDA) based on Gibbs
 #' sampling. The code adopted from the GibbsLDA++ library (Xuan-Hieu Phan,
 #' 2007). `textmodel_seededlda()` allows identification of pre-defined topics by
-#' semisupervided learning with a seed word dictionary.
+#' semisupervised learning with a seed word dictionary.
 #' @param x the dfm on which the model will be fit
 #' @param k the number of topics
 #' @param max_iter the maximum number of iteration in Gibbs sampling.
@@ -28,7 +28,7 @@ textmodel_lda.dfm <- function(
 ) {
     
     label <- paste0("topic", seq_len(k))
-    lda(x, k, label, max_iter, alpha, beta, NULL, seed, verbose)
+    lda(x, k, label, max_iter, alpha, beta, NULL, verbose)
 }
 
 #' @rdname textmodel_lda
@@ -75,10 +75,10 @@ textmodel_seededlda.dfm <- function(
         stop("seeds must have the same features")
     k <- ncol(seeds)
     label <- colnames(seeds)
-    lda(x, k, label, max_iter, alpha, beta, seeds, seed, verbose)
+    lda(x, k, label, max_iter, alpha, beta, seeds, verbose)
 }
 
-lda <- function(x, k, label, max_iter, alpha, beta, seeds, seed, verbose) {
+lda <- function(x, k, label, max_iter, alpha, beta, seeds, verbose) {
     
     k <- as.integer(k)
     max_iter <- as.integer(max_iter)
