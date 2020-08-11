@@ -31,7 +31,10 @@ List qatd_cpp_lda(arma::sp_mat &mt, int k, int max_iter, double alpha, double be
         lda.estimate();
     }
 
-    return List::create(Rcpp::Named("iter") = lda.liter,
+    return List::create(Rcpp::Named("k") = lda.K,
+                        Rcpp::Named("iter") = lda.liter,
+                        Rcpp::Named("alpha") = lda.alpha,
+                        Rcpp::Named("beta") = lda.beta,
                         Rcpp::Named("phi") = wrap(lda.phi),
                         Rcpp::Named("theta") = wrap(lda.theta));
 }
