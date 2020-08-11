@@ -2,15 +2,28 @@
 % Please edit documentation in R/textmodel_lda.R
 \name{textmodel_lda}
 \alias{textmodel_lda}
+\alias{textmodel_seededlda}
 \title{Latent Dirichlet allocation}
 \usage{
 textmodel_lda(
   x,
   k = 10,
   max_iter = 2000,
-  seeds = NULL,
-  alpha = 50/k,
-  beta = 0.1,
+  alpha = NULL,
+  beta = NULL,
+  verbose = quanteda_options("verbose")
+)
+
+textmodel_seededlda(
+  x,
+  dictionary,
+  valuetype = c("glob", "regex", "fixed"),
+  case_insensitive = TRUE,
+  residual = FALSE,
+  weight = 0.01,
+  max_iter = 2000,
+  alpha = NULL,
+  beta = NULL,
   verbose = quanteda_options("verbose")
 )
 }
@@ -19,19 +32,45 @@ textmodel_lda(
 
 \item{k}{the number of topics}
 
-\item{max_iter}{the maximum number of iteration in Gibbs sampling}
+\item{max_iter}{the maximum number of iteration in Gibbs sampling.}
 
-\item{seeds}{seed words that define topics to be identified in seeded LDA.}
+\item{alpha}{the hyper parameter for topic-document distribution}
+
+\item{beta}{the hyper parameter for topic-word distribution}
 
 \item{verbose}{logical; if \code{TRUE} print diagnostic information during
 fitting.}
+
+\item{dictionary}{a \link[quanteda:dictionary]{dictionary} with seed words as
+examples of topics.}
+
+\item{valuetype}{see \link[quanteda:valuetype]{valuetype}}
+
+\item{case_insensitive}{see \link[quanteda:valuetype]{valuetype}}
+
+\item{residual}{if \code{TRUE} a residual topic (or "garbage topic") will be
+added to user-defined topics.}
+
+\item{weight}{pseudo count given to seed words as a proportion of total
+number of words in \code{x}.}
 }
 \description{
-Implements Latent Dirichlet allocation (LDA) based on Gibbs sampling. The
-code adopted from the GibbsLDA++ library.
+\code{textmodel_lda()} implements Latent Dirichlet allocation (LDA) based on Gibbs
+sampling. The code adopted from the GibbsLDA++ library (Xuan-Hieu Phan,
+2007). \code{textmodel_seededlda()} allows identification of pre-defined topics by
+semisupervided learning with a seed word dictionary.
+}
+\references{
+Lu, Bin et al. (2011).
+\href{https://dl.acm.org/doi/10.5555/2117693.2119585}{Multi-aspect Sentiment Analysis with Topic Models}.
+\emph{Proceedings of the 2011 IEEE 11th International Conference on Data Mining Workshops}.
+
+Watanabe, Kohei & Zhou, Yuan (2020).
+\href{https://doi.org/10.1177/0894439320907027}{Theory-Driven Analysis of Large Corpora: Semisupervised Topic Classification of the UN Speeches}.
+\emph{Social Science Computer Review}.
 }
 \seealso{
-\link[=LDA]{topicmodels}
+\link[topicmodels:lda]{topicmodels}
 }
 \keyword{experimental}
 \keyword{textmodel}
