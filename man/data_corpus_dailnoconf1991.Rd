@@ -4,8 +4,10 @@
 \name{data_corpus_dailnoconf1991}
 \alias{data_corpus_dailnoconf1991}
 \title{Confidence debate from 1991 Irish Parliament}
-\format{\code{data_corpus_dailnoconf1991} is a corpus with 58 texts,
-including docvars for \code{name}, \code{party}, and \code{position}.}
+\format{
+\code{data_corpus_dailnoconf1991} is a corpus with 58 texts,
+including docvars for \code{name}, \code{party}, and \code{position}.
+}
 \source{
 \url{https://www.oireachtas.ie/en/debates/debate/dail/1991-10-16/10/}
 }
