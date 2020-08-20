@@ -38,6 +38,7 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Vikas Sindhwani \email{vikas.sindhwani@gmail.com} (authored svmlin C++ source code) [copyright holder]
   \item European Research Council (ERC-2011-StG 283794-QUANTESS) [funder]
 }
 

@@ -9,7 +9,6 @@ textmodel_svmlin(
   y,
   intercept = TRUE,
   lambda = 1,
-  max_switch = 10000,
   cp = 1,
   cn = 1,
   scale = FALSE,
@@ -26,8 +25,6 @@ in \code{train}.  (These will be converted to factors if not already factors.)}
 \item{intercept}{logical; if \code{TRUE}, add an intercept to the data}
 
 \item{lambda}{numeric; regularization parameter lambda (default 1)}
-
-\item{max_switch}{integer; Maximum number of switches in TSVM (default 10000)}
 
 \item{scale}{logical; if \code{TRUE}, normalize the feature counts}
 

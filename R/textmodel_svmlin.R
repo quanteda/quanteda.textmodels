@@ -12,7 +12,6 @@
 #'   in `train`.  (These will be converted to factors if not already factors.)
 #' @param intercept logical; if `TRUE`, add an intercept to the data
 #' @param lambda numeric; regularization parameter lambda (default 1)
-#' @param max_switch integer; Maximum number of switches in TSVM (default 10000)
 #' @param scale	logical; if `TRUE`, normalize the feature counts
 #' @param center logical; if `TRUE`, centre the feature counts
 #' @return a fitted model object of class `textmodel_svmlin`
@@ -41,10 +40,9 @@
 #' @keywords textmodel
 #' @export
 textmodel_svmlin <- function(x, y, intercept = TRUE, # x_u = NULL,
+                             lambda = 1,
                              # algorithm = 1,
-                             lambda = 1, # lambda_u = 1,
-                             max_switch = 10000,
-                             # pos_frac = 0.5,
+                             # lambda_u = 1, max_switch = 10000, # pos_frac = 0.5,
                              cp = 1, cn = 1,
                              scale = FALSE, x_center = FALSE) {
     UseMethod("textmodel_svmlin")
@@ -52,10 +50,9 @@ textmodel_svmlin <- function(x, y, intercept = TRUE, # x_u = NULL,
 
 #' @export
 textmodel_svmlin.default <-  function(x, y, intercept = TRUE, # x_u = NULL,
+                                      lambda = 1,
                                       # algorithm = 1,
-                                      lambda = 1, # lambda_u = 1,
-                                      max_switch = 10000,
-                                      # pos_frac = 0.5,
+                                      # lambda_u = 1, max_switch = 10000, # pos_frac = 0.5,
                                       cp = 1, cn = 1,
                                       scale = FALSE, x_center = FALSE) {
   stop(friendly_class_undefined_message(class(x), "textmodel_svmlin"))
@@ -64,10 +61,9 @@ textmodel_svmlin.default <-  function(x, y, intercept = TRUE, # x_u = NULL,
 #' @export
 #' @importFrom methods as
 textmodel_svmlin.dfm <-  function(x, y, intercept = TRUE, # x_u = NULL,
+                                  lambda = 1,
                                   # algorithm = 1,
-                                  lambda = 1, # lambda_u = 1,
-                                  max_switch = 10000,
-                                  # pos_frac = 0.5,
+                                  # lambda_u = 1, max_switch = 10000, # pos_frac = 0.5,
                                   cp = 1, cn = 1,
                                   scale = FALSE, x_center = FALSE) {
     x <- as.dfm(x)
