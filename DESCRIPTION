@@ -32,7 +32,6 @@ Imports:
     RSpectra,
     Rcpp (>= 0.12.12),
     RcppParallel,
-    RSSL,
     SparseM,
     stringi
 Suggests:
