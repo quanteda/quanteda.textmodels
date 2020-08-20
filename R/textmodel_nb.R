@@ -210,7 +210,12 @@ predict.textmodel_nb <- function(object, newdata = NULL,
                                  force = FALSE, ...) {
     unused_dots(...)
     type <- match.arg(type)
-
+    if ("Pc" %in% names(object)) {
+      names(object)[which(names(object) == "Pc")] <- "priors"
+    }
+    if ("PwGc" %in% names(object)) {
+      names(object)[which(names(object) == "PwGc")] <- "param"
+    }
     newdata <- if (!is.null(newdata)) as.dfm(newdata) else as.dfm(object$x)
     newdata <- force_conformance(newdata, colnames(object$param), force)
 
@@ -293,14 +298,17 @@ summary.textmodel_nb <- function(object, n = 30, ...) {
     as.summary.textmodel(result)
 }
 
-#' @noRd
+#' @rdname predict.textmodel_nb
 #' @method coef textmodel_nb
+#' @return `coef.textmodel_nb()` returns a matrix of estimated
+#'   word likelihoods given the class.  (In earlier versions,
+#'   this was named `PwGc`.)
 #' @export
 coef.textmodel_nb <- function(object, ...) {
     t(object$param)
 }
 
-#' @noRd
+#' @rdname predict.textmodel_nb
 #' @method coefficients textmodel_nb
 #' @export
 coefficients.textmodel_nb <- function(object, ...) {
