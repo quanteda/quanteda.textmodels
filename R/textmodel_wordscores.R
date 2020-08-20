@@ -145,6 +145,8 @@ textmodel_wordscores.dfm <- function(x, y, scale = c("linear", "logit"), smooth 
 #' predict(tmod, se.fit = TRUE, interval = "confidence")
 #' predict(tmod, se.fit = TRUE, interval = "confidence", rescaling = "lbg")
 #' @keywords textmodel internal
+#' @importFrom stats predict
+#' @method predict textmodel_wordscores
 #' @export
 #' @importFrom stats qnorm median sd
 predict.textmodel_wordscores <- function(object,

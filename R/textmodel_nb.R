@@ -201,6 +201,8 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
 #' (tmod <- textmodel_nb(data_dfm_lbgexample, y = c("A", "A", "B", "C", "C", NA)))
 #' predict(tmod)
 #' predict(tmod, type = "logposterior")
+#' @importFrom stats predict
+#' @method predict textmodel_nb
 #' @keywords textmodel internal
 #' @export
 predict.textmodel_nb <- function(object, newdata = NULL,

@@ -4,27 +4,44 @@
 \alias{textmodel_svmlin}
 \title{(faster) Linear SVM classifier for texts}
 \usage{
-textmodel_svmlin(x, y, intercept = TRUE, ...)
+textmodel_svmlin(
+  x,
+  y,
+  intercept = TRUE,
+  lambda = 1,
+  max_switch = 10000,
+  cp = 1,
+  cn = 1,
+  scale = FALSE,
+  x_center = FALSE
+)
 }
 \arguments{
-\item{x}{the \link{dfm} on which the model will be fit.  Does not need to
-contain only the training documents.}
+\item{x}{the \link{dfm} on which the model will be fit.  Does not need to contain
+only the training documents.}
 
 \item{y}{vector of training labels associated with each document identified
-in \code{train}.  (These will be converted to factors if not already
-factors.)}
+in \code{train}.  (These will be converted to factors if not already factors.)}
 
 \item{intercept}{logical; if \code{TRUE}, add an intercept to the data}
 
-\item{...}{additional arguments passed to \code{\link[RSSL:svmlin]{RSSL::svmlin()}}}
+\item{lambda}{numeric; regularization parameter lambda (default 1)}
+
+\item{max_switch}{integer; Maximum number of switches in TSVM (default 10000)}
+
+\item{scale}{logical; if \code{TRUE}, normalize the feature counts}
+
+\item{center}{logical; if \code{TRUE}, centre the feature counts}
 }
 \value{
 a fitted model object of class \code{textmodel_svmlin}
 }
 \description{
-Fit a fast linear SVM classifier for texts, using svmlin C++ code written by
-Vikas Sindhwani and S. Sathiya Keerthi for fast linear transductive SVMs.
-This operates directly and efficiently on sparse dfm objects.
+Fit a fast linear SVM classifier for sparse text matrices, using svmlin C++
+code written by Vikas Sindhwani and S. Sathiya Keerthi.  This method
+implements the modified finite Newton L2-SVM method (L2-SVM-MFN) method
+described in Sindhwani and Keerthi (2006). Currently,
+\code{textmodel_svmlin()} only works for two-class problems.
 }
 \examples{
 # use Lenihan for govt class and Bruton for opposition
@@ -32,21 +49,20 @@ quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
     c("Govt", "Opp", rep(NA, 12))
 dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
 
-tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"),
-                         pos_frac = 5/14)
+tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
 predict(tmod)
 
-predict(textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"),
-                         intercept = FALSE, pos_frac = 5/14))
+predict(textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
 }
 \references{
-Vikas Sindhwani and S. Sathiya Keerthi (2006).  Large Scale Semi-supervised
-Linear SVMs. \emph{Proceedings of ACM SIGIR}.
+Vikas Sindhwani and S. Sathiya Keerthi (2006).  \href{https://vikas.sindhwani.org/sk_sigir06.pdf}{Large Scale Semi-supervised Linear SVMs}. \emph{Proceedings of ACM
+SIGIR}. August 6–11, 2006, Seattle.
 
-V. Sindhwani and S. Sathiya Keerthi (2006).  Newton Methods for Fast Solution of Semi-supervised
-Linear SVMs. Book Chapter in \emph{Large Scale Kernel Machines}, MIT Press, 2006.
+V. Sindhwani and S. Sathiya Keerthi (2006).  Newton Methods for Fast Solution
+of Semi-supervised Linear SVMs. Book Chapter in \emph{Large Scale Kernel
+Machines}, MIT Press, 2006.
 }
 \seealso{
-\code{\link[RSSL:svmlin]{RSSL::svmlin()}}, \code{text{textmodel_svm}}
+\code{\link[=predict.textmodel_svmlin]{predict.textmodel_svmlin()}}
 }
 \keyword{textmodel}

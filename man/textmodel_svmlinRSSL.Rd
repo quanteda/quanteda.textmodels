@@ -57,4 +57,5 @@ Linear SVMs. Book Chapter in \emph{Large Scale Kernel Machines}, MIT Press, 2006
 \seealso{
 \code{\link[RSSL:svmlin]{RSSL::svmlin()}}, \code{text{textmodel_svm}}
 }
+\keyword{internal}
 \keyword{textmodel}

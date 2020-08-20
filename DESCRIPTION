@@ -17,6 +17,8 @@ Authors@R: c(
     person("Patrick O.", "Perry", email = "patperry@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-7460-127X")),
     person("Benjamin", "Lauderdale", email = "b.e.lauderdale@lse.ac.uk", role = "aut", comment = c(ORCID = "0000-0003-3090-0969")),    
     person("William", "Lowe", email = "wlowe@princeton.edu", role = "aut", comment = c(ORCID = "0000-0002-1549-6163")),
+    person("Vikas", "Sindhwani", email = "vikas.sindhwani@gmail.com", role = "cph", 
+           comment = "authored svmlin C++ source code"),
     person("European Research Council", role = "fnd", comment = "ERC-2011-StG 283794-QUANTESS")
     )
 Depends:
@@ -51,7 +53,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Language: en-GB
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 SystemRequirements: C++11
 Roxygen: list(markdown = TRUE)
 Collate: 
@@ -65,6 +67,7 @@ Collate:
     'textmodel_nb.R'
     'textmodel_svm.R'
     'textmodel_svmlin.R'
+    'textmodel_svmlinRSSL.R'
     'textmodel_wordfish.R'
     'textmodel_wordscores.R'
     'textplot_influence.R'

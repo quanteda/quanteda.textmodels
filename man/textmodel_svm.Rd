@@ -48,5 +48,5 @@ LIBLINEAR: A Library for Large Linear Classification.
 \url{http://www.csie.ntu.edu.tw/~cjlin/liblinear}.
 }
 \seealso{
-\code{\link[LiblineaR:LiblineaR]{LiblineaR::LiblineaR()}}
+\code{\link[LiblineaR:LiblineaR]{LiblineaR::LiblineaR()}} \code{\link[=predict.textmodel_svm]{predict.textmodel_svm()}}
 }

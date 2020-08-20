@@ -18,7 +18,7 @@
 #' LIBLINEAR: A Library for Large Linear Classification.
 #' *Journal of Machine Learning Research* 9: 1871-1874.
 #' <http://www.csie.ntu.edu.tw/~cjlin/liblinear>.
-#' @seealso [LiblineaR::LiblineaR()]
+#' @seealso [LiblineaR::LiblineaR()] [predict.textmodel_svm()]
 #' @examples
 #' # use party leaders for govt and opposition classes
 #' quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
@@ -107,6 +107,8 @@ textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq")
 #' @seealso [textmodel_svm()]
 #' @keywords textmodel internal
 #' @importFrom SparseM as.matrix.csr
+#' @importFrom stats predict
+#' @method predict textmodel_svm
 #' @export
 predict.textmodel_svm <- function(object, newdata = NULL,
                                   type = c("class", "probability"),
