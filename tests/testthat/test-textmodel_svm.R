@@ -124,7 +124,8 @@ test_that("the svmlin model works", {
                      d4 = "Tokyo Japan Chinese",
                      d5 = "Chinese Chinese Chinese Tokyo Japan"),
                    docvars = data.frame(train = factor(c("Y", "Y", "Y", "N", NA))))
-    dfmat <- quanteda::dfm(corp, tolower = FALSE) %>% dfm_tfidf()
+    dfmat <- quanteda::dfm(corp, tolower = FALSE) %>%
+        quanteda::dfm_tfidf()
     tmod <- textmodel_svmlin(dfmat, y = docvars(dfmat, "train"))
 
     expect_output(

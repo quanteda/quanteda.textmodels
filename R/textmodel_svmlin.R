@@ -12,6 +12,10 @@
 #'   in `train`.  (These will be converted to factors if not already factors.)
 #' @param intercept logical; if `TRUE`, add an intercept to the data
 #' @param lambda numeric; regularization parameter lambda (default 1)
+#' @param cp numeric; Relative cost for "positive" examples (the second factor
+#'   level)
+#' @param cn numeric; Relative cost for "negative" examples (the first factor
+#'   level)
 #' @param scale	logical; if `TRUE`, normalize the feature counts
 #' @param center logical; if `TRUE`, centre the feature counts
 #' @return a fitted model object of class `textmodel_svmlin`
@@ -33,8 +37,6 @@
 #'
 #' tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
 #' predict(tmod)
-#'
-#' predict(textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
 #' @importFrom quanteda dfm_group as.dfm
 #' @importFrom stats na.omit predict
 #' @keywords textmodel
@@ -44,7 +46,7 @@ textmodel_svmlin <- function(x, y, intercept = TRUE, # x_u = NULL,
                              # algorithm = 1,
                              # lambda_u = 1, max_switch = 10000, # pos_frac = 0.5,
                              cp = 1, cn = 1,
-                             scale = FALSE, x_center = FALSE) {
+                             scale = FALSE, center = FALSE) {
     UseMethod("textmodel_svmlin")
 }
 
@@ -54,7 +56,7 @@ textmodel_svmlin.default <-  function(x, y, intercept = TRUE, # x_u = NULL,
                                       # algorithm = 1,
                                       # lambda_u = 1, max_switch = 10000, # pos_frac = 0.5,
                                       cp = 1, cn = 1,
-                                      scale = FALSE, x_center = FALSE) {
+                                      scale = FALSE, center = FALSE) {
   stop(friendly_class_undefined_message(class(x), "textmodel_svmlin"))
 }
 
@@ -65,7 +67,7 @@ textmodel_svmlin.dfm <-  function(x, y, intercept = TRUE, # x_u = NULL,
                                   # algorithm = 1,
                                   # lambda_u = 1, max_switch = 10000, # pos_frac = 0.5,
                                   cp = 1, cn = 1,
-                                  scale = FALSE, x_center = FALSE) {
+                                  scale = FALSE, center = FALSE) {
     x <- as.dfm(x)
     if (!sum(x)) stop(message_error("dfm_empty"))
     call <- match.call()
