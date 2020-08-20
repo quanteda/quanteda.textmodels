@@ -10,6 +10,6 @@
 \item{x}{input \link{dfm}}
 }
 \description{
-Utility to convert a dfm into a \link[SparseM]{matrix.csr} from the \pkg{SparseM} package.
+Utility to convert a dfm into a \link[SparseM:SparseM.ontology]{matrix.csr} from the \pkg{SparseM} package.
 }
 \keyword{internal}

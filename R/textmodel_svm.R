@@ -2,23 +2,23 @@
 #'
 #' Fit a fast linear SVM classifier for texts, using the
 #' \pkg{LiblineaR} package.
-#' @param x the \link{dfm} on which the model will be fit.  Does not need to
+#' @param x the [dfm] on which the model will be fit.  Does not need to
 #'   contain only the training documents.
 #' @param y vector of training labels associated with each document identified
-#'   in \code{train}.  (These will be converted to factors if not already
+#'   in `train`.  (These will be converted to factors if not already
 #'   factors.)
 #' @param weight weights for different classes for imbalanced training sets,
-#'   passed to \code{wi} in \code{\link[LiblineaR]{LiblineaR}}. \code{"uniform"}
-#'   uses default; \code{"docfreq"} weights by the number of training examples,
-#'   and \code{"termfreq"} by the relative sizes of the training classes in
+#'   passed to `wi` in [LiblineaR::LiblineaR()]. `"uniform"`
+#'   uses default; `"docfreq"` weights by the number of training examples,
+#'   and `"termfreq"` by the relative sizes of the training classes in
 #'   terms of their total lengths in tokens.
-#' @param ... additional arguments passed to \code{\link[LiblineaR]{LiblineaR}}
+#' @param ... additional arguments passed to [LiblineaR::LiblineaR()]
 #' @references
 #' R. E. Fan, K. W. Chang, C. J. Hsieh, X. R. Wang, and C. J. Lin. (2008)
 #' LIBLINEAR: A Library for Large Linear Classification.
-#' \emph{Journal of Machine Learning Research} 9: 1871-1874.
-#' \url{http://www.csie.ntu.edu.tw/~cjlin/liblinear}.
-#' @seealso \code{\link[LiblineaR]{LiblineaR}}
+#' *Journal of Machine Learning Research* 9: 1871-1874.
+#' <http://www.csie.ntu.edu.tw/~cjlin/liblinear>.
+#' @seealso [LiblineaR::LiblineaR()]
 #' @examples
 #' # use party leaders for govt and opposition classes
 #' quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
@@ -93,18 +93,18 @@ textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq")
 
 #' Prediction from a fitted textmodel_svm object
 #'
-#' \code{predict.textmodel_svm()} implements class predictions from a fitted
+#' `predict.textmodel_svm()` implements class predictions from a fitted
 #' linear SVM model.
 #' @param object a fitted linear SVM textmodel
 #' @param newdata dfm on which prediction should be made
 #' @param type the type of predicted values to be returned; see Value
 #' @param force make newdata's feature set conformant to the model terms
 #' @param ... not used
-#' @return \code{predict.textmodel_svm} returns either a vector of class
-#'   predictions for each row of \code{newdata} (when \code{type = "class"}), or
-#'   a document-by-class matrix of class probabilities (when \code{type =
-#'   "probability"}).
-#' @seealso \code{\link{textmodel_svm}}
+#' @return `predict.textmodel_svm` returns either a vector of class
+#'   predictions for each row of `newdata` (when `type = "class"`), or
+#'   a document-by-class matrix of class probabilities (when `type =
+#'   "probability"`).
+#' @seealso [textmodel_svm()]
 #' @keywords textmodel internal
 #' @importFrom SparseM as.matrix.csr
 #' @export
@@ -159,7 +159,7 @@ print.textmodel_svm <- function(x, ...) {
 }
 
 #' summary method for textmodel_svm objects
-#' @param object output from \code{\link{textmodel_svm}}
+#' @param object output from [textmodel_svm()]
 #' @param n how many coefficients to print before truncating
 #' @param ... additional arguments not used
 #' @keywords textmodel internal
@@ -197,8 +197,8 @@ print.predict.textmodel_svm <- function(x, ...) {
 
 #' convert a dfm into a matrix.csr from SparseM package
 #'
-#' Utility to convert a dfm into a \link[SparseM]{matrix.csr} from the \pkg{SparseM} package.
-#' @param x input \link{dfm}
+#' Utility to convert a dfm into a [matrix.csr][SparseM::matrix.csr] from the \pkg{SparseM} package.
+#' @param x input [dfm]
 #' @importFrom SparseM as.matrix.csr
 #' @importFrom methods new
 #' @method as.matrix.csr dfm
