@@ -12,7 +12,7 @@ textmodel_svmlin(
   cp = 1,
   cn = 1,
   scale = FALSE,
-  x_center = FALSE
+  center = FALSE
 )
 }
 \arguments{
@@ -25,6 +25,12 @@ in \code{train}.  (These will be converted to factors if not already factors.)}
 \item{intercept}{logical; if \code{TRUE}, add an intercept to the data}
 
 \item{lambda}{numeric; regularization parameter lambda (default 1)}
+
+\item{cp}{numeric; Relative cost for "positive" examples (the second factor
+level)}
+
+\item{cn}{numeric; Relative cost for "negative" examples (the first factor
+level)}
 
 \item{scale}{logical; if \code{TRUE}, normalize the feature counts}
 
@@ -48,8 +54,6 @@ dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
 
 tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
 predict(tmod)
-
-predict(textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
 }
 \references{
 Vikas Sindhwani and S. Sathiya Keerthi (2006).  \href{https://vikas.sindhwani.org/sk_sigir06.pdf}{Large Scale Semi-supervised Linear SVMs}. \emph{Proceedings of ACM

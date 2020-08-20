@@ -87,7 +87,7 @@ textmodel_svmlin.dfm <-  function(x, y, intercept = TRUE, # x_u = NULL,
                            # max_switch = max_switch,
                            # pos_frac = pos_frac,
                            Cp = cp, Cn = cn, verbose = FALSE,
-                           scale = scale, x_center = x_center)
+                           scale = scale, x_center = center)
 
     result <- list(
         x = x, y = y,

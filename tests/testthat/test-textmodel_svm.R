@@ -85,7 +85,7 @@ test_that("the svm model works with bias = 0", {
                    docvars = data.frame(train = factor(c("Y", "Y", "Y", "N", NA))))
     dfmat <- quanteda::dfm(corp, tolower = FALSE)
     set.seed(10)
-    tmod <- textmodel_svm(dfmat, y = docvars(dfmat, "train"), bias = 0)
+    tmod <- textmodel_svm(dfmat, y = quanteda::docvars(dfmat, "train"), bias = 0)
     expect_identical(
         predict(tmod, type = "class"),
         factor(c(d1 = "Y", d2 = "Y", d3 = "Y", d4 = "N", d5 = "Y"))
@@ -126,7 +126,7 @@ test_that("the svmlin model works", {
                    docvars = data.frame(train = factor(c("Y", "Y", "Y", "N", NA))))
     dfmat <- quanteda::dfm(corp, tolower = FALSE) %>%
         quanteda::dfm_tfidf()
-    tmod <- textmodel_svmlin(dfmat, y = docvars(dfmat, "train"))
+    tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "train"))
 
     expect_output(
         print(tmod),
@@ -139,7 +139,7 @@ test_that("the svmlin model works", {
         tol = .001
     )
 
-    tmod2 <- textmodel_svmlin(dfmat, y = docvars(dfmat, "train"), intercept = FALSE)
+    tmod2 <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "train"), intercept = FALSE)
     expect_identical(
         predict(tmod2),
         c(d1 = "Y", d2 = "Y", d3 = "Y", d4 = "N", d5 = "N")
