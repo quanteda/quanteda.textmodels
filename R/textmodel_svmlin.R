@@ -220,7 +220,7 @@ svmlin <- function(X, y, X_u = NULL, algorithm = 1, lambda = 1, lambda_u = 1, ma
   use_Xu_for_scaling <- TRUE
   classnames <- levels(y)
 
-    if (scale | x_center) {
+    if (scale || x_center) {
         if (intercept) {
             cols <- 2:ncol(X) # do not scale the intercept column
         } else {

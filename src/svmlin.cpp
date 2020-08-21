@@ -123,7 +123,7 @@ List svmlin_rcpp(S4 X,
             Outputs);
 //Clear(Data);
 
-  return Rcpp::List::create(Rcpp::Named("Weights") = std::vector<double>(Weights->vec, Weights->vec+Weights->d),
-                              Rcpp::Named("Outputs") = std::vector<double>(Outputs->vec, Outputs->vec+Outputs->d)
+  return Rcpp::List::create(Rcpp::Named("Weights") = Rcpp::NumericVector(Weights->vec, Weights->vec+Weights->d),
+                              Rcpp::Named("Outputs") = Rcpp::NumericVector(Outputs->vec, Outputs->vec+Outputs->d)
                               );
 }
