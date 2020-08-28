@@ -22,7 +22,7 @@ sentences, which can theoretically range between 0 and 1. Only coders with trust
 0.8 are included in the corpus.}
 }
 
-A \link[quanteda]{corpus} object.
+A \link[quanteda:corpus]{corpus} object.
 }
 \usage{
 data_corpus_EPcoaldebate
@@ -43,8 +43,7 @@ the coding approach see
 }
 \references{
 Benoit, K., Conway, D., Lauderdale, B.E., Laver, M., & Mikhaylov,
-S. (2016). \href{https://doi.org/10.1017/S0003055416000058}{Crowd-sourced
-Text Analysis: Reproducible and Agile Production of Political Data}.
+S. (2016). \href{https://doi.org/10.1017/S0003055416000058}{Crowd-sourced Text Analysis: Reproducible and Agile Production of Political Data}.
 \emph{American Political Science Review}, 100,(2), 278--295.
 }
 \keyword{data}

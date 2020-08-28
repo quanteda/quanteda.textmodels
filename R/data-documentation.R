@@ -92,7 +92,7 @@
 #'   Greek, Italian, Polish and Spanish. The unit of observation is the
 #'   individual crowd coding of each natural sentence. For more information on
 #'   the coding approach see
-#'   \href{https://doi.org/10.1017/S0003055416000058}{Benoit et al. (2016)}.
+#'   [Benoit et al. (2016)](https://doi.org/10.1017/S0003055416000058).
 #' @format
 #'   The corpus consists of 16,806 documents (i.e. codings of a sentence) and includes the following
 #'   document-level variables: \describe{
@@ -111,11 +111,11 @@
 #'    0.8 are included in the corpus.}
 #'   }
 #' @references Benoit, K., Conway, D., Lauderdale, B.E., Laver, M., & Mikhaylov,
-#'   S. (2016). \href{https://doi.org/10.1017/S0003055416000058}{Crowd-sourced
-#'   Text Analysis: Reproducible and Agile Production of Political Data}.
-#'   \emph{American Political Science Review}, 100,(2), 278--295.
+#'   S. (2016). [Crowd-sourced
+#'   Text Analysis: Reproducible and Agile Production of Political Data](https://doi.org/10.1017/S0003055416000058).
+#'   *American Political Science Review*, 100,(2), 278--295.
 #' @format
-#'  A \link[quanteda]{corpus} object.
+#'  A [corpus][quanteda::corpus] object.
 #' @keywords data
 "data_corpus_EPcoaldebate"
 
@@ -128,18 +128,18 @@
 #' @format
 #'   The corpus includes the following document variables: \describe{
 #'   \item{sentiment}{factor indicating whether a review was manually classified as
-#'   positive \code{pos} or negative \code{neg}.}
+#'   positive `pos` or negative `neg`.}
 #'   \item{id1}{Character counting the position in the corpus.}
 #'   \item{id2}{Random number for each review.}
 #'   }
 #'
 #' @references
 #' Pang, B., Lee, L.  (2004)
-#' "\href{https://www.cs.cornell.edu/home/llee/papers/cutsent.pdf}{A Sentimental
+#' "[A Sentimental
 #' Education: Sentiment Analysis Using Subjectivity Summarization Based on
-#' Minimum Cuts.}", Proceedings of the ACL.
+#' Minimum Cuts.](https://www.cs.cornell.edu/home/llee/papers/cutsent.pdf)", Proceedings of the ACL.
 #'
-#' @source \url{https://www.cs.cornell.edu/people/pabo/movie-review-data/}
+#' @source <https://www.cs.cornell.edu/people/pabo/movie-review-data/>
 #' @keywords data
 #' @examples
 #' # check polarities

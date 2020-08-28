@@ -13,3 +13,4 @@
 ^doc$
 ^Meta$
 tests/data-creation
+^\.github$

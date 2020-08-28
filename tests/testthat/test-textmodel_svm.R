@@ -74,7 +74,7 @@ test_that("the svm model works with different weights", {
 })
 
 test_that("the svm model works with bias = 0", {
-    skip("because it's stupid to drop an intercept")
+    skip("results are a bit stochastic on this small dataset")
     ## Example from 13.1 of _An Introduction to Information Retrieval_
     set.seed(100)
     corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
@@ -85,7 +85,7 @@ test_that("the svm model works with bias = 0", {
                    docvars = data.frame(train = factor(c("Y", "Y", "Y", "N", NA))))
     dfmat <- quanteda::dfm(corp, tolower = FALSE)
     set.seed(10)
-    tmod <- textmodel_svm(dfmat, y = docvars(dfmat, "train"), bias = 0)
+    tmod <- textmodel_svm(dfmat, y = quanteda::docvars(dfmat, "train"), bias = 0)
     expect_identical(
         predict(tmod, type = "class"),
         factor(c(d1 = "Y", d2 = "Y", d3 = "Y", d4 = "N", d5 = "Y"))
@@ -117,7 +117,6 @@ test_that("multiclass prediction works", {
 context("test textmodel_svmlin")
 
 test_that("the svmlin model works", {
-    skip("results are a bit stochastic")
     ## Example from 13.1 of _An Introduction to Information Retrieval_
     corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
                      d2 = "Chinese Chinese Shanghai",
@@ -125,8 +124,9 @@ test_that("the svmlin model works", {
                      d4 = "Tokyo Japan Chinese",
                      d5 = "Chinese Chinese Chinese Tokyo Japan"),
                    docvars = data.frame(train = factor(c("Y", "Y", "Y", "N", NA))))
-    dfmat <- quanteda::dfm(corp, tolower = FALSE) %>% dfm_tfidf()
-    tmod <- textmodel_svmlin(dfmat, y = docvars(dfmat, "train"), pos_frac = 0.75)
+    dfmat <- quanteda::dfm(corp, tolower = FALSE) %>%
+        quanteda::dfm_tfidf()
+    tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "train"))
 
     expect_output(
         print(tmod),
@@ -135,11 +135,11 @@ test_that("the svmlin model works", {
 
     expect_equal(
         head(coef(tmod), 3),
-        c(intercept = 0.16666667, Chinese = 0.09649123, Beijing = 0.09649123),
-        tol = .0000001
+        c(intercept = 0.0, Chinese = 0.330, Beijing = 0.330),
+        tol = .001
     )
 
-    tmod2 <- textmodel_svmlin(dfmat, y = docvars(dfmat, "train"), intercept = FALSE, pos_frac = 0.75)
+    tmod2 <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "train"), intercept = FALSE)
     expect_identical(
         predict(tmod2),
         c(d1 = "Y", d2 = "Y", d3 = "Y", d4 = "N", d5 = "N")

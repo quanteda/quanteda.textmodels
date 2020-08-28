@@ -7,7 +7,7 @@
 \method{summary}{textmodel_svm}(object, n = 30, ...)
 }
 \arguments{
-\item{object}{output from \code{\link{textmodel_svm}}}
+\item{object}{output from \code{\link[=textmodel_svm]{textmodel_svm()}}}
 
 \item{n}{how many coefficients to print before truncating}
 

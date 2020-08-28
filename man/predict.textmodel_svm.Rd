@@ -26,15 +26,14 @@
 \value{
 \code{predict.textmodel_svm} returns either a vector of class
 predictions for each row of \code{newdata} (when \code{type = "class"}), or
-a document-by-class matrix of class probabilities (when \code{type =
-  "probability"}).
+a document-by-class matrix of class probabilities (when \code{type = "probability"}).
 }
 \description{
 \code{predict.textmodel_svm()} implements class predictions from a fitted
 linear SVM model.
 }
 \seealso{
-\code{\link{textmodel_svm}}
+\code{\link[=textmodel_svm]{textmodel_svm()}}
 }
 \keyword{internal}
 \keyword{textmodel}

@@ -49,6 +49,10 @@ coef(tmod1)
 predict(tmod1, type = "prob")
 predict(tmod1)
 }
+\references{
+Friedman, J., Hastie, T., & Tibshirani, R. (2010). \href{http://dx.doi.org/10.18637/jss.v033.i01}{Regularization Paths for Generalized Linear Models via Coordinate Descent}. \emph{Journal of Statistical
+Software} 33(1), 1-22.
+}
 \seealso{
 \code{\link[glmnet:cv.glmnet]{cv.glmnet()}}, \code{\link[=predict.textmodel_lr]{predict.textmodel_lr()}},
 \code{\link[=coef.textmodel_lr]{coef.textmodel_lr()}}

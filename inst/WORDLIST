@@ -25,6 +25,7 @@ Furnas
 gfortran
 Greenacre
 Harshman
+Hastie
 Hinrich
 Hsieh
 INFOSYS
@@ -42,6 +43,7 @@ Maas
 macOS
 Majka
 Matsuo
+MFN
 Mikhaylov
 naivebayes
 nb
@@ -65,7 +67,6 @@ Rtools
 Sathiya
 se
 SIGIR
-Sindhwani
 Skogholt
 Slapin
 SparseM
@@ -82,12 +83,11 @@ termfreq
 textmodel
 textmodels
 th
-transductive
+Tibshirani
 underdispersed
 underdispersion
 unsmoothed
 Vanberg
-Vikas
 vol
 wordfish
 Wordfish
