@@ -5,7 +5,7 @@ using namespace arma;
 
 
 // [[Rcpp::export]]
-Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SEXP disp, SEXP dispfloor, bool abs_err){
+Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SEXP disp, SEXP dispfloor, bool abs_err) {
 
     // DEFINE INPUTS
 
@@ -49,7 +49,7 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
     double asum = sum(rsum);
     for (int i = 0; i < N; i++){
         for (int k=0; k < K; k++){
-            C(i,k) = (Y(i,k) - rsum(i)*csum(k)/asum)/sqrt(rsum(i)*csum(k)/asum);
+            C(i,k) = (Y(i,k) - rsum(i) * csum(k) / asum) / sqrt(rsum(i) * csum(k) / asum);
         }
     }
 
@@ -68,7 +68,7 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
     for (int k=0; k < K; k++){
       beta(k) = -0.5; // pow(csum(k)/asum,-0.5) * V(k,0);
       beta2(k) = 0;
-    } 
+    }
     for (int i=0; i < N; i++) alpha = log(rsum);
     psi = log(csum/N);
 
@@ -99,10 +99,10 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
     double lastlp = -2000000000000.0;
     double lp = -1.0 * (sum(0.5 * ((alpha*alpha) * (priorprecalpha))) +
                         sum(0.5 * ((psi * psi) * (priorprecpsi))) +
-                        sum(0.5 * ((beta*beta)*(priorprecbeta))) +
-                        sum(0.5 * ((theta*theta)*(priorprectheta))));
+                        sum(0.5 * ((beta*beta) * (priorprecbeta))) +
+                        sum(0.5 * ((theta*theta) * (priorprectheta))));
     // double lp_P = lp;
-    
+
     for (int i = 0; i < N; i++){
       for (int k = 0; k < K; k++){
         loglambdaik = alpha(i) + psi(k) + beta(k) * theta(i);
@@ -199,7 +199,10 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
 
         // CHECK LOG-POSTERIOR FOR CONVERGENCE
         lastlp = lp;
-        lp = -1.0 * (sum(0.5 * ((alpha*alpha) * (priorprecalpha))) + sum(0.5 * ((psi*psi) * (priorprecpsi))) + sum(0.5 * ((beta*beta)*(priorprecbeta))) + sum(0.5 * ((theta*theta)*(priorprectheta))));
+        lp = -1.0 * (sum(0.5 * ((alpha*alpha) * (priorprecalpha))) +
+                     sum(0.5 * ((psi*psi) * (priorprecpsi))) +
+                     sum(0.5 * ((beta*beta)*(priorprecbeta))) +
+                     sum(0.5 * ((theta*theta)*(priorprectheta))));
         for (int i = 0; i < N; i++){
             for (int k = 0; k < K; k++){
                 loglambdaik = alpha(i) + psi(k) + beta(k) * theta(i);
@@ -210,10 +213,10 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
         //Rcout<<"outeriter="<<outeriter<<"  lp - lastlp= "<<lp - lastlp<<std::endl;
         err = (abs_err == true) ? fabs(lp - lastlp) : (lp - lastlp);
         // END WHILE LOOP
-        
+
     }
     // lp = lp_P;
-    
+
     // IF TWO-DIMENSIONAL POISSON
     if (method == 4){
       // CALCULATE THE START VALUES OF THETA_2 AND BETA_2
@@ -224,10 +227,10 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
           C(i,k) = Y(i,k) - lambdaik;
         }
       }
-      
+
       // Singular Value Decomposition of Chi-Sq Residuals
       svd(U,s,V,C);
-      
+
       // Load initial values
       for (int i = 0; i < N; i++) {
         theta2(i) = U(i,0);
@@ -236,23 +239,24 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
       for (int k=0; k < K; k++){
         beta2(k) = V(k,0);
       }
-      
+
       // cout << "theta2: " << theta2 << endl;
       //
       // cout << "beta2: " << beta2 << endl;
-      
-      
+
+
       gg = 0;
       hh = 0;
       cc = 0.0;
       inneriter = 0;
       outeriter = 0;
       lastlp = -2000000000000.0;
-      lp = lp - sum(0.5 * ((beta2*beta2)*(priorprecbeta))) + sum(0.5 * ((theta2*theta2)*(priorprectheta)));
+      lp = lp - sum(0.5 * ((beta2 * beta2) * (priorprecbeta))) +
+           sum(0.5 * ((theta2 * theta2) * (priorprectheta)));
       err = (abs_err == true) ? fabs(lp - lastlp) : (lp - lastlp);
       while ((err > tolvec(0)) && outeriter < 100) {
         outeriter++;
-        
+
         // UPDATE WORD PARAMETERS
         for (int k = 0; k < K; k++) {
           cc = 1;
@@ -270,14 +274,13 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
             stepsize = 1.0;
           }
         }
-        
-        
+
         // UPDATE DOCUMENT PARAMETERS
-        for (int i = 0; i < N; i++){
+        for (int i = 0; i < N; i++) {
           cc = 1;
           inneriter = 0;
           if (outeriter == 1) stepsize = 0.5;
-          while ((cc > tolvec(1)) && inneriter < 10){
+          while ((cc > tolvec(1)) && inneriter < 10) {
             inneriter++;
             lambdai = exp(alpha(i) + psi + beta * theta(i));
             gg = sum(beta2 * (Y(i,_) - lambdai) / phi) - theta2(i) * (priorprectheta);
@@ -289,9 +292,9 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
             stepsize = 1.0;
           }
         }
-        
+
         // UPDATE DISPERSION PARAMETERS
-        
+
         if (disptype(0) == 2) { // single dispersion parameter for all words
           phitmp = 0.0;
           for (int k = 0; k < K; k++){
@@ -303,7 +306,7 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
           phitmp = phitmp / (N * K - 2 * N - 2 * K);
           for (int k = 0; k < K; k++) phi(k) = phitmp;
         }
-        
+
         if (disptype(0) >= 3) { // individual dispersion parameter for each word
           for (int k = 0; k < K; k++){
             phitmp = 0.0;
@@ -317,14 +320,17 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
             if (disptype(0) == 4) phi(k) = fmax(dispmin(0), phi(k));
           }
         }
-        
+
         theta2 = (theta2 - mean(theta2))/sd(theta2);
-        
+
         // CHECK LOG-POSTERIOR FOR CONVERGENCE
         lastlp = lp;
-        lp = -1.0 * (sum(0.5 * ((alpha*alpha) * (priorprecalpha))) + sum(0.5 * ((psi*psi) * (priorprecpsi))) +
-          sum(0.5 * ((beta*beta)*(priorprecbeta))) + sum(0.5 * ((theta*theta)*(priorprectheta))) +
-          sum(0.5 * ((beta2*beta2)*(priorprecbeta))) + sum(0.5 * ((theta2*theta2)*(priorprectheta))));
+        lp = -1.0 * (sum(0.5 * ((alpha*alpha) * (priorprecalpha))) +
+          sum(0.5 * ((psi * psi) * (priorprecpsi))) +
+          sum(0.5 * ((beta * beta) * (priorprecbeta))) +
+          sum(0.5 * ((theta * theta) * (priorprectheta))) +
+          sum(0.5 * ((beta2 * beta2) * (priorprecbeta))) +
+          sum(0.5 * ((theta2 * theta2) * (priorprectheta))));
         for (int i = 0; i < N; i++){
           for (int k = 0; k < K; k++){
             loglambdaik = alpha(i) + psi(k) + beta(k) * theta(i) + beta2(k) * theta2(i);
@@ -335,13 +341,13 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
         //Rcout<<"outeriter="<<outeriter<<"  lp - lastlp= "<<lp - lastlp<<std::endl;
         err = (abs_err == true) ? fabs(lp - lastlp) : (lp - lastlp);
         // END WHILE LOOP
-        
+
       }
     }
 
 
     // cout << "skipped?" << endl;
-    
+
     // IF USE THE NB MODEL
     if (method == 99 || method == 10000){
       cc = 0.0;
@@ -350,12 +356,12 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
       lastlp = -2000000000000.0;
       lp = -1.0 * (sum(0.5 * ((alpha*alpha) * (priorprecalpha))) +
                    sum(0.5 * ((psi * psi) * (priorprecpsi))) +
-                   sum(0.5 * ((beta*beta)*(priorprecbeta))) +
-                   sum(0.5 * ((theta*theta)*(priorprectheta))));
+                   sum(0.5 * ((beta*beta) * (priorprecbeta))) +
+                   sum(0.5 * ((theta*theta) * (priorprectheta))));
       // double lp_NB = lp;
-      
-      for (int i = 0; i < N; i++){
-        for (int k = 0; k < K; k++){
+
+      for (int i = 0; i < N; i++) {
+        for (int k = 0; k < K; k++) {
           loglambdaik = alpha(i) + psi(k) + beta(k) * theta(i);
           lp = lp + loglambdaik * Y(i,k) - (log(exp(loglambdaik)+zeta)) * (Y(i,k) + zeta);
         }
@@ -364,14 +370,14 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
       double err = (abs_err == true) ? fabs(lp - lastlp) : (lp - lastlp);
       while ((err > tolvec(0)) && outeriter < 100) {
         outeriter++;
-        
+
         // UPDATE WORD PARAMETERS
         for (int k = 0; k < K; k++) {
           cc = 1;
           inneriter = 0;
           if (outeriter == 1) stepsize = 0.5;
-  
-          while ((cc > tolvec(1)) && inneriter < 10){
+
+          while ((cc > tolvec(1)) && inneriter < 10) {
             inneriter++;
             lambdak = exp(alpha + psi(k) + beta(k) * theta);
             G(0,0) = sum(zeta * (Y(_,k) - lambdak)/(lambdak + zeta)) - psi(k) * (priorprecpsi);
@@ -391,7 +397,7 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
           }
         }
 
-  
+
         // UPDATE DOCUMENT PARAMETERS
         for (int i = 0; i < N; i++){
           cc = 1;
@@ -430,32 +436,35 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
             // zetatmp = zetatmp + (Y(i,k) - mutmp) * (Y(i,k) - mutmp);
           }
         }
-        l_mean = l_mean / (N*K);
-        l2_mean = l2_mean / (N*K);
-        
-        
-        for (int k = 0; k < K; k++){
-          for (int i=0; i < N; i++){
+        l_mean = l_mean / (N * K);
+        l2_mean = l2_mean / (N * K);
+
+
+        for (int k = 0; k < K; k++) {
+          for (int i=0; i < N; i++) {
             zetatmp = zetatmp + (Y(i,k) - l_mean) * (Y(i,k) - l_mean);
           }
         }
-        
+
         // zeta = zetatmp;
-        zeta = l2_mean / ((zetatmp / (N*K-1)) - l_mean);
-        
+        zeta = l2_mean / ((zetatmp / (N * K - 1)) - l_mean);
+
         alpha = alpha - mean(alpha);
         theta = (theta - mean(theta))/sd(theta);
-        
+
         // CHECK LOG-POSTERIOR FOR CONVERGENCE
         lastlp = lp;
-        lp = -1.0 * (sum(0.5 * ((alpha*alpha) * (priorprecalpha))) + sum(0.5 * ((psi*psi) * (priorprecpsi))) + sum(0.5 * ((beta*beta)*(priorprecbeta))) + sum(0.5 * ((theta*theta)*(priorprectheta))));
-        for (int i = 0; i < N; i++){
-          for (int k = 0; k < K; k++){
+        lp = -1.0 * (sum(0.5 * ((alpha*alpha) * (priorprecalpha))) +
+          sum(0.5 * ((psi*psi) * (priorprecpsi))) +
+          sum(0.5 * ((beta*beta) * (priorprecbeta))) +
+          sum(0.5 * ((theta*theta) * (priorprectheta))));
+        for (int i = 0; i < N; i++) {
+          for (int k = 0; k < K; k++) {
             loglambdaik = alpha(i) + psi(k) + beta(k) * theta(i);
-            lp = lp + loglambdaik * Y(i,k) - (log(exp(loglambdaik)+zeta)) * (Y(i,k) + zeta);
+            lp = lp + loglambdaik * Y(i,k) - (log(exp(loglambdaik) + zeta)) * (Y(i,k) + zeta);
           }
         }
-        
+
         // Rprintf("%d: %f2\\n",outeriter,lp);
         //Rcout<<"outeriter="<<outeriter<<"  lp - lastlp= "<<lp - lastlp<<std::endl;
         err = (abs_err == true) ? fabs(lp - lastlp) : (lp - lastlp);
@@ -473,31 +482,32 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
           }
         }
 
-        
+
         // Singular Value Decomposition of Chi-Sq Residuals
         svd(U,s,V,C);
-        
+
         // Load initial values
         for (int i = 0; i < N; i++) {
           theta2(i) = U(i,0);
           //Rcout<<"theta starting values:"<<theta(i)<<std::endl;
         }
-        for (int k=0; k < K; k++){
+        for (int k=0; k < K; k++) {
           beta2(k) = V(k,0);
         }
-        
-        
+
+
         gg = 0;
         hh = 0;
         cc = 0.0;
         inneriter = 0;
         outeriter = 0;
         lastlp = -2000000000000.0;
-        lp = lp - sum(0.5 * ((beta2*beta2)*(priorprecbeta))) + sum(0.5 * ((theta2*theta2)*(priorprectheta)));
+        lp = lp - sum(0.5 * ((beta2 * beta2) * (priorprecbeta))) +
+          sum(0.5 * ((theta2 * theta2) * (priorprectheta)));
         err = (abs_err == true) ? fabs(lp - lastlp) : (lp - lastlp);
         while ((err > tolvec(0)) && outeriter < 100) {
           outeriter++;
-          
+
           // UPDATE WORD PARAMETERS
           for (int k = 0; k < K; k++) {
             cc = 1;
@@ -515,8 +525,8 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
               stepsize = 1.0;
             }
           }
-          
-          
+
+
           // UPDATE DOCUMENT PARAMETERS
           for (int i = 0; i < N; i++){
             cc = 1;
@@ -534,7 +544,7 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
               stepsize = 1.0;
             }
           }
-          
+
           // UPDATE DISPERSION PARAMETERS
           zetatmp = 0.0;
           l_mean = 0.0;
@@ -548,18 +558,18 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
           }
           l_mean = l_mean / (N*K);
           l2_mean = l2_mean / (N*K);
-          
+
           for (int k = 0; k < K; k++){
             for (int i=0; i < N; i++){
               zetatmp = zetatmp + (Y(i,k) - l_mean) * (Y(i,k) - l_mean);
             }
           }
-          
+
           // zeta = zetatmp;
           zeta = l2_mean / ((zetatmp / (N*K-1)) - l_mean);
 
           theta2 = (theta2 - mean(theta2))/sd(theta2);
-          
+
           // CHECK LOG-POSTERIOR FOR CONVERGENCE
           lastlp = lp;
           lp = -1.0 * (sum(0.5 * ((alpha*alpha) * (priorprecalpha))) + sum(0.5 * ((psi*psi) * (priorprecpsi))) +
@@ -580,8 +590,8 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
       }
       // END OF NB MODEL
     }
-    
-    
+
+
     // Fix Global Polarity
 
     // added the -1 because C counts from ZERO...  -- KB
@@ -621,7 +631,7 @@ Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SE
         thetaSE(i) = sqrt(-1.0 * H(0,0) / (H(0,0) * H(1,1) - H(1,0) * H(0,1)));
         alphaSE(i) = sqrt(-1.0 * H(1,1) / (H(0,0) * H(1,1) - H(1,0) * H(0,1)));
     }
-    
+
     // COMPUTE WORD STANDARD ERRORS
     for (int k = 0; k < K; k++) {
       lambdak = exp(alpha + psi(k) + beta(k) * theta);
