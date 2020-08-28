@@ -276,6 +276,8 @@ textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
 #' out-of-sample data.
 #' @param object a fitted wordfish model
 #' @inheritParams predict.textmodel_wordscores
+#' @importFrom stats predict
+#' @method predict textmodel_wordfish
 #' @keywords textmodel internal
 #' @export
 predict.textmodel_wordfish <- function(object,

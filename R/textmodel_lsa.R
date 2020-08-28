@@ -110,6 +110,8 @@ textmodel_lsa.dfm <- function(x, nd = 10, margin = c("both", "documents", "featu
 #' @param ... unused
 #' @return `predict()` returns a predicted [textmodel_lsa] object, projecting the patterns onto
 #' new data.
+#' @importFrom stats predict
+#' @method predict textmodel_lsa
 #' @keywords textmodel internal
 #' @export
 predict.textmodel_lsa <- function(object, newdata = NULL, ...) {

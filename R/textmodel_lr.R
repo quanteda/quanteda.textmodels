@@ -120,6 +120,7 @@ textmodel_lr.dfm <- function(x, y, ...) {
 #' @seealso [textmodel_lr()]
 #' @keywords textmodel internal
 #' @importFrom stats predict
+#' @method predict textmodel_lr
 #' @export
 predict.textmodel_lr <- function(object, newdata = NULL,
                                  type = c("class", "probability"),

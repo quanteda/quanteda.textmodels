@@ -19,22 +19,22 @@
 
 \item{type}{the type of predicted values to be returned; see Value}
 
-\item{force}{make newdata's feature set conformant to the model terms}
+\item{force}{logical, if \code{TRUE}, make newdata's feature set conformant to the
+model terms}
 
 \item{...}{not used}
 }
 \value{
 \code{predict.textmodel_svmlin} returns either a vector of class
 predictions for each row of \code{newdata} (when \code{type = "class"}), or
-a document-by-class matrix of class probabilities (when \code{type =
-  "probability"}).
+a document-by-class matrix of class probabilities (when \code{type = "probability"}).
 }
 \description{
 \code{predict.textmodel_svmlin()} implements class predictions from a fitted
 linear SVM model.
 }
 \seealso{
-\code{\link{textmodel_svmlin}}
+\code{\link[=textmodel_svmlin]{textmodel_svmlin()}}
 }
 \keyword{internal}
 \keyword{textmodel}

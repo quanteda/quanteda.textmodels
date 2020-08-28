@@ -7,7 +7,7 @@
 \method{summary}{textmodel_svmlin}(object, n = 30, ...)
 }
 \arguments{
-\item{object}{output from \code{\link{textmodel_svmlin}}}
+\item{object}{output from \code{\link[=textmodel_svmlin]{textmodel_svmlin()}}}
 
 \item{n}{how many coefficients to print before truncating}
 

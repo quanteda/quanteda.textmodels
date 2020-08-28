@@ -5,6 +5,10 @@ qatd_cpp_ca <- function(dfm, residual_floor) {
     .Call(`_quanteda_textmodels_qatd_cpp_ca`, dfm, residual_floor)
 }
 
+svmlin_rcpp <- function(X, y, l, algorithm, lambda, lambda_u, max_switch, pos_frac, Cp, Cn, costs, verbose) {
+    .Call(`_quanteda_textmodels_svmlin_rcpp`, X, y, l, algorithm, lambda, lambda_u, max_switch, pos_frac, Cp, Cn, costs, verbose)
+}
+
 qatd_cpp_tbb_enabled <- function() {
     .Call(`_quanteda_textmodels_qatd_cpp_tbb_enabled`)
 }

@@ -35,8 +35,6 @@ print(data_corpus_moviereviewsents, max_ndoc = 3)
 }
 \references{
 Pang, B., Lee, L.  (2004)
-"\href{https://www.cs.cornell.edu/home/llee/papers/cutsent.pdf}{A Sentimental
-Education: Sentiment Analysis Using Subjectivity Summarization Based on
-Minimum Cuts.}", Proceedings of the ACL.
+"\href{https://www.cs.cornell.edu/home/llee/papers/cutsent.pdf}{A Sentimental Education: Sentiment Analysis Using Subjectivity Summarization Based on Minimum Cuts.}", Proceedings of the ACL.
 }
 \keyword{data}

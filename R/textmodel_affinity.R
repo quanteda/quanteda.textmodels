@@ -452,6 +452,8 @@ print.textmodel_affinity <- function(x, ...) {
 #' @return `predict()` returns a list of predicted affinity textmodel
 #'   quantities.
 #' @importFrom methods new
+#' @importFrom stats predict
+#' @method predict textmodel_affinity
 #' @keywords textmodel internal
 #' @seealso [influence.predict.textmodel_affinity()] for methods of
 #'   computing the influence of particular features from a predicted
