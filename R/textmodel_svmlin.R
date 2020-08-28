@@ -92,12 +92,12 @@ textmodel_svmlin.dfm <-  function(x, y, intercept = TRUE, # x_u = NULL,
     result <- list(
         x = x, y = y,
         weights = svmlinfitted$weights,
-        algorithm = factor(svmlinfitted$algorithm, levels = 0:3,
-                           labels = c("Regularized Least Squares Classification",
-                                      "SVM",
-                                      "Multi-switch Transductive SVM",
-                                      "Deterministic Annealing Semi-supervised SVM")),
-        classnames = svmlinfitted$classnames,
+        # algorithm = factor(svmlinfitted$algorithm, levels = 0:3,
+        #                    labels = c("Regularized Least Squares Classification",
+        #                               "SVM",
+        #                               "Multi-switch Transductive SVM",
+        #                               "Deterministic Annealing Semi-supervised SVM")),
+        # classnames = svmlinfitted$classnames,
         intercept = intercept,
         call = call
     )
@@ -151,8 +151,9 @@ predict.textmodel_svmlin <- function(object, newdata = NULL,
     pred_y <- as.numeric(data %*% object$weights)
     names(pred_y) <- docnames(data)
 
+    classnames <- levels(object$y)
     if (type == "class") {
-        pred_y <- ifelse(pred_y < 0, object$classnames[1], object$classnames[2])
+        pred_y <- ifelse(pred_y < 0, classnames[1], classnames[2])
     } else if (type == "probability") {
         stop("probability type not implemented yet")
     }
