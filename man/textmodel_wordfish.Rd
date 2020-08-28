@@ -9,6 +9,9 @@ textmodel_wordfish(
   dir = c(1, 2),
   priors = c(Inf, Inf, 3, 1),
   tol = c(1e-06, 1e-08),
+  method = "Poisson",
+  dim2 = FALSE,
+  prior_values = NULL,
   dispersion = c("poisson", "quasipoisson"),
   dispersion_level = c("feature", "overall"),
   dispersion_floor = 0,
@@ -33,6 +36,14 @@ threshold for the log-posterior of the model, the second value is the
 tolerance in the difference in parameter values from the iterative
 conditional maximum likelihood (from conditionally estimating
 document-level, then feature-level parameters).}
+
+\item{method}{specifies whether to use the Poisson model or the negative
+binomial model}
+
+\item{dim2}{a boolean variable that specifies whether to estimate the second
+dimension of theta and beta}
+
+\item{prior_values}{NEEDS DOCUMENTING}
 
 \item{dispersion}{sets whether a quasi-Poisson quasi-likelihood should be
 used based on a single dispersion parameter (\code{"poisson"}), or
@@ -88,7 +99,7 @@ In the rare situation where a warning message of "The algorithm did not
 converge." shows up, removing some documents may work.
 }
 \examples{
-(tmod1 <- textmodel_wordfish(data_dfm_lbgexample, dir = c(1,5)))
+(tmod1 <- textmodel_wordfish(data_dfm_lbgexample, dir = c(1, 5)))
 summary(tmod1, n = 10)
 coef(tmod1)
 predict(tmod1)
@@ -98,14 +109,16 @@ predict(tmod1, interval = "confidence")
 \dontrun{
 library("quanteda")
 dfmat <- dfm(data_corpus_irishbudget2010)
-(tmod2 <- textmodel_wordfish(dfmat, dir = c(6,5)))
-(tmod3 <- textmodel_wordfish(dfmat, dir = c(6,5),
+(tmod2 <- textmodel_wordfish(dfmat, dir = c(6, 5)))
+(tmod3 <- textmodel_wordfish(dfmat, dir = c(6, 5),
                              dispersion = "quasipoisson", dispersion_floor = 0))
-(tmod4 <- textmodel_wordfish(dfmat, dir = c(6,5),
+(tmod4 <- textmodel_wordfish(dfmat, dir = c(6, 5),
                              dispersion = "quasipoisson", dispersion_floor = .5))
-plot(tmod3$phi, tmod4$phi, xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
+plot(tmod3$phi, tmod4$phi,
+     xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
      xlim = c(0, 1.0), ylim = c(0, 1.0))
-plot(tmod3$phi, tmod4$phi, xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
+plot(tmod3$phi, tmod4$phi,
+     xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
      xlim = c(0, 1.0), ylim = c(0, 1.0), type = "n")
 underdispersedTerms <- sample(which(tmod3$phi < 1.0), 5)
 which(featnames(dfmat) \%in\% names(topfeatures(dfmat, 20)))
@@ -120,12 +133,11 @@ if (requireNamespace("austin")) {
 }}
 }
 \references{
-Slapin, J. & Proksch, S.O. (2008).
-\href{https://doi.org/10.1111/j.1540-5907.2008.00338.x}{A Scaling Model for Estimating Time-Series Party Positions from Texts}. \emph{American
+Slapin, J. & Proksch, S.O. (2008). \href{https://doi.org/10.1111/j.1540-5907.2008.00338.x}{A Scaling Model for Estimating Time-Series Party Positions from Texts}. \emph{American
 Journal of Political Science}, 52(3), 705--772.
 
-Lowe, W. & Benoit, K.R. (2013). \href{http://doi.org/10.1093/pan/mpt002}{Validating Estimates of Latent Traits from Textual Data Using Human Judgment as a Benchmark}.
-\emph{Political Analysis}, 21(3), 298--313.
+Lowe, W. & Benoit, K.R. (2013). \href{http://doi.org/10.1093/pan/mpt002}{Validating Estimates of Latent Traits from Textual Data Using Human Judgment as a Benchmark}. \emph{Political Analysis}, 21(3),
+298--313.
 }
 \seealso{
 \code{\link[=predict.textmodel_wordfish]{predict.textmodel_wordfish()}}

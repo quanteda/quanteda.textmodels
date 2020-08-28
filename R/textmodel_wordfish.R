@@ -16,10 +16,11 @@
 #'   tolerance in the difference in parameter values from the iterative
 #'   conditional maximum likelihood (from conditionally estimating
 #'   document-level, then feature-level parameters).
-#' @param method specifies whether to use the Poisson model or the negative 
+#' @param method specifies whether to use the Poisson model or the negative
 #'   binomial model
-#' @param dim2 a boolean variable that specifies whether to estimate the second 
+#' @param dim2 a boolean variable that specifies whether to estimate the second
 #'   dimension of theta and beta
+#' @param prior_values NEEDS DOCUMENTING
 #' @param dispersion sets whether a quasi-Poisson quasi-likelihood should be
 #'   used based on a single dispersion parameter (`"poisson"`), or
 #'   quasi-Poisson (`"quasipoisson"`)
@@ -40,7 +41,6 @@
 #'   only applies when `sparse = TRUE`
 #' @param residual_floor specifies the threshold for residual matrix when
 #'   calculating the svds, only applies when `sparse = TRUE`
-#' @param boot calculate bootstrap standard errors when setting to `True`
 #' @return An object of class `textmodel_fitted_wordfish`.  This is a list
 #'   containing: \item{dir}{global identification of the dimension}
 #'   \item{theta}{estimated document positions} \item{alpha}{estimated document
@@ -60,17 +60,19 @@
 #' @note In the rare situation where a warning message of "The algorithm did not
 #'   converge." shows up, removing some documents may work.
 #' @seealso [predict.textmodel_wordfish()]
-#' @references Slapin, J. & Proksch, S.O. (2008).
-#'   [A Scaling Model
-#'   for Estimating Time-Series Party Positions from Texts](https://doi.org/10.1111/j.1540-5907.2008.00338.x). *American
+#' @references
+#'   Slapin, J. & Proksch, S.O. (2008). [A Scaling Model for Estimating
+#'   Time-Series Party Positions from
+#'   Texts](https://doi.org/10.1111/j.1540-5907.2008.00338.x). *American
 #'   Journal of Political Science*, 52(3), 705--772.
 #'
-#'   Lowe, W. & Benoit, K.R. (2013). [Validating
-#'   Estimates of Latent Traits from Textual Data Using Human Judgment as a Benchmark](http://doi.org/10.1093/pan/mpt002).
-#'   *Political Analysis*, 21(3), 298--313.
+#'   Lowe, W. & Benoit, K.R. (2013). [Validating Estimates of Latent Traits from
+#'   Textual Data Using Human Judgment as a
+#'   Benchmark](http://doi.org/10.1093/pan/mpt002). *Political Analysis*, 21(3),
+#'   298--313.
 #' @author Benjamin Lauderdale, Haiyan Wang, and Kenneth Benoit
 #' @examples
-#' (tmod1 <- textmodel_wordfish(data_dfm_lbgexample, dir = c(1,5)))
+#' (tmod1 <- textmodel_wordfish(data_dfm_lbgexample, dir = c(1, 5)))
 #' summary(tmod1, n = 10)
 #' coef(tmod1)
 #' predict(tmod1)
@@ -80,14 +82,16 @@
 #' \dontrun{
 #' library("quanteda")
 #' dfmat <- dfm(data_corpus_irishbudget2010)
-#' (tmod2 <- textmodel_wordfish(dfmat, dir = c(6,5)))
-#' (tmod3 <- textmodel_wordfish(dfmat, dir = c(6,5),
+#' (tmod2 <- textmodel_wordfish(dfmat, dir = c(6, 5)))
+#' (tmod3 <- textmodel_wordfish(dfmat, dir = c(6, 5),
 #'                              dispersion = "quasipoisson", dispersion_floor = 0))
-#' (tmod4 <- textmodel_wordfish(dfmat, dir = c(6,5),
+#' (tmod4 <- textmodel_wordfish(dfmat, dir = c(6, 5),
 #'                              dispersion = "quasipoisson", dispersion_floor = .5))
-#' plot(tmod3$phi, tmod4$phi, xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
+#' plot(tmod3$phi, tmod4$phi,
+#'      xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
 #'      xlim = c(0, 1.0), ylim = c(0, 1.0))
-#' plot(tmod3$phi, tmod4$phi, xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
+#' plot(tmod3$phi, tmod4$phi,
+#'      xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
 #'      xlim = c(0, 1.0), ylim = c(0, 1.0), type = "n")
 #' underdispersedTerms <- sample(which(tmod3$phi < 1.0), 5)
 #' which(featnames(dfmat) %in% names(topfeatures(dfmat, 20)))
@@ -201,12 +205,12 @@ textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
     } else {
         stop("Illegal option combination.")
     }
-    
-    if (method == "Poisson"){
-      
-      if (dim2 == TRUE){
+
+    if (method == "Poisson") {
+
+      if (dim2 == TRUE) {
         priors <- c(priors, 0.5)
-      }else if (dim2 == FALSE){
+      }else if (dim2 == FALSE) {
         priors <- c(priors, 1)
       }
       if (sparse == TRUE) {
@@ -222,20 +226,20 @@ textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
       }
       # NOTE: psi is a 1 x nfeat matrix, not a numeric vector
       #       alpha is a ndoc x 1 matrix, not a numeric vector
-    }else if (method == "NB"){
-      if (dim2 == TRUE){
+    }else if (method == "NB") {
+      if (dim2 == TRUE) {
         priors <- c(priors, 0.01)
-      }else if (dim2 == FALSE){
+      } else if (dim2 == FALSE) {
         priors <- c(priors, 0.1)
       }
-      
+
       result <- qatd_cpp_wordfish_dense(as.matrix(x),
                                         as.integer(dir), 1 / (priors ^ 2),
                                         tol, disp,
                                         dispersion_floor, abs_err)
      }
-    
- 
+
+
     if (any(is.nan(result$theta)))
         warning("Warning: The algorithm did not converge.")
 
@@ -319,7 +323,7 @@ print.textmodel_wordfish <- function(x, ...) {
     print(x$call)
     cat("\n",
         "Dispersion: ", x$dispersion, "; ",
-        "direction: ", x$dir[1], ' < ' , x$dir[2], "; ",
+        "direction: ", x$dir[1], " < ", x$dir[2], "; ",
         ndoc(x), " documents; ",
         nfeat(x), " features.",
         "\n",
@@ -344,9 +348,9 @@ summary.textmodel_wordfish <- function(object, n = 30, ...) {
     )
 
     result <- list(
-        'call' = object$call,
-        'estimated.document.positions' = as.statistics_textmodel(stat),
-        'estimated.feature.scores' = as.coefficients_textmodel(head(coef(object)$features, n))
+        "call" = object$call,
+        "estimated.document.positions" = as.statistics_textmodel(stat),
+        "estimated.feature.scores" = as.coefficients_textmodel(head(coef(object)$features, n))
     )
     return(as.summary.textmodel(result))
 }
