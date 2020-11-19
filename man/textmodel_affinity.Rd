@@ -14,9 +14,9 @@ textmodel_affinity(
 )
 }
 \arguments{
-\item{x}{the \link{dfm} or \link{bootstrap_dfm} object on which the model
-will be fit.  Does not need to contain only the training documents, since
-the index of these will be matched automatically.}
+\item{x}{the \link{dfm} or \link[quanteda.core:bootstrap_dfm]{bootstrap_dfm} object on
+which the model will be fit.  Does not need to contain only the training
+documents, since the index of these will be matched automatically.}
 
 \item{y}{vector of training classes/scores associated with each document
 identified in \code{data}}
@@ -43,7 +43,7 @@ predict(af, newdata = data_dfm_lbgexample[6, ])
 
 \dontrun{
 # compute bootstrapped SEs
-dfmat <- quanteda::bootstrap_dfm(data_corpus_dailnoconf1991, n = 10, remove_punct = TRUE)
+dfmat <- quanteda.core::bootstrap_dfm(data_corpus_dailnoconf1991, n = 10, remove_punct = TRUE)
 textmodel_affinity(dfmat, y = c("Govt", "Opp", "Opp", rep(NA, 55)))
 }
 }

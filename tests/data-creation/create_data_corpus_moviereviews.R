@@ -1,6 +1,6 @@
 # create the Pang and Lee dataset
 
-library("quanteda")
+library("quanteda.core")
 
 download.file("https://www.cs.cornell.edu/people/pabo/movie-review-data/review_polarity.tar.gz",
               destfile = "review_polarity.tar.gz")
@@ -14,7 +14,7 @@ rt$id1 <- stringi::stri_extract_last_regex(rt$id1, "cv\\d+$")
 rt$id2 <- stringi::stri_replace_last_fixed(rt$id2, ".txt", "")
 
 data_corpus_moviereviews <- corpus(rt) %>%
-    quanteda:::add_summary_metadata()
+    quanteda.core:::add_summary_metadata()
 
 meta(data_corpus_moviereviews) <- list(
     title = "Movie reviews from Pang, Lee, and Vaithyanathan (2002)",

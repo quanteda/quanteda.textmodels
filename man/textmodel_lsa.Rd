@@ -15,7 +15,7 @@ textmodel_lsa(x, nd = 10, margin = c("both", "documents", "features"))
 }
 \description{
 Fit the Latent Semantic Analysis scaling model to a \link{dfm}, which may be
-weighted (for instance using \code{\link[quanteda:dfm_tfidf]{quanteda::dfm_tfidf()}}).
+weighted (for instance using \code{\link[quanteda.core:dfm_tfidf]{quanteda.core::dfm_tfidf()}}).
 }
 \details{
 \link[RSpectra:svds]{svds} in the \pkg{RSpectra} package is applied to
@@ -27,7 +27,7 @@ issue. While a reduction in \eqn{k} can remove much of the noise, keeping
 too few dimensions or factors may lose important information.
 }
 \examples{
-dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+dfmat <- quanteda.core::dfm(data_corpus_irishbudget2010)
 # create an LSA space and return its truncated representation in the low-rank space
 tmod <- textmodel_lsa(dfmat[1:10, ])
 head(tmod$docs)

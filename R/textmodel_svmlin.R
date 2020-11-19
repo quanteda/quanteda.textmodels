@@ -31,13 +31,13 @@
 #' @seealso [predict.textmodel_svmlin()]
 #' @examples
 #' # use Lenihan for govt class and Bruton for opposition
-#' quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
+#' quanteda.core::docvars(data_corpus_irishbudget2010, "govtopp") <-
 #'     c("Govt", "Opp", rep(NA, 12))
-#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+#' dfmat <- quanteda.core::dfm(data_corpus_irishbudget2010)
 #'
-#' tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
+#' tmod <- textmodel_svmlin(dfmat, y = quanteda.core::docvars(dfmat, "govtopp"))
 #' predict(tmod)
-#' @importFrom quanteda dfm_group as.dfm
+#' @importFrom quanteda.core dfm_group as.dfm
 #' @importFrom stats na.omit predict
 #' @keywords textmodel
 #' @export
@@ -286,14 +286,14 @@ setClass("scaleMatrix",
 
 scaleMatrix <- function(x, center = TRUE, scale = TRUE) {
   if (center) {
-    mean <- quanteda::colMeans(x)
+    mean <- quanteda.core::colMeans(x)
     x <- sweep(x, 2, mean)
   } else {
     mean <- NULL
   }
 
   if (scale) {
-    scale <- sqrt(colSums(sweep(x, 2, quanteda::colMeans(x)) ^ 2) / (nrow(x) - 1))
+    scale <- sqrt(colSums(sweep(x, 2, quanteda.core::colMeans(x)) ^ 2) / (nrow(x) - 1))
     x <- sweep(x, 2, scale, "/")
   } else {
     scale <- NULL

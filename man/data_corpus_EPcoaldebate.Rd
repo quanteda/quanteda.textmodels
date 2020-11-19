@@ -22,7 +22,7 @@ sentences, which can theoretically range between 0 and 1. Only coders with trust
 0.8 are included in the corpus.}
 }
 
-A \link[quanteda:corpus]{corpus} object.
+A \link[quanteda.core:corpus]{corpus} object.
 }
 \usage{
 data_corpus_EPcoaldebate

@@ -21,7 +21,7 @@ coalition. (See Laver and Benoit 2002 for details.)
 }
 \examples{
 \dontrun{
-library("quanteda")
+library("quanteda.core")
 data_dfm_dailnoconf1991 <- dfm(data_corpus_dailnoconf1991, remove_punct = TRUE)
 tmod <- textmodel_affinity(data_dfm_dailnoconf1991,
                            c("Govt", "Opp", "Opp", rep(NA, 55)))

@@ -1,5 +1,5 @@
 #include "lib.h"
-using namespace quanteda;
+using namespace quanteda.core;
 
 // [[Rcpp::export]]
 bool qatd_cpp_tbb_enabled(){

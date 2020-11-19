@@ -1,7 +1,7 @@
 #' Logistic regression classifier for texts
 #'
 #' Fits a fast penalized maximum likelihood estimator to predict discrete
-#' categories from sparse [dfm][quanteda::dfm] objects. Using the \pkg{glmnet}
+#' categories from sparse [dfm][quanteda.core::dfm] objects. Using the \pkg{glmnet}
 #' package, the function computes the regularization path for the lasso or
 #' elasticnet penalty at a grid of values for the regularization parameter
 #' lambda.  This is done automatically by testing on several folds of the data
@@ -21,22 +21,22 @@
 #' Software_ 33(1), 1-22.
 #' @examples
 #' ## Example from 13.1 of _An Introduction to Information Retrieval_
-#' corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
-#'                            d2 = "Chinese Chinese Shanghai",
-#'                            d3 = "Chinese Macao",
-#'                            d4 = "Tokyo Japan Chinese",
-#'                            d5 = "London England Chinese",
-#'                            d6 = "Chinese Chinese Chinese Tokyo Japan"),
-#'                          docvars = data.frame(train = factor(c("Y", "Y", "Y",
-#'                                                                "N", "N", NA))))
-#' dfmat <- quanteda::dfm(corp, tolower = FALSE)
+#' corp <- quanteda.core::corpus(c(d1 = "Chinese Beijing Chinese",
+#'                                 d2 = "Chinese Chinese Shanghai",
+#'                                 d3 = "Chinese Macao",
+#'                                 d4 = "Tokyo Japan Chinese",
+#'                                 d5 = "London England Chinese",
+#'                                 d6 = "Chinese Chinese Chinese Tokyo Japan"),
+#'                                docvars = data.frame(train = factor(c("Y", "Y", "Y",
+#'                                                                      "N", "N", NA))))
+#' dfmat <- quanteda.core::dfm(corp, tolower = FALSE)
 #'
 #' ## simulate bigger sample as classification on small samples is problematic
 #' set.seed(1)
-#' dfmat <- quanteda::dfm_sample(dfmat, 50, replace = TRUE)
+#' dfmat <- quanteda.core::dfm_sample(dfmat, 50, replace = TRUE)
 #'
 #' ## train model
-#' (tmod1 <- textmodel_lr(dfmat, quanteda::docvars(dfmat, "train")))
+#' (tmod1 <- textmodel_lr(dfmat, quanteda.core::docvars(dfmat, "train")))
 #' summary(tmod1)
 #' coef(tmod1)
 #'
@@ -50,7 +50,7 @@ textmodel_lr <- function(x, y, ...) {
 
 #' @export
 textmodel_lr.default <- function(x, y, ...) {
-    stop(quanteda:::friendly_class_undefined_message(class(x), "textmodel_lr"))
+    stop(quanteda.core:::friendly_class_undefined_message(class(x), "textmodel_lr"))
 }
 
 #' @export
@@ -58,7 +58,7 @@ textmodel_lr.default <- function(x, y, ...) {
 textmodel_lr.dfm <- function(x, y, ...) {
 
     x <- as.dfm(x)
-    if (!sum(x)) stop(quanteda:::message_error("dfm_empty"))
+    if (!sum(x)) stop(quanteda.core:::message_error("dfm_empty"))
     call <- match.call()
 
     # exclude NA in training labels
@@ -151,7 +151,7 @@ predict.textmodel_lr <- function(object, newdata = NULL,
     )
     if (type == "class") {
         pred_y <- as.factor(pred_y)
-        names(pred_y) <-  quanteda::docnames(data)
+        names(pred_y) <-  quanteda.core::docnames(data)
     } else if (type == "response") {
         if (ncol(pred_y) == 1) {
             pred_y <- cbind(
@@ -172,8 +172,8 @@ print.textmodel_lr <- function(x, ...) {
     cat("\nCall:\n")
     print(x$call)
     cat("\n",
-        format(quanteda::ndoc(x$x), big.mark = ","), " training documents; ",
-        format(quanteda::nfeat(x$x), big.mark = ","), " fitted features",
+        format(quanteda.core::ndoc(x$x), big.mark = ","), " training documents; ",
+        format(quanteda.core::nfeat(x$x), big.mark = ","), " fitted features",
         ".\n",
         "Method: ", x$algorithm, "\n",
         sep = "")

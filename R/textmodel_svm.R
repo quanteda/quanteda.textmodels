@@ -21,10 +21,10 @@
 #' @seealso [LiblineaR::LiblineaR()] [predict.textmodel_svm()]
 #' @examples
 #' # use party leaders for govt and opposition classes
-#' quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
+#' quanteda.core::docvars(data_corpus_irishbudget2010, "govtopp") <-
 #'     c(rep(NA, 4), "Gov", "Opp", NA, "Opp", NA, NA, NA, NA, NA, NA)
-#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
-#' tmod <- textmodel_svm(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
+#' dfmat <- quanteda.core::dfm(data_corpus_irishbudget2010)
+#' tmod <- textmodel_svm(dfmat, y = quanteda.core::docvars(dfmat, "govtopp"))
 #' predict(tmod)
 #' predict(tmod, type = "probability")
 #'
@@ -45,7 +45,7 @@ textmodel_svm.default <- function(x, y, weight = c("uniform", "docfreq", "termfr
 
 #' @importFrom LiblineaR LiblineaR
 #' @importFrom SparseM as.matrix.csr
-#' @importFrom quanteda dfm_weight dfm_group dfm_trim as.dfm
+#' @importFrom quanteda.core dfm_weight dfm_group dfm_trim as.dfm
 #' @export
 textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), ...) {
     x <- as.dfm(x)

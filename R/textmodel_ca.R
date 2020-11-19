@@ -30,11 +30,11 @@
 #' @return `textmodel_ca()` returns a fitted CA textmodel that is a special
 #' class of \pkg{ca} object.
 #' @examples
-#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+#' dfmat <- quanteda.core::dfm(data_corpus_irishbudget2010)
 #' tmod <- textmodel_ca(dfmat)
 #' summary(tmod)
 #' @seealso [coef.textmodel_lsa()], [ca][ca::ca]
-#' @importFrom quanteda as.dfm
+#' @importFrom quanteda.core as.dfm
 #' @export
 textmodel_ca <- function(x, smooth = 0, nd = NA, sparse = FALSE,
                          residual_floor = 0.1) {

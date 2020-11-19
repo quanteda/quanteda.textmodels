@@ -2,9 +2,9 @@
 #'
 #' `textmodel_affinity` implements the maximum likelihood supervised text
 #' scaling method described in Perry and Benoit (2017).
-#' @param x the [dfm] or [bootstrap_dfm] object on which the model
-#'   will be fit.  Does not need to contain only the training documents, since
-#'   the index of these will be matched automatically.
+#' @param x the [dfm] or [bootstrap_dfm][quanteda.core::bootstrap_dfm] object on
+#'   which the model will be fit.  Does not need to contain only the training
+#'   documents, since the index of these will be matched automatically.
 #' @param y vector of training classes/scores associated with each document
 #'   identified in `data`
 #' @param exclude a set of words to exclude from the model
@@ -25,14 +25,14 @@
 #'
 #' \dontrun{
 #' # compute bootstrapped SEs
-#' dfmat <- quanteda::bootstrap_dfm(data_corpus_dailnoconf1991, n = 10, remove_punct = TRUE)
+#' dfmat <- quanteda.core::bootstrap_dfm(data_corpus_dailnoconf1991, n = 10, remove_punct = TRUE)
 #' textmodel_affinity(dfmat, y = c("Govt", "Opp", "Opp", rep(NA, 55)))
 #' }
 #' @export
 #' @keywords textmodel experimental
 #' @importFrom methods as
 #' @importFrom stats sd predict
-#' @importFrom quanteda dfm_group as.dfm
+#' @importFrom quanteda.core dfm_group as.dfm
 #' @seealso [predict.textmodel_affinity()] for methods of applying a
 #'   fitted [textmodel_affinity] model object to predict quantities from
 #'   (other) documents.
@@ -51,7 +51,7 @@ textmodel_affinity.default <- function(x, y, exclude = NULL,
 
 
 #' @export
-#' @importFrom quanteda colSums rowSums t
+#' @importFrom quanteda.core colSums rowSums t
 textmodel_affinity.dfm <- function(x, y, exclude = NULL,
                                    smooth = 0.5, ref_smooth = 0.5,
                                    verbose = quanteda_options("verbose")) {

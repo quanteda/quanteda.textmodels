@@ -2,14 +2,14 @@ context("test textmodel_svm")
 
 test_that("the svm model works", {
     ## Example from 13.1 of _An Introduction to Information Retrieval_
-    corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
+    corp <- quanteda.core::corpus(c(d1 = "Chinese Beijing Chinese",
                      d2 = "Chinese Chinese Shanghai",
                      d3 = "Chinese Macao",
                      d4 = "Tokyo Japan Chinese",
                      d5 = "Chinese Chinese Chinese Tokyo Japan"),
                    docvars = data.frame(train = factor(c("Y", "Y", "Y", "N", NA))))
-    dfmat <- quanteda::dfm(corp, tolower = FALSE)
-    tmod <- textmodel_svm(dfmat, y = quanteda::docvars(dfmat, "train"), scale = TRUE)
+    dfmat <- quanteda.core::dfm(corp, tolower = FALSE)
+    tmod <- textmodel_svm(dfmat, y = quanteda.core::docvars(dfmat, "train"), scale = TRUE)
 
     expect_output(
         print(tmod),
@@ -39,15 +39,15 @@ test_that("the svm model works", {
 
 test_that("the svm model works with different weights", {
     ## Example from 13.1 of _An Introduction to Information Retrieval_
-    corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
+    corp <- quanteda.core::corpus(c(d1 = "Chinese Beijing Chinese",
                      d2 = "Chinese Chinese Shanghai",
                      d3 = "Chinese Macao",
                      d4 = "Tokyo Japan Chinese",
                      d5 = "Chinese Chinese Chinese Tokyo Japan"),
                    docvars = data.frame(train = factor(c("Y", "Y", "Y", "N", NA))))
-    dfmat <- quanteda::dfm(corp, tolower = FALSE)
+    dfmat <- quanteda.core::dfm(corp, tolower = FALSE)
 
-    tmod <- textmodel_svm(dfmat, y = quanteda::docvars(dfmat, "train"), weight = "docfreq")
+    tmod <- textmodel_svm(dfmat, y = quanteda.core::docvars(dfmat, "train"), weight = "docfreq")
     expect_identical(
         predict(tmod, type = "class"),
         factor(c(d1 = "Y", d2 = "Y", d3 = "Y", d4 = "Y", d5 = "Y"), levels = sort(tmod$classnames))
@@ -59,7 +59,7 @@ test_that("the svm model works with different weights", {
                dimnames = list(paste0("d", 1:5), c("Y", "N"))),
         tol = .1
     )
-    tmod <- textmodel_svm(dfmat, y = quanteda::docvars(dfmat, "train"), weight = "termfreq")
+    tmod <- textmodel_svm(dfmat, y = quanteda.core::docvars(dfmat, "train"), weight = "termfreq")
     expect_identical(
         predict(tmod, type = "class"),
         factor(c(d1 = "Y", d2 = "Y", d3 = "Y", d4 = "Y", d5 = "Y"), levels = sort(tmod$classnames))
@@ -77,15 +77,15 @@ test_that("the svm model works with bias = 0", {
     skip("results are a bit stochastic on this small dataset")
     ## Example from 13.1 of _An Introduction to Information Retrieval_
     set.seed(100)
-    corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
+    corp <- quanteda.core::corpus(c(d1 = "Chinese Beijing Chinese",
                      d2 = "Chinese Chinese Shanghai",
                      d3 = "Chinese Macao",
                      d4 = "Tokyo Japan Chinese",
                      d5 = "Chinese Chinese Chinese Tokyo Japan"),
                    docvars = data.frame(train = factor(c("Y", "Y", "Y", "N", NA))))
-    dfmat <- quanteda::dfm(corp, tolower = FALSE)
+    dfmat <- quanteda.core::dfm(corp, tolower = FALSE)
     set.seed(10)
-    tmod <- textmodel_svm(dfmat, y = quanteda::docvars(dfmat, "train"), bias = 0)
+    tmod <- textmodel_svm(dfmat, y = quanteda.core::docvars(dfmat, "train"), bias = 0)
     expect_identical(
         predict(tmod, type = "class"),
         factor(c(d1 = "Y", d2 = "Y", d3 = "Y", d4 = "N", d5 = "Y"))
@@ -100,8 +100,8 @@ test_that("the svm model works with bias = 0", {
 })
 
 test_that("multiclass prediction works", {
-    dfmat <- quanteda::dfm(data_corpus_irishbudget2010) %>%
-        quanteda::dfm_tfidf()
+    dfmat <- quanteda.core::dfm(data_corpus_irishbudget2010) %>%
+        quanteda.core::dfm_tfidf()
     tmod2 <- textmodel_svm(dfmat,
                            y = c(rep(NA, 3), "SF", "FF", "FG", NA, "LAB", NA,
                                  NA, "Green", rep(NA, 3)),
@@ -118,15 +118,15 @@ context("test textmodel_svmlin")
 
 test_that("the svmlin model works", {
     ## Example from 13.1 of _An Introduction to Information Retrieval_
-    corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
+    corp <- quanteda.core::corpus(c(d1 = "Chinese Beijing Chinese",
                      d2 = "Chinese Chinese Shanghai",
                      d3 = "Chinese Macao",
                      d4 = "Tokyo Japan Chinese",
                      d5 = "Chinese Chinese Chinese Tokyo Japan"),
                    docvars = data.frame(train = factor(c("Y", "Y", "Y", "N", NA))))
-    dfmat <- quanteda::dfm(corp, tolower = FALSE) %>%
-        quanteda::dfm_tfidf()
-    tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "train"))
+    dfmat <- quanteda.core::dfm(corp, tolower = FALSE) %>%
+        quanteda.core::dfm_tfidf()
+    tmod <- textmodel_svmlin(dfmat, y = quanteda.core::docvars(dfmat, "train"))
 
     expect_output(
         print(tmod),
@@ -139,7 +139,7 @@ test_that("the svmlin model works", {
         tol = .001
     )
 
-    tmod2 <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "train"), intercept = FALSE)
+    tmod2 <- textmodel_svmlin(dfmat, y = quanteda.core::docvars(dfmat, "train"), intercept = FALSE)
     expect_identical(
         predict(tmod2),
         c(d1 = "Y", d2 = "Y", d3 = "Y", d4 = "N", d5 = "N")
@@ -158,7 +158,7 @@ test_that("the svmlin model works", {
 })
 
 test_that("textmodel_svm/svmlin() work with weighted dfm", {
-    dfmat <- quanteda::dfm_tfidf(data_dfm_lbgexample)
+    dfmat <- quanteda.core::dfm_tfidf(data_dfm_lbgexample)
     expect_silent(
         tmod <- textmodel_svm(dfmat, y = c("N", "N", NA, "Y", "Y", NA))
     )

@@ -73,7 +73,7 @@
 #' predict(tmod1, interval = "confidence")
 #'
 #' \dontrun{
-#' library("quanteda")
+#' library("quanteda.core")
 #' dfmat <- dfm(data_corpus_irishbudget2010)
 #' (tmod2 <- textmodel_wordfish(dfmat, dir = c(6,5)))
 #' (tmod3 <- textmodel_wordfish(dfmat, dir = c(6,5),
@@ -92,10 +92,10 @@
 #'      tmod3$features['underdispersedTerms'],
 #'      cex = .8, xlim = c(0, 1.0), ylim = c(0, 1.0), col = "black")
 #' if (requireNamespace("austin")) {
-#'     tmod5 <- austin::wordfish(quanteda::as.wfm(dfmat), dir = c(6, 5))
+#'     tmod5 <- austin::wordfish(quanteda.core::as.wfm(dfmat), dir = c(6, 5))
 #'     cor(tmod1$theta, tmod5$theta)
 #' }}
-#' @importFrom quanteda as.dfm
+#' @importFrom quanteda.core as.dfm
 #' @export
 textmodel_wordfish <- function(x, dir = c(1, 2),
                                priors = c(Inf, Inf, 3, 1),

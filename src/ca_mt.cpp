@@ -1,5 +1,5 @@
 #include "lib.h"
-using namespace quanteda;
+using namespace quanteda.core;
 using namespace arma;
 
 
@@ -23,15 +23,15 @@ struct Res : public Worker {
     const arma::rowvec &csum;
     const double residual_floor;
     const std::size_t K;
-    
+
     // output: residual[index0, index1, residual_value]
     Triplets &residual_tri;
-    
+
     //constructor
-    Res(const arma::sp_mat& dfm, const arma::colvec &rsum, const arma::rowvec &csum, 
+    Res(const arma::sp_mat& dfm, const arma::colvec &rsum, const arma::rowvec &csum,
         const double residual_floor, const std::size_t K, Triplets &residual_tri):
         dfm(dfm), rsum(rsum), csum(csum), residual_floor(residual_floor), K(K), residual_tri(residual_tri) {}
-    
+
     void operator() (std::size_t begin, std::size_t end) {
         for (std::size_t i = begin; i < end; i++) {
             create_residual_ca(i, dfm, rsum, csum, residual_floor, K, residual_tri);
@@ -41,14 +41,14 @@ struct Res : public Worker {
 
 // [[Rcpp::export]]
 S4 qatd_cpp_ca(const arma::sp_mat &dfm, const double residual_floor){
-    
+
     const std::size_t N = dfm.n_rows;
     const std::size_t K = dfm.n_cols;
-    
-    // Construct Chi-Sq Residuals	
+
+    // Construct Chi-Sq Residuals
     const arma::colvec rsum(sum(dfm,1));
     const arma::rowvec csum(sum(dfm,0));
-    
+
     //create the residual matrix
     Triplets residual_tri;
     residual_tri.reserve(N * K / 1000); // assume 99.9% sparsity
@@ -61,7 +61,7 @@ S4 qatd_cpp_ca(const arma::sp_mat &dfm, const double residual_floor){
         create_residual_ca(i, dfm, rsum, csum, residual_floor, K, residual_tri);
     }
 #endif
-    
+
     return to_matrix( residual_tri, N, K, false );
 //     std::size_t residual_size = residual_tri.size();
 //     IntegerVector dim_ = IntegerVector::create(N, K);
@@ -81,7 +81,7 @@ S4 qatd_cpp_ca(const arma::sp_mat &dfm, const double residual_floor){
 //     res_.slot("Dim") = dim_;
 //
 //     return res_;
-    
+
 }
 
 /***R

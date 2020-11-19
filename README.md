@@ -79,8 +79,8 @@ are most welcome. How to contribute:
   - Fork the source code, modify, and issue a [pull
     request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/)
     through the [project GitHub
-    page](https://github.com/quanteda/quanteda). See our [Contributor
-    Code of
+    page](https://github.com/quanteda/quanteda.textmodels). See our
+    [Contributor Code of
     Conduct](https://github.com/quanteda/quanteda/blob/master/CONDUCT.md)
     and the all-important **quanteda** [Style
     Guide](https://github.com/quanteda/quanteda/wiki/Style-guide).

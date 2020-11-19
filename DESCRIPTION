@@ -30,7 +30,7 @@ Imports:
     glmnet,
     LiblineaR,
     Matrix (>= 1.2),
-    quanteda (>= 2.0),
+    quanteda.core (>= 2.0),
     RSpectra,
     Rcpp (>= 0.12.12),
     RcppParallel,
@@ -48,7 +48,9 @@ Suggests:
     RColorBrewer,
     testthat,
     rmarkdown
-LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
+Remotes:
+    koheiw/quanteda.core@modularise
+LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda.core
 URL: https://github.com/quanteda/quanteda.textmodels
 License: GPL-3
 Encoding: UTF-8

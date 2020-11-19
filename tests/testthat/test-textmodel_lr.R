@@ -1,7 +1,7 @@
 context("test textmodel_lr")
 test_that("the lr model works with binomal classification", {
     ## Example based on 13.1 of _An Introduction to Information Retrieval_
-    corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
+    corp <- quanteda.core::corpus(c(d1 = "Chinese Beijing Chinese",
                                d2 = "Chinese Chinese Shanghai",
                                d3 = "Chinese Macao",
                                d4 = "Tokyo Japan Chinese",
@@ -9,12 +9,12 @@ test_that("the lr model works with binomal classification", {
                                d6 = "Chinese Chinese Chinese Tokyo Japan"),
                              docvars = data.frame(train = factor(c("Y", "Y", "Y",
                                                                    "N", "N", NA))))
-    dfmat <- quanteda::dfm(corp, tolower = FALSE)
+    dfmat <- quanteda.core::dfm(corp, tolower = FALSE)
     dfmat_test <- dfmat
     #
     set.seed(1)
-    dfmat <- quanteda::dfm_sample(dfmat, 100, replace = TRUE)
-    tmod <- textmodel_lr(dfmat, y = quanteda::docvars(dfmat, "train"), nfolds = 3)
+    dfmat <- quanteda.core::dfm_sample(dfmat, 100, replace = TRUE)
+    tmod <- textmodel_lr(dfmat, y = quanteda.core::docvars(dfmat, "train"), nfolds = 3)
     expect_output(
         print(tmod),
         "Call:"
@@ -44,7 +44,7 @@ test_that("the lr model works with binomal classification", {
 })
 
 test_that("the lr model works with multinomial classification", {
-    corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
+    corp <- quanteda.core::corpus(c(d1 = "Chinese Beijing Chinese",
                                d2 = "Chinese Chinese Shanghai",
                                d3 = "Chinese Macao",
                                d4 = "Tokyo Japan Chinese",
@@ -52,12 +52,12 @@ test_that("the lr model works with multinomial classification", {
                                d6 = "Bratwurst German Berlin"),
                              docvars = data.frame(train = factor(c("C", "C", "C",
                                                                    "J", "J", "G"))))
-    dfmat <- quanteda::dfm(corp, tolower = FALSE)
+    dfmat <- quanteda.core::dfm(corp, tolower = FALSE)
     dfmat_test <- dfmat
 
     set.seed(1)
-    dfmat <- quanteda::dfm_sample(dfmat, 100, replace = TRUE)
-    tmod <- textmodel_lr(dfmat, y = quanteda::docvars(dfmat, "train"), nfolds = 3)
+    dfmat <- quanteda.core::dfm_sample(dfmat, 100, replace = TRUE)
+    tmod <- textmodel_lr(dfmat, y = quanteda.core::docvars(dfmat, "train"), nfolds = 3)
     expect_output(
         print(tmod),
         "Call:"

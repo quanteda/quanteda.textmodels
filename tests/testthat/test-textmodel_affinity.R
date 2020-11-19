@@ -11,8 +11,8 @@ test_that("textmodel_affinity works as expected",  {
 
 test_that("textmodel_affinity works for tolower = TRUE dfm objects (#1338)", {
     txt <- c("A", "B", "C", "a")
-    dfm1 <- quanteda::dfm(txt, tolower = TRUE)
-    dfm2 <- quanteda::dfm(txt, tolower = FALSE)
+    dfm1 <- quanteda.core::dfm(txt, tolower = TRUE)
+    dfm2 <- quanteda.core::dfm(txt, tolower = FALSE)
 
     expect_output(
         print(textmodel_affinity(dfm1, y = c("one", "two", NA, NA))),
@@ -26,7 +26,7 @@ test_that("textmodel_affinity works for tolower = TRUE dfm objects (#1338)", {
 
 test_that("raises error when dfm is empty (#1419)",  {
 
-    mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
+    mx <- quanteda.core::dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_affinity(mx, y = c(-1, NA, NA, NA, 1, NA)),
                  quanteda.textmodels:::message_error("dfm_empty"))
 

@@ -3,16 +3,16 @@ context("test plots.R")
 pdf(file = tempfile(".pdf"), width = 10, height = 10)
 
 test_that("test textplot_scale1d wordfish in the most basic way", {
-    wf <- textmodel_wordfish(quanteda::dfm(data_corpus_irishbudget2010), dir = c(6, 5))
+    wf <- textmodel_wordfish(quanteda.core::dfm(data_corpus_irishbudget2010), dir = c(6, 5))
     expect_false(identical(textplot_scale1d(wf, sort = TRUE),
                            textplot_scale1d(wf, sort = FALSE)))
     expect_silent(textplot_scale1d(wf, sort = TRUE,
-                                   groups = quanteda::docvars(data_corpus_irishbudget2010, "party")))
+                                   groups = quanteda.core::docvars(data_corpus_irishbudget2010, "party")))
     expect_silent(textplot_scale1d(wf, sort = FALSE,
-                                   groups = quanteda::docvars(data_corpus_irishbudget2010, "party")))
+                                   groups = quanteda.core::docvars(data_corpus_irishbudget2010, "party")))
 
     expect_silent(
-        textplot_scale1d(wf, doclabels = apply(quanteda::docvars(data_corpus_irishbudget2010,
+        textplot_scale1d(wf, doclabels = apply(quanteda.core::docvars(data_corpus_irishbudget2010,
                                                        c("name", "party")),
                                                1, paste, collapse = " "))
     )
@@ -25,18 +25,18 @@ test_that("test textplot_scale1d wordfish in the most basic way", {
 })
 
 test_that("test textplot_scale1d wordscores in the most basic way", {
-    mt <- quanteda::dfm(data_corpus_irishbudget2010)
+    mt <- quanteda.core::dfm(data_corpus_irishbudget2010)
     ws <- textmodel_wordscores(mt, c(rep(NA, 4), -1, 1, rep(NA, 8)))
     pr <- suppressWarnings(predict(ws, mt, force = TRUE))
 
     expect_false(identical(textplot_scale1d(pr, sort = TRUE),
                            textplot_scale1d(pr, sort = FALSE)))
     expect_silent(textplot_scale1d(pr, sort = TRUE,
-                                   groups = quanteda::docvars(data_corpus_irishbudget2010, "party")))
+                                   groups = quanteda.core::docvars(data_corpus_irishbudget2010, "party")))
     expect_silent(textplot_scale1d(pr, sort = FALSE,
-                                   groups = quanteda::docvars(data_corpus_irishbudget2010, "party")))
+                                   groups = quanteda.core::docvars(data_corpus_irishbudget2010, "party")))
 
-    expect_silent(textplot_scale1d(pr, doclabels = apply(quanteda::docvars(data_corpus_irishbudget2010,
+    expect_silent(textplot_scale1d(pr, doclabels = apply(quanteda.core::docvars(data_corpus_irishbudget2010,
                                                                  c("name", "party")),
                                                          1, paste, collapse = " ")))
 

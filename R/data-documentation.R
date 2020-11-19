@@ -59,7 +59,7 @@
 #' @keywords data
 #' @examples
 #' \dontrun{
-#' library("quanteda")
+#' library("quanteda.core")
 #' data_dfm_dailnoconf1991 <- dfm(data_corpus_dailnoconf1991, remove_punct = TRUE)
 #' tmod <- textmodel_affinity(data_dfm_dailnoconf1991,
 #'                            c("Govt", "Opp", "Opp", rep(NA, 55)))
@@ -115,7 +115,7 @@
 #'   Text Analysis: Reproducible and Agile Production of Political Data](https://doi.org/10.1017/S0003055416000058).
 #'   *American Political Science Review*, 100,(2), 278--295.
 #' @format
-#'  A [corpus][quanteda::corpus] object.
+#'  A [corpus][quanteda.core::corpus] object.
 #' @keywords data
 "data_corpus_EPcoaldebate"
 
@@ -147,6 +147,7 @@
 #'
 #' # make the data into sentences, because each line is a sentence
 #' data_corpus_moviereviewsents <-
-#'     quanteda::corpus_segment(data_corpus_moviereviews, "\n", extract_pattern = FALSE)
+#'     quanteda.core::corpus_segment(data_corpus_moviereviews, "\n",
+#'                                   extract_pattern = FALSE)
 #' print(data_corpus_moviereviewsents, max_ndoc = 3)
 "data_corpus_moviereviews"

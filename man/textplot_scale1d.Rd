@@ -33,7 +33,7 @@ applies when \code{margin = "documents"}.}
 variables to be used for grouping; or a factor or object that can be
 coerced into a factor equal in length or rows to the number of documents.
 \code{NA} values of the grouping value are dropped.
-See \link[quanteda]{groups} for details.}
+See \link[quanteda.core]{groups} for details.}
 
 \item{highlighted}{a vector of feature names to draw attention to in a
 feature plot; only applies if \code{margin = "features"}}
@@ -64,7 +64,7 @@ The \code{groups} argument only applies when \code{margin = "documents"}.
 }
 \examples{
 \dontrun{
-dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+dfmat <- quanteda.core::dfm(data_corpus_irishbudget2010)
 
 ## wordscores
 refscores <- c(rep(NA, 4), 1, -1, rep(NA, 8))

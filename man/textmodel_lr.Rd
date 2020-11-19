@@ -18,7 +18,7 @@ factors.)}
 }
 \description{
 Fits a fast penalized maximum likelihood estimator to predict discrete
-categories from sparse \link[quanteda:dfm]{dfm} objects. Using the \pkg{glmnet}
+categories from sparse \link[quanteda.core:dfm]{dfm} objects. Using the \pkg{glmnet}
 package, the function computes the regularization path for the lasso or
 elasticnet penalty at a grid of values for the regularization parameter
 lambda.  This is done automatically by testing on several folds of the data
@@ -26,22 +26,22 @@ at estimation time.
 }
 \examples{
 ## Example from 13.1 of _An Introduction to Information Retrieval_
-corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
-                           d2 = "Chinese Chinese Shanghai",
-                           d3 = "Chinese Macao",
-                           d4 = "Tokyo Japan Chinese",
-                           d5 = "London England Chinese",
-                           d6 = "Chinese Chinese Chinese Tokyo Japan"),
-                         docvars = data.frame(train = factor(c("Y", "Y", "Y",
-                                                               "N", "N", NA))))
-dfmat <- quanteda::dfm(corp, tolower = FALSE)
+corp <- quanteda.core::corpus(c(d1 = "Chinese Beijing Chinese",
+                                d2 = "Chinese Chinese Shanghai",
+                                d3 = "Chinese Macao",
+                                d4 = "Tokyo Japan Chinese",
+                                d5 = "London England Chinese",
+                                d6 = "Chinese Chinese Chinese Tokyo Japan"),
+                               docvars = data.frame(train = factor(c("Y", "Y", "Y",
+                                                                     "N", "N", NA))))
+dfmat <- quanteda.core::dfm(corp, tolower = FALSE)
 
 ## simulate bigger sample as classification on small samples is problematic
 set.seed(1)
-dfmat <- quanteda::dfm_sample(dfmat, 50, replace = TRUE)
+dfmat <- quanteda.core::dfm_sample(dfmat, 50, replace = TRUE)
 
 ## train model
-(tmod1 <- textmodel_lr(dfmat, quanteda::docvars(dfmat, "train")))
+(tmod1 <- textmodel_lr(dfmat, quanteda.core::docvars(dfmat, "train")))
 summary(tmod1)
 coef(tmod1)
 

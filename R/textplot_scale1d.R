@@ -17,7 +17,7 @@
 #' @param sort if `TRUE` (the default), order points from low to high
 #'   score. If a vector, order according to these values from low to high. Only
 #'   applies when `margin = "documents"`.
-#' @inheritParams quanteda::groups
+#' @inheritParams quanteda.core::groups
 #' @param doclabels a vector of names for document; if left NULL (the default),
 #'   docnames will be used
 #' @param highlighted a vector of feature names to draw attention to in a
@@ -35,7 +35,7 @@
 #' @keywords textplot
 #' @examples
 #' \dontrun{
-#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+#' dfmat <- quanteda.core::dfm(data_corpus_irishbudget2010)
 #'
 #' ## wordscores
 #' refscores <- c(rep(NA, 4), 1, -1, rep(NA, 8))

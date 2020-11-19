@@ -48,11 +48,11 @@ described in Sindhwani and Keerthi (2006). Currently,
 }
 \examples{
 # use Lenihan for govt class and Bruton for opposition
-quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
+quanteda.core::docvars(data_corpus_irishbudget2010, "govtopp") <-
     c("Govt", "Opp", rep(NA, 12))
-dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+dfmat <- quanteda.core::dfm(data_corpus_irishbudget2010)
 
-tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
+tmod <- textmodel_svmlin(dfmat, y = quanteda.core::docvars(dfmat, "govtopp"))
 predict(tmod)
 }
 \references{

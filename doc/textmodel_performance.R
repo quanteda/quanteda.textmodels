@@ -5,8 +5,8 @@ knitr::opts_chunk$set(
 )
 
 ## ----setup--------------------------------------------------------------------
+library("quanteda.core")
 library("quanteda.textmodels")
-library("quanteda")
 
 ## -----------------------------------------------------------------------------
 # large movie review database of 50,000 movie reviews

@@ -30,7 +30,8 @@ table(data_corpus_moviereviews$sentiment)
 
 # make the data into sentences, because each line is a sentence
 data_corpus_moviereviewsents <-
-    quanteda::corpus_segment(data_corpus_moviereviews, "\n", extract_pattern = FALSE)
+    quanteda.core::corpus_segment(data_corpus_moviereviews, "\n",
+                                  extract_pattern = FALSE)
 print(data_corpus_moviereviewsents, max_ndoc = 3)
 }
 \references{

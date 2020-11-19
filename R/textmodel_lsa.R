@@ -1,7 +1,7 @@
 #' Latent Semantic Analysis
 #'
 #' Fit the Latent Semantic Analysis scaling model to a [dfm], which may be
-#' weighted (for instance using [quanteda::dfm_tfidf()]).
+#' weighted (for instance using [quanteda.core::dfm_tfidf()]).
 #' @param x the [dfm] on which the model will be fit
 #' @param nd  the number of dimensions to be included in output
 #' @param margin margin to be smoothed by the SVD
@@ -22,7 +22,7 @@
 #'   by Latent Semantic Analysis](https://search.proquest.com/docview/1301252034). *Journal of the American Society for
 #'   Information Science*, 41(6): 391.
 #' @examples
-#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+#' dfmat <- quanteda.core::dfm(data_corpus_irishbudget2010)
 #' # create an LSA space and return its truncated representation in the low-rank space
 #' tmod <- textmodel_lsa(dfmat[1:10, ])
 #' head(tmod$docs)
@@ -37,7 +37,7 @@
 #'
 #' @keywords textmodel experimental
 #' @seealso [predict.textmodel_lsa()], [coef.textmodel_lsa()]
-#' @importFrom quanteda as.dfm
+#' @importFrom quanteda.core as.dfm
 #' @export
 textmodel_lsa <- function(x, nd = 10, margin = c("both", "documents", "features")) {
     UseMethod("textmodel_lsa")
@@ -133,6 +133,7 @@ predict.textmodel_lsa <- function(object, newdata = NULL, ...) {
 }
 
 #' @rdname textmodel_lsa-postestimation
+#' @importFrom quanteda.core as.dfm
 #' @method as.dfm textmodel_lsa
 #' @export
 as.dfm.textmodel_lsa <- function(x) {
