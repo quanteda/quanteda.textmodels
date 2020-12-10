@@ -25,9 +25,6 @@ of 2010.
 At the time of the debate, Fianna Fáil (FF) and the Greens formed the government
 coalition, while Fine Gael (FG), Labour (LAB), and Sinn Féin (SF) were in opposition.
 }
-\examples{
-summary(data_corpus_irishbudget2010)
-}
 \references{
 Lowe, W. & Benoit, K.R. (2013).
 \href{https://doi.org/10.1093/pan/mpt002}{Validating Estimates of Latent Traits From Textual Data Using Human Judgment as a Benchmark}.

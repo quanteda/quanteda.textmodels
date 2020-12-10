@@ -33,9 +33,6 @@
 #' Dáil Éireann Debate,
 #' [Budget Statement 2010.](http://oireachtasdebates.oireachtas.ie/debates\%20authoring/debateswebpack.nsf/takes/dail2009120900022?opendocument)
 #' 9 December 2009. vol. 697, no. 3.
-#'
-#' @examples
-#' summary(data_corpus_irishbudget2010)
 "data_corpus_irishbudget2010"
 
 
