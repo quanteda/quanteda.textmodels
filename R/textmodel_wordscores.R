@@ -42,17 +42,19 @@
 #' predict(tmod)
 #' predict(tmod, rescaling = "lbg")
 #' predict(tmod, se.fit = TRUE, interval = "confidence", rescaling = "mv")
-#' @references Laver, M., Benoit, K.R., & Garry, J. (2003).
-#'   [Estimating
-#'   Policy Positions from Political Text using Words as Data](https://kenbenoit.net/pdfs/WORDSCORESAPSR.pdf). *American
-#'   Political Science Review*, 97(2), 311--331.
+#' @references
+#' Laver, M., Benoit, K.R., & Garry, J. (2003). [Estimating Policy Positions
+#' from Political Text using Words as
+#' Data](https://kenbenoit.net/pdfs/WORDSCORESAPSR.pdf). *American Political
+#' Science Review*, 97(2), 311--331.
 #'
-#'   Beauchamp, N. (2012). [Using
-#'   Text to Scale Legislatures with Uninformative Voting](http://nickbeauchamp.com/work/Beauchamp_scaling_current.pdf). New York University Mimeo.
+#'   Beauchamp, N. (2012). [Using Text to Scale Legislatures with Uninformative
+#'   Voting](http://nickbeauchamp.com/work/Beauchamp_scaling_current.pdf). New
+#'   York University Mimeo.
 #'
-#'   Martin, L.W. & Vanberg, G. (2007). [A Robust
-#'   Transformation Procedure for Interpreting Political Text](https://doi.org/10.1093/pan/mpm010). *Political Analysis*
-#'   16(1), 93--100.
+#'   Martin, L.W. & Vanberg, G. (2007). A Robust Transformation Procedure for
+#'   Interpreting Political Text.  *Political Analysis* 16(1), 93--100.
+#'   \doi{doi.org/10.1093/pan/mpm010}
 #' @importFrom quanteda dfm_weight dfm_smooth as.dfm
 #' @export
 textmodel_wordscores <- function(x, y, scale = c("linear", "logit"), smooth = 0) {

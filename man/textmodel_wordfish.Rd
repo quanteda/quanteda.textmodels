@@ -120,12 +120,14 @@ if (requireNamespace("austin")) {
 }}
 }
 \references{
-Slapin, J. & Proksch, S.O. (2008).
-\href{https://doi.org/10.1111/j.1540-5907.2008.00338.x}{A Scaling Model for Estimating Time-Series Party Positions from Texts}. \emph{American
-Journal of Political Science}, 52(3), 705--772.
+Slapin, J. & Proksch, S.O. (2008). A Scaling Model for Estimating
+Time-Series Party Positions from Texts.
+\doi{10.1111/j.1540-5907.2008.00338.x}. \emph{American Journal of Political
+Science}, 52(3), 705--772.
 
-Lowe, W. & Benoit, K.R. (2013). \href{http://doi.org/10.1093/pan/mpt002}{Validating Estimates of Latent Traits from Textual Data Using Human Judgment as a Benchmark}.
-\emph{Political Analysis}, 21(3), 298--313.
+Lowe, W. & Benoit, K.R. (2013). Validating Estimates of Latent Traits from
+Textual Data Using Human Judgment as a Benchmark.
+\doi{10.1093/pan/mpt002}. \emph{Political Analysis}, 21(3), 298--313.
 }
 \seealso{
 \code{\link[=predict.textmodel_wordfish]{predict.textmodel_wordfish()}}

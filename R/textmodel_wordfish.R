@@ -55,14 +55,14 @@
 #' @note In the rare situation where a warning message of "The algorithm did not
 #'   converge." shows up, removing some documents may work.
 #' @seealso [predict.textmodel_wordfish()]
-#' @references Slapin, J. & Proksch, S.O. (2008).
-#'   [A Scaling Model
-#'   for Estimating Time-Series Party Positions from Texts](https://doi.org/10.1111/j.1540-5907.2008.00338.x). *American
-#'   Journal of Political Science*, 52(3), 705--772.
+#' @references Slapin, J. & Proksch, S.O. (2008). A Scaling Model for Estimating
+#'   Time-Series Party Positions from Texts.
+#'   \doi{10.1111/j.1540-5907.2008.00338.x}. *American Journal of Political
+#'   Science*, 52(3), 705--772.
 #'
-#'   Lowe, W. & Benoit, K.R. (2013). [Validating
-#'   Estimates of Latent Traits from Textual Data Using Human Judgment as a Benchmark](http://doi.org/10.1093/pan/mpt002).
-#'   *Political Analysis*, 21(3), 298--313.
+#'   Lowe, W. & Benoit, K.R. (2013). Validating Estimates of Latent Traits from
+#'   Textual Data Using Human Judgment as a Benchmark.
+#'   \doi{10.1093/pan/mpt002}. *Political Analysis*, 21(3), 298--313.
 #' @author Benjamin Lauderdale, Haiyan Wang, and Kenneth Benoit
 #' @examples
 #' (tmod1 <- textmodel_wordfish(data_dfm_lbgexample, dir = c(1,5)))
