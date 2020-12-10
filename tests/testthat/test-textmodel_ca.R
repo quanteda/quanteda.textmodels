@@ -64,7 +64,7 @@ test_that("textmodel_ca matches ca::ca() for given number of dimension", {
 test_that("textmodel-ca(sparse) works as expected on another dataset", {
     usdfm <- quanteda::dfm(quanteda::data_corpus_inaugural, verbose = FALSE)
     skip_if_not_installed("ca")
-    wca <- ca::ca(quanteda::as.matrix(usdfm))
+    wca <- ca::ca(as.matrix(usdfm))
     wtca <- textmodel_ca(usdfm, sparse = TRUE)
 
     expect_gt(cor(wca$rowdist, wtca$rowdist), 0.99)
