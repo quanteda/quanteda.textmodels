@@ -54,7 +54,7 @@
 #'
 #'   Martin, L.W. & Vanberg, G. (2007). A Robust Transformation Procedure for
 #'   Interpreting Political Text.  *Political Analysis* 16(1), 93--100.
-#'   \doi{doi.org/10.1093/pan/mpm010}
+#'   \doi{10.1093/pan/mpm010}
 #' @importFrom quanteda dfm_weight dfm_smooth as.dfm
 #' @export
 textmodel_wordscores <- function(x, y, scale = c("linear", "logit"), smooth = 0) {

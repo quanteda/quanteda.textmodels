@@ -1,14 +1,15 @@
 ## Purpose
 
-RESUBMISSION: We forgot to .Rbuildignore some files used for creating the data objects, and this made the package size too large.  Fixed now.
-
-Minor compatibility improvements with respect to the splitting from this package originally from **quanteda**, and adds new data objects.
+* Fixes Solaris errors
+* Fixes errors in r-devel releases caused by changes in how all.equal(f, g) works, as noted in an email on Dec 9, 2020 by Martin Maechler.
+* Adds two new features, as noted in NEWS
 
 ## Test environments
 
-* local R installation, R 3.6.3
-* ubuntu 16.04 (on travis-ci), R 3.6.3
-* win-builder (devel, release)
+* local macOS 10.15.7, R 4.0.3
+* Ubuntu 18.04 LTS and 18.10, R 4.0.3
+* Windows release via devtools::check_win_release()
+* Windows devel via devtools::check_win_devel()
 
 ## R CMD check results
 

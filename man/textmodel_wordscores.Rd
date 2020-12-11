@@ -62,7 +62,7 @@ York University Mimeo.
 
 Martin, L.W. & Vanberg, G. (2007). A Robust Transformation Procedure for
 Interpreting Political Text.  \emph{Political Analysis} 16(1), 93--100.
-\doi{doi.org/10.1093/pan/mpm010}
+\doi{10.1093/pan/mpm010}
 }
 \seealso{
 \code{\link[=predict.textmodel_wordscores]{predict.textmodel_wordscores()}} for methods of applying a

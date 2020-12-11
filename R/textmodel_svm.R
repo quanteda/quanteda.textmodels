@@ -17,7 +17,7 @@
 #' R. E. Fan, K. W. Chang, C. J. Hsieh, X. R. Wang, and C. J. Lin. (2008)
 #' LIBLINEAR: A Library for Large Linear Classification.
 #' *Journal of Machine Learning Research* 9: 1871-1874.
-#' <https://www.csie.ntu.edu.tw/~cjlin/liblinear>.
+#' <https://www.csie.ntu.edu.tw/~cjlin/liblinear/>.
 #' @seealso [LiblineaR::LiblineaR()] [predict.textmodel_svm()]
 #' @examples
 #' # use party leaders for govt and opposition classes
