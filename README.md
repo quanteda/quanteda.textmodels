@@ -4,12 +4,12 @@
 <!-- badges: start -->
 
 [![](https://www.r-pkg.org/badges/version/quanteda.textmodels?color=green)](https://cran.r-project.org/package=quanteda.textmodels)
-[![](https://img.shields.io/badge/devel%20version-0.9.1.9003-royalblue.svg)](https://github.com/quanteda/quanteda.textmodels)
+[![](https://img.shields.io/badge/devel%20version-0.9.2-royalblue.svg)](https://github.com/quanteda/quanteda.textmodels)
 [![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textmodels)](https://CRAN.R-project.org/package=quanteda.textmodels)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textmodels?color=orange)](https://CRAN.R-project.org/package=quanteda.textmodels)
 [![R build
-status](https://github.com/JBGruber/quanteda.textmodels/workflows/R-CMD-check/badge.svg)](https://github.com/JBGruber/quanteda.textmodels/actions)
+status](https://github.com/quanteda/quanteda.textmodels/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/quanteda.textmodels/actions)
 [![codecov](https://codecov.io/gh/quanteda/quanteda.textmodels/branch/master/graph/badge.svg)](https://codecov.io/gh/quanteda/quanteda.textmodels)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)

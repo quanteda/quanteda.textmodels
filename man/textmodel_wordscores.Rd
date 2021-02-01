@@ -54,14 +54,15 @@ predict(tmod, rescaling = "lbg")
 predict(tmod, se.fit = TRUE, interval = "confidence", rescaling = "mv")
 }
 \references{
-Laver, M., Benoit, K.R., & Garry, J. (2003).
-\href{https://kenbenoit.net/pdfs/WORDSCORESAPSR.pdf}{Estimating Policy Positions from Political Text using Words as Data}. \emph{American
-Political Science Review}, 97(2), 311--331.
+Laver, M., Benoit, K.R., & Garry, J. (2003). \href{https://kenbenoit.net/pdfs/WORDSCORESAPSR.pdf}{Estimating Policy Positions from Political Text using Words as Data}. \emph{American Political
+Science Review}, 97(2), 311--331.
 
-Beauchamp, N. (2012). \href{http://nickbeauchamp.com/work/Beauchamp_scaling_current.pdf}{Using Text to Scale Legislatures with Uninformative Voting}. New York University Mimeo.
+Beauchamp, N. (2012). \href{http://nickbeauchamp.com/work/Beauchamp_scaling_current.pdf}{Using Text to Scale Legislatures with Uninformative Voting}. New
+York University Mimeo.
 
-Martin, L.W. & Vanberg, G. (2007). \href{https://doi.org/10.1093/pan/mpm010}{A Robust Transformation Procedure for Interpreting Political Text}. \emph{Political Analysis}
-16(1), 93--100.
+Martin, L.W. & Vanberg, G. (2007). A Robust Transformation Procedure for
+Interpreting Political Text.  \emph{Political Analysis} 16(1), 93--100.
+\doi{10.1093/pan/mpm010}
 }
 \seealso{
 \code{\link[=predict.textmodel_wordscores]{predict.textmodel_wordscores()}} for methods of applying a

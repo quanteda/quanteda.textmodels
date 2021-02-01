@@ -50,7 +50,7 @@ tmod <- textmodel_ca(dfmat)
 summary(tmod)
 }
 \references{
-Nenadic, O. & Greenacre, M. (2007). \href{http://www.jstatsoft.org/v20/i03/}{Correspondence Analysis in R, with Two- and Three-dimensional Graphics: The ca package}. \emph{Journal of Statistical Software}, 20(3).
+Nenadic, O. & Greenacre, M. (2007). \href{https://www.jstatsoft.org/v20/i03/}{Correspondence Analysis in R, with Two- and Three-dimensional Graphics: The ca package}. \emph{Journal of Statistical Software}, 20(3).
 }
 \seealso{
 \code{\link[=coef.textmodel_lsa]{coef.textmodel_lsa()}}, \link[ca:ca]{ca}

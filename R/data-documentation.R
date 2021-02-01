@@ -33,9 +33,6 @@
 #' Dáil Éireann Debate,
 #' [Budget Statement 2010.](http://oireachtasdebates.oireachtas.ie/debates\%20authoring/debateswebpack.nsf/takes/dail2009120900022?opendocument)
 #' 9 December 2009. vol. 697, no. 3.
-#'
-#' @examples
-#' summary(data_corpus_irishbudget2010)
 "data_corpus_irishbudget2010"
 
 
@@ -111,9 +108,9 @@
 #'    0.8 are included in the corpus.}
 #'   }
 #' @references Benoit, K., Conway, D., Lauderdale, B.E., Laver, M., & Mikhaylov,
-#'   S. (2016). [Crowd-sourced
-#'   Text Analysis: Reproducible and Agile Production of Political Data](https://doi.org/10.1017/S0003055416000058).
-#'   *American Political Science Review*, 100,(2), 278--295.
+#'   S. (2016). Crowd-sourced Text Analysis: Reproducible and Agile Production
+#'   of Political Data. *American Political Science Review*, 100,(2), 278--295.
+#'   \doi{10.1017/S0003055416000058}
 #' @format
 #'  A [corpus][quanteda::corpus] object.
 #' @keywords data
