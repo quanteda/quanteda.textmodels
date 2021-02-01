@@ -28,8 +28,4 @@ test_that("test default textplot methods", {
         textplot_influence(TRUE),
         "textplot_influence\\(\\) only works on influence\\..*textmodel_affinity objects"
     )
-    expect_error(
-        textplot_scale1d(TRUE),
-        "textplot_scale1d\\(\\) only works on predict\\.textmodel.*objects"
-    )
 })

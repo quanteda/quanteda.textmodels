@@ -95,9 +95,9 @@ test_that("ca coefficients methods work", {
 
 test_that("ca textplot_scale1d method works", {
     camodel <- textmodel_ca(data_dfm_lbgexample)
-    textplot_scale1d(camodel, margin = "document")
+    quanteda.textplots::textplot_scale1d(camodel, margin = "document")
     expect_error(
-        textplot_scale1d(camodel, margin = "features"),
+        quanteda.textplots::textplot_scale1d(camodel, margin = "features"),
         "textplot_scale1d for features not implemented for CA models"
     )
 })

@@ -25,9 +25,17 @@ test_that("textmodel_affinity works for tolower = TRUE dfm objects (#1338)", {
 })
 
 test_that("raises error when dfm is empty (#1419)",  {
-
     mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_affinity(mx, y = c(-1, NA, NA, NA, 1, NA)),
                  quanteda.textmodels:::message_error("dfm_empty"))
-
 })
+
+
+pdf(file = tempfile(".pdf"), width = 10, height = 10)
+test_that("test textmodel_affinity plots", {
+    af <- textmodel_affinity(data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA))
+    afpred <- predict(af)
+    expect_silent(textplot_influence(influence(afpred)))
+    expect_silent(textplot_influence(summary(influence(afpred))))
+})
+dev.off()
