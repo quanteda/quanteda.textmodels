@@ -1,0 +1,7 @@
+pandoc: 2.11.2
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  textmodel_performance: textmodel_performance.html
+last_built: 2021-02-12T15:51Z
+
