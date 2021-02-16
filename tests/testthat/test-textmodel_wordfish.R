@@ -8,7 +8,7 @@ wfp <- predict(wfm)
 
 test_that("textmodel-wordfish (sparse) works as expected as austin::wordfish", {
     skip_if_not_installed("austin")
-    wfmodelAustin <- austin::wordfish(quanteda::as.wfm(ie2010dfm), dir = c(6, 5))
+    wfmodelAustin <- austin::wordfish(quanteda::convert(ie2010dfm, to = "austin"), dir = c(6, 5))
     cc <- cor(wfm$theta, wfmodelAustin$theta)
     expect_gt(cc, 0.99)
 
