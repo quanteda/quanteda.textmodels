@@ -27,7 +27,7 @@ test_that("the lr model works with binomal classification", {
                                  "Beijing", "Shanghai", "Macao",
                                  "Tokyo", "Japan", "London", "England"
                ), "Y")),
-        tol = .0000001
+        tol = .00001
     )
 
     expect_identical(
@@ -71,7 +71,7 @@ test_that("the lr model works with multinomial classification", {
                                  "Shanghai", "Macao", "Tokyo", "Japan",
                                  "Sushi", "Bratwurst", "German", "Berlin"
                    ), c("C", "G", "J"))),
-        tol = .0000001
+        tol = .000001
     )
 
     expect_identical(
