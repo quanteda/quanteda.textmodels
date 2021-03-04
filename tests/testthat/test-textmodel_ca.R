@@ -1,6 +1,6 @@
-context("Testing textmodel-ca.R")
+library("quanteda")
 
-ie2010dfm <- quanteda::dfm(data_corpus_irishbudget2010)
+ie2010dfm <- dfm(tokens(data_corpus_irishbudget2010))
 
 test_that("textmodel-ca (rsvd) works as expected as ca::ca", {
     skip_if_not_installed("ca")
@@ -62,7 +62,7 @@ test_that("textmodel_ca matches ca::ca() for given number of dimension", {
 })
 
 test_that("textmodel-ca(sparse) works as expected on another dataset", {
-    usdfm <- quanteda::dfm(quanteda::data_corpus_inaugural, verbose = FALSE)
+    usdfm <- dfm(tokens(data_corpus_inaugural))
     skip_if_not_installed("ca")
     wca <- ca::ca(as.matrix(usdfm))
     wtca <- textmodel_ca(usdfm, sparse = TRUE)
@@ -83,7 +83,6 @@ test_that("textmodel-ca(sparse) works as expected on another dataset", {
     expect_gt(cc, 0.99)
 })
 
-
 test_that("ca coefficients methods work", {
     camodel <- textmodel_ca(data_dfm_lbgexample)
     expect_equal(coef(camodel), coefficients(camodel))
@@ -103,7 +102,7 @@ test_that("ca textplot_scale1d method works", {
 })
 
 test_that("raises error when dfm is empty (#1419)",  {
-    mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
+    mx <- dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_ca(mx),
                  quanteda.textmodels:::message_error("dfm_empty"))
 })

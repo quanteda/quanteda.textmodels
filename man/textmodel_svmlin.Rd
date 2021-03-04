@@ -2,7 +2,7 @@
 % Please edit documentation in R/textmodel_svmlin.R
 \name{textmodel_svmlin}
 \alias{textmodel_svmlin}
-\title{(faster) Linear SVM classifier for texts}
+\title{[experimental] Linear SVM classifier for texts}
 \usage{
 textmodel_svmlin(
   x,
@@ -46,13 +46,20 @@ implements the modified finite Newton L2-SVM method (L2-SVM-MFN) method
 described in Sindhwani and Keerthi (2006). Currently,
 \code{textmodel_svmlin()} only works for two-class problems.
 }
+\section{Warning}{
+
+This function is marked experimental since it's not fully working yet in a
+way that translates into more standard SVM parameters that we understand. Use
+with caution after reading the Sindhwani and Keerthi (2006) paper.
+}
+
 \examples{
 # use Lenihan for govt class and Bruton for opposition
-quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
-    c("Govt", "Opp", rep(NA, 12))
-dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+library("quanteda")
+docvars(data_corpus_irishbudget2010, "govtopp") <- c("Govt", "Opp", rep(NA, 12))
+dfmat <- dfm(tokens(data_corpus_irishbudget2010))
 
-tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
+tmod <- textmodel_svmlin(dfmat, y = dfmat$govtopp)
 predict(tmod)
 }
 \references{
@@ -66,4 +73,6 @@ Machines}, MIT Press, 2006.
 \seealso{
 \code{\link[=predict.textmodel_svmlin]{predict.textmodel_svmlin()}}
 }
+\keyword{experimental}
+\keyword{internal}
 \keyword{textmodel}

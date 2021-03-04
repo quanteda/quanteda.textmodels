@@ -1,10 +1,15 @@
-#' (faster) Linear SVM classifier for texts
+#' \[experimental\] Linear SVM classifier for texts
 #'
 #' Fit a fast linear SVM classifier for sparse text matrices, using svmlin C++
 #' code written by Vikas Sindhwani and S. Sathiya Keerthi.  This method
 #' implements the modified finite Newton L2-SVM method (L2-SVM-MFN) method
 #' described in Sindhwani and Keerthi (2006). Currently,
 #' `textmodel_svmlin()` only works for two-class problems.
+#'
+#' @section Warning:
+#' This function is marked experimental since it's not fully working yet in a
+#' way that translates into more standard SVM parameters that we understand. Use
+#' with caution after reading the Sindhwani and Keerthi (2006) paper.
 #'
 #' @param x the [dfm] on which the model will be fit.  Does not need to contain
 #'   only the training documents.
@@ -31,15 +36,15 @@
 #' @seealso [predict.textmodel_svmlin()]
 #' @examples
 #' # use Lenihan for govt class and Bruton for opposition
-#' quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
-#'     c("Govt", "Opp", rep(NA, 12))
-#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+#' library("quanteda")
+#' docvars(data_corpus_irishbudget2010, "govtopp") <- c("Govt", "Opp", rep(NA, 12))
+#' dfmat <- dfm(tokens(data_corpus_irishbudget2010))
 #'
-#' tmod <- textmodel_svmlin(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
+#' tmod <- textmodel_svmlin(dfmat, y = dfmat$govtopp)
 #' predict(tmod)
 #' @importFrom quanteda dfm_group as.dfm
 #' @importFrom stats na.omit predict
-#' @keywords textmodel
+#' @keywords textmodel internal experimental
 #' @export
 textmodel_svmlin <- function(x, y, intercept = TRUE, # x_u = NULL,
                              lambda = 1,

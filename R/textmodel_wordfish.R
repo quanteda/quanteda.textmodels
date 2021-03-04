@@ -74,7 +74,7 @@
 #'
 #' \dontrun{
 #' library("quanteda")
-#' dfmat <- dfm(data_corpus_irishbudget2010)
+#' dfmat <- dfm(tokens(data_corpus_irishbudget2010))
 #' (tmod2 <- textmodel_wordfish(dfmat, dir = c(6,5)))
 #' (tmod3 <- textmodel_wordfish(dfmat, dir = c(6,5),
 #'                              dispersion = "quasipoisson", dispersion_floor = 0))

@@ -1,4 +1,4 @@
-context('Testing textmodel-lsa.R')
+library("quanteda")
 
 test_that("textmodel-lsa (rsvd) works as expected as lsa", {
     skip_if_not_installed("lsa")
@@ -14,7 +14,7 @@ test_that("textmodel-lsa (rsvd) works as expected as lsa", {
     myLSAspace <- suppressWarnings(lsa(foxlsaMatrix, dims = 2))
 
     #quanteda
-    foxdfm <- quanteda::as.dfm(foxmatrix)
+    foxdfm <- as.dfm(foxmatrix)
     qtd_lsa <- textmodel_lsa(foxdfm, nd = 2)
 
     expect_equivalent(abs(qtd_lsa$docs), abs(myLSAspace$dk))
@@ -38,7 +38,7 @@ test_that("predict works as expected as lsa::fold_in()", {
     newSpace <- t(fold_in(t(newfox), myLSAspace))
     newSpace <- newSpace[ , ]
     #quanteda
-    foxdfm <- quanteda::as.dfm(foxmatrix)
+    foxdfm <- as.dfm(foxmatrix)
     qtd_lsa <- textmodel_lsa(foxdfm, nd = 2)
     new_qtd_lsa <- predict(qtd_lsa, newfox)
 
@@ -60,29 +60,29 @@ test_that("textmodel-lsa (rsvd) works as expected as lsa::as.textmatrix()", {
     foxlsaMatrix_lowRank <- as.textmatrix(myLSAspace)
     foxlsaMatrix_lowRank <- foxlsaMatrix_lowRank[ , ]
     #quanteda
-    foxdfm <- quanteda::as.dfm(foxmatrix)
+    foxdfm <- as.dfm(foxmatrix)
     qtd_lsa <- textmodel_lsa(foxdfm, nd = 2)
 
     expect_equivalent(round(abs(qtd_lsa$matrix_low_rank), 3), round(abs(t(foxlsaMatrix_lowRank)), 3))
 })
 
 test_that("textmodel-lsa works with margin argument", {
-    ie_dfm <- quanteda::dfm(data_corpus_irishbudget2010)
+    ie_dfm <- dfm(tokens(data_corpus_irishbudget2010))
     ie_lsa1 <- textmodel_lsa(ie_dfm, margin = 'both')
     expect_equal(dim(ie_lsa1$matrix_low_rank), dim(ie_dfm))
-    expect_true(quanteda::is.dfm(quanteda::as.dfm(ie_lsa1)))
+    expect_true(is.dfm(as.dfm(ie_lsa1)))
 
     ie_lsa2 <- textmodel_lsa(ie_dfm, margin = 'documents')
-    expect_equal(dim(ie_lsa2$matrix_low_rank), c(10, quanteda::nfeat(ie_dfm)))
-    expect_true(quanteda::is.dfm(quanteda::as.dfm(ie_lsa2)))
+    expect_equal(dim(ie_lsa2$matrix_low_rank), c(10, nfeat(ie_dfm)))
+    expect_true(is.dfm(as.dfm(ie_lsa2)))
 
     ie_lsa3 <- textmodel_lsa(ie_dfm, margin = 'features')
-    expect_equal(dim(ie_lsa3$matrix_low_rank), c(quanteda::ndoc(ie_dfm), 10))
-    expect_true(quanteda::is.dfm(quanteda::as.dfm(ie_lsa3)))
+    expect_equal(dim(ie_lsa3$matrix_low_rank), c(ndoc(ie_dfm), 10))
+    expect_true(is.dfm(as.dfm(ie_lsa3)))
 })
 
 test_that("raises error when dfm is empty (#1419)",  {
-    mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
+    mx <- dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_lsa(mx),
                  quanteda.textmodels:::message_error("dfm_empty"))
 

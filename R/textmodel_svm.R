@@ -12,6 +12,9 @@
 #'   uses default; `"docfreq"` weights by the number of training examples,
 #'   and `"termfreq"` by the relative sizes of the training classes in
 #'   terms of their total lengths in tokens.
+#' @param type argument passed to the `type` argument in
+#'   [LiblineaR::LiblineaR()]; default is `1` for L2-regularized L2-loss support
+#'   vector classification (dual)
 #' @param ... additional arguments passed to [LiblineaR::LiblineaR()]
 #' @references
 #' R. E. Fan, K. W. Chang, C. J. Hsieh, X. R. Wang, and C. J. Lin. (2008)
@@ -21,25 +24,24 @@
 #' @seealso [LiblineaR::LiblineaR()] [predict.textmodel_svm()]
 #' @examples
 #' # use party leaders for govt and opposition classes
-#' quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
+#' library("quanteda")
+#' docvars(data_corpus_irishbudget2010, "govtopp") <-
 #'     c(rep(NA, 4), "Gov", "Opp", NA, "Opp", NA, NA, NA, NA, NA, NA)
-#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
-#' tmod <- textmodel_svm(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
+#' dfmat <- dfm(tokens(data_corpus_irishbudget2010))
+#' tmod <- textmodel_svm(dfmat, y = dfmat$govtopp)
 #' predict(tmod)
-#' predict(tmod, type = "probability")
 #'
 #' # multiclass problem - all party leaders
 #' tmod2 <- textmodel_svm(dfmat,
 #'     y = c(rep(NA, 3), "SF", "FF", "FG", NA, "LAB", NA, NA, "Green", rep(NA, 3)))
 #' predict(tmod2)
-#' predict(tmod2, type = "probability")
 #' @export
-textmodel_svm <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), ...) {
+textmodel_svm <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), type = 1, ...) {
     UseMethod("textmodel_svm")
 }
 
 #' @export
-textmodel_svm.default <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), ...) {
+textmodel_svm.default <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), type = 1, ...) {
     stop(friendly_class_undefined_message(class(x), "textmodel_svm"))
 }
 
@@ -47,7 +49,7 @@ textmodel_svm.default <- function(x, y, weight = c("uniform", "docfreq", "termfr
 #' @importFrom SparseM as.matrix.csr
 #' @importFrom quanteda dfm_weight dfm_group dfm_trim as.dfm
 #' @export
-textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), ...) {
+textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), type = 1, ...) {
     x <- as.dfm(x)
     if (!sum(x)) stop(message_error("dfm_empty"))
     call <- match.call()
@@ -73,7 +75,7 @@ textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq")
     }
 
     svmlinfitted <- LiblineaR::LiblineaR(as.matrix.csr.dfm(x_train),
-                                         target = y_train, wi = wi, ...)
+                                         target = y_train, wi = wi, type = type, ...)
     colnames(svmlinfitted$W)[seq_along(featnames(x_train))] <- featnames(x_train)
     result <- list(
         x = x, y = y,
