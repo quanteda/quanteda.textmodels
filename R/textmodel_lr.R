@@ -15,10 +15,9 @@
 #' @seealso [`cv.glmnet()`][glmnet::cv.glmnet()], [predict.textmodel_lr()],
 #'   [coef.textmodel_lr()]
 #' @references
-#' Friedman, J., Hastie, T., & Tibshirani, R. (2010). [Regularization Paths for
-#' Generalized Linear Models via Coordinate
-#' Descent](http://dx.doi.org/10.18637/jss.v033.i01). _Journal of Statistical
-#' Software_ 33(1), 1-22.
+#' Friedman, J., Hastie, T., & Tibshirani, R. (2010). Regularization Paths for
+#' Generalized Linear Models via Coordinate Descent. _Journal of Statistical
+#' Software_ 33(1), 1-22.  \doi{10.18637/jss.v033.i01}
 #' @examples
 #' ## Example from 13.1 of _An Introduction to Information Retrieval_
 #' library("quanteda")

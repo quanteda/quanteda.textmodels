@@ -24,10 +24,9 @@
 #' @format The corpus object for the 2010 budget speeches, with document-level
 #'   variables for year, debate, serial number, first and last name of the
 #'   speaker, and the speaker's party.
-#' @references Lowe, W. & Benoit, K.R. (2013).
-#'   [Validating Estimates of Latent Traits
-#'   From Textual Data Using Human Judgment as a Benchmark](https://doi.org/10.1093/pan/mpt002).
-#'   *Political Analysis*, 21(3), 298--313.
+#' @references Lowe, W. & Benoit, K.R. (2013). Validating Estimates of Latent
+#'   Traits From Textual Data Using Human Judgment as a Benchmark. *Political
+#'   Analysis*, 21(3), 298--313. \doi{10.1093/pan/mpt002}.
 #' @keywords data
 #' @source
 #' Dáil Éireann Debate,
@@ -90,8 +89,7 @@
 #' @description Each speech is available in six languages: English, German,
 #'   Greek, Italian, Polish and Spanish. The unit of observation is the
 #'   individual crowd coding of each natural sentence. For more information on
-#'   the coding approach see
-#'   [Benoit et al. (2016)](https://doi.org/10.1017/S0003055416000058).
+#'   the coding approach see Benoit et al. (2016).
 #' @format
 #'   The corpus consists of 16,806 documents (i.e. codings of a sentence) and includes the following
 #'   document-level variables: \describe{

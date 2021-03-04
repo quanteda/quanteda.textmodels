@@ -38,8 +38,7 @@ permitting state aid to uncompetitive coal mines.
 Each speech is available in six languages: English, German,
 Greek, Italian, Polish and Spanish. The unit of observation is the
 individual crowd coding of each natural sentence. For more information on
-the coding approach see
-\href{https://doi.org/10.1017/S0003055416000058}{Benoit et al. (2016)}.
+the coding approach see Benoit et al. (2016).
 }
 \references{
 Benoit, K., Conway, D., Lauderdale, B.E., Laver, M., & Mikhaylov,
