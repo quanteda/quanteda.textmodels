@@ -71,12 +71,13 @@
 #' @importFrom quanteda dfm_weight as.dfm
 #' @examples
 #' ## Example from 13.1 of _An Introduction to Information Retrieval_
+#' library("quanteda")
 #' txt <- c(d1 = "Chinese Beijing Chinese",
 #'          d2 = "Chinese Chinese Shanghai",
 #'          d3 = "Chinese Macao",
 #'          d4 = "Tokyo Japan Chinese",
 #'          d5 = "Chinese Chinese Chinese Tokyo Japan")
-#' x <- quanteda::dfm(txt, tolower = FALSE)
+#' x <- dfm(tokens(txt), tolower = FALSE)
 #' y <- factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)
 #'
 #' ## replicate IIR p261 prediction for test set (document 5)

@@ -45,7 +45,8 @@ this is probably because of the memory demands of computing the \eqn{V
 \code{residual_floor} by 0.1, until the model can be fit.
 }
 \examples{
-dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+library("quanteda")
+dfmat <- dfm(tokens(data_corpus_irishbudget2010))
 tmod <- textmodel_ca(dfmat)
 summary(tmod)
 }

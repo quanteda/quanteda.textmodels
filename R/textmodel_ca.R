@@ -30,7 +30,8 @@
 #' @return `textmodel_ca()` returns a fitted CA textmodel that is a special
 #' class of \pkg{ca} object.
 #' @examples
-#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+#' library("quanteda")
+#' dfmat <- dfm(tokens(data_corpus_irishbudget2010))
 #' tmod <- textmodel_ca(dfmat)
 #' summary(tmod)
 #' @seealso [coef.textmodel_lsa()], [ca][ca::ca]

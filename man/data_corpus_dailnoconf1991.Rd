@@ -22,7 +22,9 @@ coalition. (See Laver and Benoit 2002 for details.)
 \examples{
 \dontrun{
 library("quanteda")
-data_dfm_dailnoconf1991 <- dfm(data_corpus_dailnoconf1991, remove_punct = TRUE)
+data_dfm_dailnoconf1991 <- data_corpus_dailnoconf1991 \%>\%
+    tokens(remove_punct = TRUE) \%>\%
+    dfm()
 tmod <- textmodel_affinity(data_dfm_dailnoconf1991,
                            c("Govt", "Opp", "Opp", rep(NA, 55)))
 (pred <- predict(tmod))

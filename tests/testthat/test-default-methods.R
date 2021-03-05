@@ -1,5 +1,3 @@
-context("test default methods for nice error messages")
-
 test_that("test default textmodel methods", {
     expect_error(
         textmodel_affinity(TRUE, FALSE),
@@ -12,6 +10,14 @@ test_that("test default textmodel methods", {
     expect_error(
         textmodel_nb(TRUE),
         "textmodel_nb\\(\\) only works on dfm.*objects"
+    )
+    expect_error(
+        textmodel_svm(TRUE),
+        "textmodel_svm\\(\\) only works on dfm.*objects"
+    )
+    expect_error(
+        textmodel_svmlin(TRUE),
+        "textmodel_svmlin\\(\\) only works on dfm.*objects"
     )
     expect_error(
         textmodel_wordfish(TRUE),

@@ -32,7 +32,7 @@ For these tests, we will choose the dataset of 50,000 movie reviews from Maas et
 # large movie review database of 50,000 movie reviews
 load(url("https://www.dropbox.com/s/sjdfmx8ggwfda5o/data_corpus_LMRD.rda?dl=1"))
 
-dfmat <- dfm(data_corpus_LMRD)
+dfmat <- dfm(quanteda::tokens(data_corpus_LMRD))
 dfmat_train <- dfm_subset(dfmat, set == "train")
 dfmat_test <- dfm_subset(dfmat, set == "test")
 ```

@@ -1,15 +1,15 @@
 ## Purpose
 
-* Fixes Solaris errors
-* Fixes errors in r-devel releases caused by changes in how all.equal(f, g) works, as noted in an email on Dec 9, 2020 by Martin Maechler.
-* Adds two new features, as noted in NEWS
+* Fixes M1mac issues flagged by CRAN checks
+* Minor fixes and stability improvements
 
 ## Test environments
 
-* local macOS 10.15.7, R 4.0.3
-* Ubuntu 18.04 LTS and 18.10, R 4.0.3
+* local macOS 10.15.7, R 4.0.4
+* Ubuntu 18.04 LTS and 18.10, R 4.0.4
 * Windows release via devtools::check_win_release()
 * Windows devel via devtools::check_win_devel()
+* Windows oldrel via devtools::check_win_oldrelease()
 
 ## R CMD check results
 
