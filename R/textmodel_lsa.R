@@ -22,7 +22,8 @@
 #'   by Latent Semantic Analysis](https://search.proquest.com/docview/1301252034). *Journal of the American Society for
 #'   Information Science*, 41(6): 391.
 #' @examples
-#' dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+#' library("quanteda")
+#' dfmat <- dfm(tokens(data_corpus_irishbudget2010))
 #' # create an LSA space and return its truncated representation in the low-rank space
 #' tmod <- textmodel_lsa(dfmat[1:10, ])
 #' head(tmod$docs)

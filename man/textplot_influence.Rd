@@ -20,7 +20,7 @@ Plot the results of a fitted scaling model, from (e.g.) a predicted
 }
 \examples{
 tmod <- textmodel_affinity(data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA))
-pred <- predict(tmod) 
+pred <- predict(tmod)
 textplot_influence(influence(pred))
 }
 \seealso{
@@ -31,4 +31,5 @@ textplot_influence(influence(pred))
 \author{
 Patrick Perry and Kenneth Benoit
 }
+\keyword{internal}
 \keyword{textplot}

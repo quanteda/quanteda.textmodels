@@ -4,7 +4,13 @@
 \alias{textmodel_svm}
 \title{Linear SVM classifier for texts}
 \usage{
-textmodel_svm(x, y, weight = c("uniform", "docfreq", "termfreq"), ...)
+textmodel_svm(
+  x,
+  y,
+  weight = c("uniform", "docfreq", "termfreq"),
+  type = 1,
+  ...
+)
 }
 \arguments{
 \item{x}{the \link{dfm} on which the model will be fit.  Does not need to
@@ -20,6 +26,10 @@ uses default; \code{"docfreq"} weights by the number of training examples,
 and \code{"termfreq"} by the relative sizes of the training classes in
 terms of their total lengths in tokens.}
 
+\item{type}{argument passed to the \code{type} argument in
+\code{\link[LiblineaR:LiblineaR]{LiblineaR::LiblineaR()}}; default is \code{1} for L2-regularized L2-loss support
+vector classification (dual)}
+
 \item{...}{additional arguments passed to \code{\link[LiblineaR:LiblineaR]{LiblineaR::LiblineaR()}}}
 }
 \description{
@@ -28,18 +38,17 @@ Fit a fast linear SVM classifier for texts, using the
 }
 \examples{
 # use party leaders for govt and opposition classes
-quanteda::docvars(data_corpus_irishbudget2010, "govtopp") <-
+library("quanteda")
+docvars(data_corpus_irishbudget2010, "govtopp") <-
     c(rep(NA, 4), "Gov", "Opp", NA, "Opp", NA, NA, NA, NA, NA, NA)
-dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
-tmod <- textmodel_svm(dfmat, y = quanteda::docvars(dfmat, "govtopp"))
+dfmat <- dfm(tokens(data_corpus_irishbudget2010))
+tmod <- textmodel_svm(dfmat, y = dfmat$govtopp)
 predict(tmod)
-predict(tmod, type = "probability")
 
 # multiclass problem - all party leaders
 tmod2 <- textmodel_svm(dfmat,
     y = c(rep(NA, 3), "SF", "FF", "FG", NA, "LAB", NA, NA, "Green", rep(NA, 3)))
 predict(tmod2)
-predict(tmod2, type = "probability")
 }
 \references{
 R. E. Fan, K. W. Chang, C. J. Hsieh, X. R. Wang, and C. J. Lin. (2008)

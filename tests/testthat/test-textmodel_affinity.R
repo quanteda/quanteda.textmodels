@@ -1,4 +1,4 @@
-context("tests of textmodel_affinity")
+library("quanteda")
 
 test_that("textmodel_affinity works as expected",  {
     fitted <- textmodel_affinity(data_dfm_lbgexample,
@@ -10,9 +10,9 @@ test_that("textmodel_affinity works as expected",  {
 })
 
 test_that("textmodel_affinity works for tolower = TRUE dfm objects (#1338)", {
-    txt <- c("A", "B", "C", "a")
-    dfm1 <- quanteda::dfm(txt, tolower = TRUE)
-    dfm2 <- quanteda::dfm(txt, tolower = FALSE)
+    toks <- tokens(c("A", "B", "C", "a"))
+    dfm1 <- dfm(toks, tolower = TRUE)
+    dfm2 <- dfm(toks, tolower = FALSE)
 
     expect_output(
         print(textmodel_affinity(dfm1, y = c("one", "two", NA, NA))),
@@ -25,9 +25,17 @@ test_that("textmodel_affinity works for tolower = TRUE dfm objects (#1338)", {
 })
 
 test_that("raises error when dfm is empty (#1419)",  {
-
-    mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
+    mx <- dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_affinity(mx, y = c(-1, NA, NA, NA, 1, NA)),
                  quanteda.textmodels:::message_error("dfm_empty"))
-
 })
+
+
+pdf(file = tempfile(".pdf"), width = 10, height = 10)
+test_that("test textmodel_affinity plots", {
+    af <- textmodel_affinity(data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA))
+    afpred <- predict(af)
+    expect_silent(textplot_influence(influence(afpred)))
+    expect_silent(textplot_influence(summary(influence(afpred))))
+})
+dev.off()

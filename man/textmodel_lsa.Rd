@@ -27,7 +27,8 @@ issue. While a reduction in \eqn{k} can remove much of the noise, keeping
 too few dimensions or factors may lose important information.
 }
 \examples{
-dfmat <- quanteda::dfm(data_corpus_irishbudget2010)
+library("quanteda")
+dfmat <- dfm(tokens(data_corpus_irishbudget2010))
 # create an LSA space and return its truncated representation in the low-rank space
 tmod <- textmodel_lsa(dfmat[1:10, ])
 head(tmod$docs)

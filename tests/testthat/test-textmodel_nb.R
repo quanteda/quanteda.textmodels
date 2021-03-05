@@ -1,4 +1,4 @@
-context("test textmodel_nb")
+library("quanteda")
 
 ## Example from 13.1 of _An Introduction to Information Retrieval_
 txt <- c(d1 = "Chinese Beijing Chinese",
@@ -6,7 +6,7 @@ txt <- c(d1 = "Chinese Beijing Chinese",
          d3 = "Chinese Macao",
          d4 = "Tokyo Japan Chinese",
          d5 = "Chinese Chinese Chinese Tokyo Japan")
-nb_dfm <- quanteda::dfm(txt, tolower = FALSE)
+nb_dfm <- dfm(tokens(txt), tolower = FALSE)
 nb_class <- factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)
 
 nb_multi_smooth <-
@@ -87,8 +87,8 @@ test_that("Bernoulli nb predicted values are correct", {
 })
 
 test_that("Works with newdata with different features from the model (#1329 and #1322)", {
-    mt1 <- quanteda::dfm(c(text1 = "a b c", text2 = "d e f"))
-    mt2 <- quanteda::dfm(c(text3 = "a b c", text4 = "e f g"))
+    mt1 <- dfm(tokens(c(text1 = "a b c", text2 = "d e f")))
+    mt2 <- dfm(tokens(c(text3 = "a b c", text4 = "e f g")))
 
     nb <- textmodel_nb(mt1, factor(1:2))
 
@@ -100,14 +100,14 @@ test_that("Works with newdata with different features from the model (#1329 and 
 })
 
 test_that("Works with features with zero probability", {
-    mt <- quanteda::as.dfm(matrix(c(0, 0, 3, 1, 4, 2), nrow = 2))
+    mt <- as.dfm(matrix(c(0, 0, 3, 1, 4, 2), nrow = 2))
     nb <- textmodel_nb(mt, factor(1:2), smooth = 0)
     expect_silent(predict(nb))
 })
 
 test_that("types works (#1322)", {
     pr <- predict(nb_multi_smooth)
-    expect_identical(names(pr), quanteda::docnames(nb_multi_smooth))
+    expect_identical(names(pr), docnames(nb_multi_smooth))
     expect_is(pr, "factor")
 
     pr_prob <- predict(nb_multi_smooth, type = "probability")
@@ -162,7 +162,7 @@ test_that("raise warning of unused dots", {
 })
 
 test_that("raises error when dfm is empty (#1419)",  {
-    mx <- quanteda::dfm_trim(data_dfm_lbgexample, 1000)
+    mx <- dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textmodel_nb(mx, factor(c("Y", "Y", "Y", "N", NA), ordered = TRUE)),
                  quanteda.textmodels:::message_error("dfm_empty"))
 })
@@ -173,7 +173,7 @@ test_that("constant predictor raises exception", {
              d3 = "Chinese Macao",
              d4 = "Tokyo Japan Chinese",
              d5 = "Chinese Chinese Chinese Tokyo Japan")
-    x <- quanteda::dfm(txt, tolower = FALSE)
+    x <- dfm(tokens(txt), tolower = FALSE)
 
     expect_error(
         textmodel_nb(x, y = c("Y", "Y", "Y", "Y", NA)),
@@ -190,7 +190,7 @@ test_that("constant predictor raises exception", {
 })
 
 test_that("textmodel_nb() works with weighted dfm", {
-    dfmat <- quanteda::dfm_tfidf(data_dfm_lbgexample)
+    dfmat <- dfm_tfidf(data_dfm_lbgexample)
     expect_silent(
         tmod <- textmodel_nb(dfmat, y = c("N", "N", NA, "Y", "Y", NA))
     )
@@ -259,7 +259,7 @@ test_that("Bernoulli output matches fastNaiveBayes and naivebayes packages", {
     library("fastNaiveBayes")
     library("naivebayes")
 
-    xb <- quanteda::dfm_weight(nb_dfm, scheme = "boolean")
+    xb <- dfm_weight(nb_dfm, scheme = "boolean")
     y <- nb_class
 
     tmod_fnb <- fnb.bernoulli(xb[1:4, ], y[1:4], priors = as.numeric(prop.table(table(y))),

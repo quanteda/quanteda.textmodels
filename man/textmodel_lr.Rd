@@ -26,22 +26,22 @@ at estimation time.
 }
 \examples{
 ## Example from 13.1 of _An Introduction to Information Retrieval_
-corp <- quanteda::corpus(c(d1 = "Chinese Beijing Chinese",
-                           d2 = "Chinese Chinese Shanghai",
-                           d3 = "Chinese Macao",
-                           d4 = "Tokyo Japan Chinese",
-                           d5 = "London England Chinese",
-                           d6 = "Chinese Chinese Chinese Tokyo Japan"),
-                         docvars = data.frame(train = factor(c("Y", "Y", "Y",
-                                                               "N", "N", NA))))
-dfmat <- quanteda::dfm(corp, tolower = FALSE)
+library("quanteda")
+corp <- corpus(c(d1 = "Chinese Beijing Chinese",
+                 d2 = "Chinese Chinese Shanghai",
+                 d3 = "Chinese Macao",
+                 d4 = "Tokyo Japan Chinese",
+                 d5 = "London England Chinese",
+                 d6 = "Chinese Chinese Chinese Tokyo Japan"),
+               docvars = data.frame(train = factor(c("Y", "Y", "Y", "N", "N", NA))))
+dfmat <- dfm(tokens(corp), tolower = FALSE)
 
 ## simulate bigger sample as classification on small samples is problematic
 set.seed(1)
-dfmat <- quanteda::dfm_sample(dfmat, 50, replace = TRUE)
+dfmat <- dfm_sample(dfmat, 50, replace = TRUE)
 
 ## train model
-(tmod1 <- textmodel_lr(dfmat, quanteda::docvars(dfmat, "train")))
+(tmod1 <- textmodel_lr(dfmat, docvars(dfmat, "train")))
 summary(tmod1)
 coef(tmod1)
 
@@ -50,8 +50,9 @@ predict(tmod1, type = "prob")
 predict(tmod1)
 }
 \references{
-Friedman, J., Hastie, T., & Tibshirani, R. (2010). \href{http://dx.doi.org/10.18637/jss.v033.i01}{Regularization Paths for Generalized Linear Models via Coordinate Descent}. \emph{Journal of Statistical
-Software} 33(1), 1-22.
+Friedman, J., Hastie, T., & Tibshirani, R. (2010). Regularization Paths for
+Generalized Linear Models via Coordinate Descent. \emph{Journal of Statistical
+Software} 33(1), 1-22.  \doi{10.18637/jss.v033.i01}
 }
 \seealso{
 \code{\link[glmnet:cv.glmnet]{cv.glmnet()}}, \code{\link[=predict.textmodel_lr]{predict.textmodel_lr()}},
