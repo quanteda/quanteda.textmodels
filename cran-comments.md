@@ -1,3 +1,7 @@
+## RESUBMISSION
+
+Fixes the redirected URL from the README.md, by simply removing it.
+
 ## Purpose
 
 * Fixes M1mac issues flagged by CRAN checks

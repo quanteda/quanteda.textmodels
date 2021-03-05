@@ -11,8 +11,6 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textmodels?col
 [![R build
 status](https://github.com/quanteda/quanteda.textmodels/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/quanteda.textmodels/actions)
 [![codecov](https://codecov.io/gh/quanteda/quanteda.textmodels/branch/master/graph/badge.svg)](https://codecov.io/gh/quanteda/quanteda.textmodels)
-[![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
 ## About
