@@ -54,7 +54,7 @@ textmodel_ca.dfm <- function(x, smooth = 0, nd = NA, sparse = FALSE,
     x <- as.dfm(x)
     if (!sum(x)) stop(message_error("dfm_empty"))
 
-    x <- x + smooth  # smooth by the specified amount
+    x <- dfm_smooth(x, smoothing = smooth)  # smooth by the specified amount
 
     I <- dim(x)[1]
     J <- dim(x)[2]
@@ -82,7 +82,7 @@ textmodel_ca.dfm <- function(x, smooth = 0, nd = NA, sparse = FALSE,
         S  <- (P - eP) / sqrt(eP)
     } else {
         # keep the residual matrix sparse
-        S <- as(qatd_cpp_ca(P, residual_floor / sqrt(n)), 'dgCMatrix')
+        S <- as(qatd_cpp_ca(P, residual_floor / sqrt(n)), "dgCMatrix")
     }
 
     dec <- RSpectra::svds(S, nd)

@@ -199,7 +199,7 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
 #' @seealso [textmodel_nb()]
 #' @examples
 #' # application to LBG (2003) example data
-#' (tmod <- textmodel_nb(data_dfm_lbgexample, y = c("A", "A", "B", "C", "C", NA)))
+#' (tmod <- textmodel_nb(quanteda::data_dfm_lbgexample, y = c("A", "A", "B", "C", "C", NA)))
 #' predict(tmod)
 #' predict(tmod, type = "logposterior")
 #' @importFrom stats predict

@@ -36,7 +36,7 @@
 #'   (other) documents.
 #' @author Kenneth Benoit
 #' @examples
-#' (tmod <- textmodel_wordscores(data_dfm_lbgexample, y = c(seq(-1.5, 1.5, .75), NA)))
+#' (tmod <- textmodel_wordscores(quanteda::data_dfm_lbgexample, y = c(seq(-1.5, 1.5, .75), NA)))
 #' summary(tmod)
 #' coef(tmod)
 #' predict(tmod)
@@ -139,7 +139,7 @@ textmodel_wordscores.dfm <- function(x, y, scale = c("linear", "logit"), smooth 
 #' "confidence"`, the predicted values will be a matrix.  This behaviour matches
 #' that of [stats::predict.lm()].
 #' @examples
-#' tmod <- textmodel_wordscores(data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA))
+#' tmod <- textmodel_wordscores(quanteda::data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA))
 #' predict(tmod)
 #' predict(tmod, rescaling = "mv")
 #' predict(tmod, rescaling = "lbg")

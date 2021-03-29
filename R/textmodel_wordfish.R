@@ -65,7 +65,7 @@
 #'   \doi{10.1093/pan/mpt002}. *Political Analysis*, 21(3), 298--313.
 #' @author Benjamin Lauderdale, Haiyan Wang, and Kenneth Benoit
 #' @examples
-#' (tmod1 <- textmodel_wordfish(data_dfm_lbgexample, dir = c(1,5)))
+#' (tmod1 <- textmodel_wordfish(quanteda::data_dfm_lbgexample, dir = c(1,5)))
 #' summary(tmod1, n = 10)
 #' coef(tmod1)
 #' predict(tmod1)
