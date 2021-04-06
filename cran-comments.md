@@ -1,11 +1,8 @@
-## RESUBMISSION
-
-Fixes the redirected URL from the README.md, by simply removing it.
-
 ## Purpose
 
-* Fixes M1mac issues flagged by CRAN checks
-* Minor fixes and stability improvements
+Updates to remove minor warnings and to ensure compatibility with forthcoming quanteda v3.  This version works with both quanteda v2.1.2 (on CRAN at the time of submission) and forthcoming v3.
+
+# Checks
 
 ## Test environments
 
