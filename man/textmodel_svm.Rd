@@ -21,20 +21,20 @@ in \code{train}.  (These will be converted to factors if not already
 factors.)}
 
 \item{weight}{weights for different classes for imbalanced training sets,
-passed to \code{wi} in \code{\link[LiblineaR:LiblineaR]{LiblineaR::LiblineaR()}}. \code{"uniform"}
+passed to \code{wi} in LiblineaR(). \code{"uniform"}
 uses default; \code{"docfreq"} weights by the number of training examples,
 and \code{"termfreq"} by the relative sizes of the training classes in
 terms of their total lengths in tokens.}
 
 \item{type}{argument passed to the \code{type} argument in
-\code{\link[LiblineaR:LiblineaR]{LiblineaR::LiblineaR()}}; default is \code{1} for L2-regularized L2-loss support
+LiblineaR(); default is \code{1} for L2-regularized L2-loss support
 vector classification (dual)}
 
-\item{...}{additional arguments passed to \code{\link[LiblineaR:LiblineaR]{LiblineaR::LiblineaR()}}}
+\item{...}{additional arguments passed to LiblineaR()}
 }
 \description{
 Fit a fast linear SVM classifier for texts, using the
-\pkg{LiblineaR} package.
+\pkg{LiblineaR} wrapper.
 }
 \examples{
 # use party leaders for govt and opposition classes
@@ -55,7 +55,4 @@ R. E. Fan, K. W. Chang, C. J. Hsieh, X. R. Wang, and C. J. Lin. (2008)
 LIBLINEAR: A Library for Large Linear Classification.
 \emph{Journal of Machine Learning Research} 9: 1871-1874.
 \url{https://www.csie.ntu.edu.tw/~cjlin/liblinear/}.
-}
-\seealso{
-\code{\link[LiblineaR:LiblineaR]{LiblineaR::LiblineaR()}} \code{\link[=predict.textmodel_svm]{predict.textmodel_svm()}}
 }

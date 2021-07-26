@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // qatd_cpp_ca
 S4 qatd_cpp_ca(const arma::sp_mat& dfm, const double residual_floor);
 RcppExport SEXP _quanteda_textmodels_qatd_cpp_ca(SEXP dfmSEXP, SEXP residual_floorSEXP) {
@@ -85,18 +90,4 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(qatd_cpp_wordfish(wfm, dirvec, priorvec, tolvec, disptype, dispmin, ABS, svd_sparse, residual_floor));
     return rcpp_result_gen;
 END_RCPP
-}
-
-static const R_CallMethodDef CallEntries[] = {
-    {"_quanteda_textmodels_qatd_cpp_ca", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_ca, 2},
-    {"_quanteda_textmodels_svmlin_rcpp", (DL_FUNC) &_quanteda_textmodels_svmlin_rcpp, 12},
-    {"_quanteda_textmodels_qatd_cpp_tbb_enabled", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_tbb_enabled, 0},
-    {"_quanteda_textmodels_qatd_cpp_wordfish_dense", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_wordfish_dense, 7},
-    {"_quanteda_textmodels_qatd_cpp_wordfish", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_wordfish, 9},
-    {NULL, NULL, 0}
-};
-
-RcppExport void R_init_quanteda_textmodels(DllInfo *dll) {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
 }

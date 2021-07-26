@@ -1,27 +1,26 @@
 #' Linear SVM classifier for texts
 #'
 #' Fit a fast linear SVM classifier for texts, using the
-#' \pkg{LiblineaR} package.
+#' \pkg{LiblineaR} wrapper.
 #' @param x the [dfm] on which the model will be fit.  Does not need to
 #'   contain only the training documents.
 #' @param y vector of training labels associated with each document identified
 #'   in `train`.  (These will be converted to factors if not already
 #'   factors.)
 #' @param weight weights for different classes for imbalanced training sets,
-#'   passed to `wi` in [LiblineaR::LiblineaR()]. `"uniform"`
+#'   passed to `wi` in LiblineaR(). `"uniform"`
 #'   uses default; `"docfreq"` weights by the number of training examples,
 #'   and `"termfreq"` by the relative sizes of the training classes in
 #'   terms of their total lengths in tokens.
 #' @param type argument passed to the `type` argument in
-#'   [LiblineaR::LiblineaR()]; default is `1` for L2-regularized L2-loss support
+#'   LiblineaR(); default is `1` for L2-regularized L2-loss support
 #'   vector classification (dual)
-#' @param ... additional arguments passed to [LiblineaR::LiblineaR()]
+#' @param ... additional arguments passed to LiblineaR()
 #' @references
 #' R. E. Fan, K. W. Chang, C. J. Hsieh, X. R. Wang, and C. J. Lin. (2008)
 #' LIBLINEAR: A Library for Large Linear Classification.
 #' *Journal of Machine Learning Research* 9: 1871-1874.
 #' <https://www.csie.ntu.edu.tw/~cjlin/liblinear/>.
-#' @seealso [LiblineaR::LiblineaR()] [predict.textmodel_svm()]
 #' @examples
 #' # use party leaders for govt and opposition classes
 #' library("quanteda")
@@ -45,8 +44,6 @@ textmodel_svm.default <- function(x, y, weight = c("uniform", "docfreq", "termfr
     stop(friendly_class_undefined_message(class(x), "textmodel_svm"))
 }
 
-#' @importFrom LiblineaR LiblineaR
-#' @importFrom SparseM as.matrix.csr
 #' @importFrom quanteda dfm_weight dfm_group dfm_trim as.dfm
 #' @export
 textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), type = 1, ...) {
@@ -54,7 +51,7 @@ textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq")
     if (!sum(x)) stop(message_error("dfm_empty"))
     call <- match.call()
     weight <- match.arg(weight)
-
+    
     # exclude NA in training labels
     x_train <- suppressWarnings(
         dfm_trim(x[!is.na(y), ], min_termfreq = .0000000001, termfreq_type = "prop")
@@ -63,7 +60,7 @@ textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq")
     # remove zero-variance features
     constant_features <- which(apply(x_train, 2, stats::var) == 0)
     if (length(constant_features)) x_train <- x_train[, -constant_features]
-
+    
     # set wi depending on weight value
     if (weight == "uniform") {
         wi <- NULL
@@ -73,9 +70,9 @@ textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq")
         wi <- rowSums(dfm_group(x_train, y_train))
         wi <- wi / sum(wi)
     }
-
-    svmlinfitted <- LiblineaR::LiblineaR(as.matrix.csr.dfm(x_train),
-                                         target = y_train, wi = wi, type = type, ...)
+    
+    svmlinfitted <- LiblineaR(as(x_train, "dgCMatrix"),
+                              target = y_train, wi = wi, type = type, ...)
     colnames(svmlinfitted$W)[seq_along(featnames(x_train))] <- featnames(x_train)
     result <- list(
         x = x, y = y,
@@ -108,7 +105,6 @@ textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq")
 #'   "probability"`).
 #' @seealso [textmodel_svm()]
 #' @keywords textmodel internal
-#' @importFrom SparseM as.matrix.csr
 #' @importFrom stats predict
 #' @method predict textmodel_svm
 #' @export
@@ -116,36 +112,36 @@ predict.textmodel_svm <- function(object, newdata = NULL,
                                   type = c("class", "probability"),
                                   force = TRUE, ...) {
     unused_dots(...)
-
+    
     type <- match.arg(type)
-
+    
     if (!is.null(newdata)) {
         data <- as.dfm(newdata)
     } else {
         data <- as.dfm(object$x)
     }
-
+    
     # the seq_along is because this will have an added term "bias" at end if bias > 0
     model_featnames <- colnames(object$weights)
     if (object$bias > 0) model_featnames <- model_featnames[-length(model_featnames)]
-
+    
     data <- if (is.null(newdata))
         suppressWarnings(force_conformance(data, model_featnames, force))
     else
         force_conformance(data, model_featnames, force)
-
+    
     if (type == "class") {
-        pred_y <- predict(object$svmlinfitted, newx = as.matrix.csr.dfm(data), proba = FALSE)
+        pred_y <- predict(object$svmlinfitted, newx = as(data, "dgCMatrix"), proba = FALSE)
         pred_y <- pred_y$predictions
         names(pred_y) <- docnames(data)
     } else if (type == "probability") {
         if (object$type != 0)
             stop("probability predictions not implemented for this model type")
-        pred_y <- predict(object$svmlinfitted, newx = as.matrix.csr.dfm(data), proba = TRUE)
+        pred_y <- predict(object$svmlinfitted, newx = as(data, "dgCMatrix"), proba = TRUE)
         pred_y <- pred_y$probabilities
         rownames(pred_y) <- docnames(data)
     }
-
+    
     pred_y
 }
 
@@ -197,21 +193,4 @@ coefficients.textmodel_svm <- function(object, ...) {
 #' @method print predict.textmodel_svm
 print.predict.textmodel_svm <- function(x, ...) {
     print(unclass(x))
-}
-
-#' convert a dfm into a matrix.csr from SparseM package
-#'
-#' Utility to convert a dfm into a [matrix.csr][SparseM::matrix.csr] from the \pkg{SparseM} package.
-#' @param x input [dfm]
-#' @importFrom SparseM as.matrix.csr
-#' @importFrom methods new
-#' @method as.matrix.csr dfm
-#' @keywords internal
-as.matrix.csr.dfm <- function(x) {
-    # convert first to column sparse format
-    as.matrix.csr(new("matrix.csc",
-                      ra = x@x,
-                      ja = x@i + 1L,
-                      ia = x@p + 1L,
-                      dimension = x@Dim))
 }
