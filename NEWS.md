@@ -1,4 +1,4 @@
-# quanteda.textmodels 0.9.3
+# quanteda.textmodels 0.9.4
 
 * removed `data_dfm_lbgexample` as this is already in **quanteda**.
 
