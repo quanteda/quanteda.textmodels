@@ -14,8 +14,8 @@
 #'   but might reduce accuracy; only applicable when `sparse = TRUE`
 
 #' @author Kenneth Benoit and Haiyan Wang
-#' @references Nenadic, O. & Greenacre, M. (2007). [Correspondence Analysis in R, with Two- and Three-dimensional Graphics:
-#'   The ca package](https://www.jstatsoft.org/v20/i03/). *Journal of Statistical Software*, 20(3).
+#' @references Nenadic, O. & Greenacre, M. (2007). Correspondence Analysis in R, with Two- and Three-dimensional Graphics:
+#'   The ca package. *Journal of Statistical Software*, 20(3).  \doi{10.18637/jss.v020.i03}
 #'
 #' @details [svds][RSpectra::svds] in the \pkg{RSpectra} package is applied to
 #'   enable the fast computation of the SVD.
