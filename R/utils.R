@@ -9,7 +9,7 @@
 #' @keywords internal dfm
 #' @importFrom quanteda is.dfm featnames dfm_match
 #' @examples
-#' quanteda.textmodels:::force_conformance(data_dfm_lbgexample, c("C", "B", "Z"))
+#' quanteda.textmodels:::force_conformance(quanteda::data_dfm_lbgexample, c("C", "B", "Z"))
 force_conformance <- function(x, features, force = TRUE) {
     if (!is.dfm(x))
         stop("x must be a dfm")

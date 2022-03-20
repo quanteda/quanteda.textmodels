@@ -14,8 +14,8 @@
 #'   but might reduce accuracy; only applicable when `sparse = TRUE`
 
 #' @author Kenneth Benoit and Haiyan Wang
-#' @references Nenadic, O. & Greenacre, M. (2007). [Correspondence Analysis in R, with Two- and Three-dimensional Graphics:
-#'   The ca package](https://www.jstatsoft.org/v20/i03/). *Journal of Statistical Software*, 20(3).
+#' @references Nenadic, O. & Greenacre, M. (2007). Correspondence Analysis in R, with Two- and Three-dimensional Graphics:
+#'   The ca package. *Journal of Statistical Software*, 20(3).  \doi{10.18637/jss.v020.i03}
 #'
 #' @details [svds][RSpectra::svds] in the \pkg{RSpectra} package is applied to
 #'   enable the fast computation of the SVD.
@@ -54,7 +54,7 @@ textmodel_ca.dfm <- function(x, smooth = 0, nd = NA, sparse = FALSE,
     x <- as.dfm(x)
     if (!sum(x)) stop(message_error("dfm_empty"))
 
-    x <- x + smooth  # smooth by the specified amount
+    x <- dfm_smooth(x, smoothing = smooth)  # smooth by the specified amount
 
     I <- dim(x)[1]
     J <- dim(x)[2]
@@ -82,7 +82,7 @@ textmodel_ca.dfm <- function(x, smooth = 0, nd = NA, sparse = FALSE,
         S  <- (P - eP) / sqrt(eP)
     } else {
         # keep the residual matrix sparse
-        S <- as(qatd_cpp_ca(P, residual_floor / sqrt(n)), 'dgCMatrix')
+        S <- as(qatd_cpp_ca(P, residual_floor / sqrt(n)), "dgCMatrix")
     }
 
     dec <- RSpectra::svds(S, nd)

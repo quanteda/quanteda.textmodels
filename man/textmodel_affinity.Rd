@@ -37,9 +37,9 @@ fitting.}
 scaling method described in Perry and Benoit (2017).
 }
 \examples{
-(af <- textmodel_affinity(data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA)))
+(af <- textmodel_affinity(quanteda::data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA)))
 predict(af)
-predict(af, newdata = data_dfm_lbgexample[6, ])
+predict(af, newdata = quanteda::data_dfm_lbgexample[6, ])
 
 \dontrun{
 # compute bootstrapped SEs

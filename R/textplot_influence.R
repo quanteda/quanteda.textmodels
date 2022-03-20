@@ -13,7 +13,7 @@
 #' @seealso [influence.predict.textmodel_affinity()]
 #' @keywords textplot internal
 #' @examples
-#' tmod <- textmodel_affinity(data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA))
+#' tmod <- textmodel_affinity(quanteda::data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA))
 #' pred <- predict(tmod)
 #' textplot_influence(influence(pred))
 textplot_influence <- function(x, n = 30, ...) {

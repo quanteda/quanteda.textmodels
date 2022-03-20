@@ -46,7 +46,7 @@ fitted \code{textmodel_wordscores} object, and \code{summary()} will print
 a nice summary of the fitted object.
 }
 \examples{
-(tmod <- textmodel_wordscores(data_dfm_lbgexample, y = c(seq(-1.5, 1.5, .75), NA)))
+(tmod <- textmodel_wordscores(quanteda::data_dfm_lbgexample, y = c(seq(-1.5, 1.5, .75), NA)))
 summary(tmod)
 coef(tmod)
 predict(tmod)

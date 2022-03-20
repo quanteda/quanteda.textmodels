@@ -99,7 +99,7 @@ In the rare situation where a warning message of "The algorithm did not
 converge." shows up, removing some documents may work.
 }
 \examples{
-(tmod1 <- textmodel_wordfish(data_dfm_lbgexample, dir = c(1, 5)))
+(tmod1 <- textmodel_wordfish(quanteda::data_dfm_lbgexample, dir = c(1,5)))
 summary(tmod1, n = 10)
 coef(tmod1)
 predict(tmod1)

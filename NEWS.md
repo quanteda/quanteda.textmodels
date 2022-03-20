@@ -1,3 +1,7 @@
+# quanteda.textmodels 0.9.4
+
+* removed `data_dfm_lbgexample` as this is already in **quanteda**.
+
 # quanteda.textmodels 0.9.3
 
 * Fixed `textmodel_svm()` to default to the "L2-regularized L2-loss support vector classification (dual)" model, and added the `type` argument to allow this to be overridden. (#45)

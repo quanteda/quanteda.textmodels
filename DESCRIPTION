@@ -1,7 +1,7 @@
 Package: quanteda.textmodels
 Type: Package
 Title: Scaling Models and Classifiers for Textual Data
-Version: 0.9.3
+Version: 0.9.4
 Description: Scaling models and classifiers for sparse matrix objects representing 
     textual data in the form of a document-feature matrix.  Includes original 
     implementations of 'Laver', 'Benoit', and Garry's (2003) <doi:10.1017/S0003055403000698>,
@@ -44,7 +44,6 @@ Suggests:
     naivebayes,
     quanteda.textplots,
     spelling,
-    RColorBrewer,
     testthat,
     rmarkdown
 LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda

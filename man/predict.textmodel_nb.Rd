@@ -44,7 +44,7 @@ Naive Bayes model. using trained Naive Bayes examples
 }
 \examples{
 # application to LBG (2003) example data
-(tmod <- textmodel_nb(data_dfm_lbgexample, y = c("A", "A", "B", "C", "C", NA)))
+(tmod <- textmodel_nb(quanteda::data_dfm_lbgexample, y = c("A", "A", "B", "C", "C", NA)))
 predict(tmod)
 predict(tmod, type = "logposterior")
 }

@@ -19,7 +19,7 @@ Takes a dfm and a set of features, and makes them match the features listed
 in the set.
 }
 \examples{
-quanteda.textmodels:::force_conformance(data_dfm_lbgexample, c("C", "B", "Z"))
+quanteda.textmodels:::force_conformance(quanteda::data_dfm_lbgexample, c("C", "B", "Z"))
 }
 \keyword{dfm}
 \keyword{internal}

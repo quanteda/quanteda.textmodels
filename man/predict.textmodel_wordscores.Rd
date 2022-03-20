@@ -48,7 +48,7 @@ that of \code{\link[stats:predict.lm]{stats::predict.lm()}}.
 Predict textmodel_wordscores
 }
 \examples{
-tmod <- textmodel_wordscores(data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA))
+tmod <- textmodel_wordscores(quanteda::data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA))
 predict(tmod)
 predict(tmod, rescaling = "mv")
 predict(tmod, rescaling = "lbg")
