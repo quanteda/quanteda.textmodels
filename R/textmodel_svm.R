@@ -139,8 +139,8 @@ predict.textmodel_svm <- function(object, newdata = NULL,
         pred_y <- pred_y$predictions
         names(pred_y) <- docnames(data)
     } else if (type == "probability") {
-        # if (object$type != 0)
-        #     stop("probability predictions not implemented for this model type")
+        if (object$type != 0)
+            stop("probability predictions not implemented for this model type")
         pred_y <- predict(object$svmlinfitted, newx = as.matrix.csr.dfm(data), proba = TRUE)
         pred_y <- pred_y$probabilities
         rownames(pred_y) <- docnames(data)
