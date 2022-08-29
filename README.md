@@ -4,13 +4,13 @@
 <!-- badges: start -->
 
 [![](https://www.r-pkg.org/badges/version/quanteda.textmodels?color=green)](https://cran.r-project.org/package=quanteda.textmodels)
-[![](https://img.shields.io/badge/devel%20version-0.9.4-royalblue.svg)](https://github.com/quanteda/quanteda.textmodels)
+[![](https://img.shields.io/badge/devel%20version-0.9.5-royalblue.svg)](https://github.com/quanteda/quanteda.textmodels)
 [![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textmodels)](https://CRAN.R-project.org/package=quanteda.textmodels)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textmodels?color=orange)](https://CRAN.R-project.org/package=quanteda.textmodels)
 [![R build
 status](https://github.com/quanteda/quanteda.textmodels/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/quanteda.textmodels/actions)
-[![codecov](https://codecov.io/gh/quanteda/quanteda.textmodels/branch/master/graph/badge.svg)](https://codecov.io/gh/quanteda/quanteda.textmodels)
+[![codecov](https://codecov.io/gh/quanteda/quanteda.textmodels/branch/master/graph/badge.svg)](https://app.codecov.io/gh/quanteda/quanteda.textmodels)
 <!-- badges: end -->
 
 ## About
@@ -35,7 +35,7 @@ Or for the latest development version:
 
 ``` r
 # devtools package required to install quanteda from Github 
-devtools::install_github("quanteda/quanteda.textmodels") 
+remotes::install_github("quanteda/quanteda.textmodels") 
 ```
 
 Because this compiles some C++ and Fortran source code, you will need to

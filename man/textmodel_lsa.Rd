@@ -48,7 +48,7 @@ Rosario, B. (2000).
 Paper, University of California, Berkeley.}
 
 Deerwester, S., Dumais, S.T., Furnas, G.W., Landauer, T.K., &
-Harshman, R. (1990). \href{https://search.proquest.com/docview/1301252034}{Indexing by Latent Semantic Analysis}. \emph{Journal of the American Society for
+Harshman, R. (1990). \href{https://www.proquest.com/docview/1301252034}{Indexing by Latent Semantic Analysis}. \emph{Journal of the American Society for
 Information Science}, 41(6): 391.
 }
 \seealso{

@@ -22,7 +22,7 @@ library("badger")
 [![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textmodels)](https://CRAN.R-project.org/package=quanteda.textmodels)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textmodels?color=orange)](https://CRAN.R-project.org/package=quanteda.textmodels)
 [![R build status](https://github.com/quanteda/quanteda.textmodels/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/quanteda.textmodels/actions)
-[![codecov](https://codecov.io/gh/quanteda/quanteda.textmodels/branch/master/graph/badge.svg)](https://codecov.io/gh/quanteda/quanteda.textmodels)
+[![codecov](https://codecov.io/gh/quanteda/quanteda.textmodels/branch/master/graph/badge.svg)](https://app.codecov.io/gh/quanteda/quanteda.textmodels)
 <!-- badges: end -->
 
 
@@ -42,7 +42,7 @@ install.packages("quanteda.textmodels")
 Or for the latest development version:
 ```{r eval = FALSE}
 # devtools package required to install quanteda from Github 
-devtools::install_github("quanteda/quanteda.textmodels") 
+remotes::install_github("quanteda/quanteda.textmodels") 
 ```
 
 Because this compiles some C++ and Fortran source code, you will need to have installed the appropriate compilers.

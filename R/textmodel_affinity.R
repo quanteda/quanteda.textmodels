@@ -185,7 +185,7 @@ affinity <- function(p, x, smooth = 0.5, verbose = FALSE) {
             fit[[j]] <- affinity1(p, x[, j], smooth, verbose)
         }
     } else {
-        x <- as(x, "dgCMatrix")
+        x <- as(x, "CsparseMatrix")
         val <- x@x
         row_ind <- x@i + 1 # switch from 0- to 1-based indexing
         col_ptr <- x@p + 1 #
@@ -584,7 +584,7 @@ influence.predict.textmodel_affinity <- function(model, subset = !train, ...) {
     # data
     x <- model$newdata[subset, ]
     x[, !support] <- 0
-    x <- as(t(x), "dgCMatrix")
+    x <- as(t(x), "CsparseMatrix")
     nword <- nrow(x)
     words <- rownames(x)
     ntext <- ncol(x)

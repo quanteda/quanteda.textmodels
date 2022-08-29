@@ -19,7 +19,7 @@
 #'
 #'   Deerwester, S., Dumais, S.T., Furnas, G.W., Landauer, T.K., &
 #'   Harshman, R. (1990). [Indexing
-#'   by Latent Semantic Analysis](https://search.proquest.com/docview/1301252034). *Journal of the American Society for
+#'   by Latent Semantic Analysis](https://www.proquest.com/docview/1301252034). *Journal of the American Society for
 #'   Information Science*, 41(6): 391.
 #' @examples
 #' library("quanteda")
@@ -54,7 +54,7 @@ textmodel_lsa.dfm <- function(x, nd = 10, margin = c("both", "documents", "featu
     if (nd > min(nrow(x), ncol(x))) nd <- min(nrow(x), ncol(x))
     if (nd < 2) nd <- 2
 
-    x <- as(x, "dgCMatrix")
+    x <- as(x, "CsparseMatrix")
     if (margin == "documents") {
         dec <- RSpectra::svds(x, k = nd, nu = 0, nv = nd)
     } else if (margin == "features") {

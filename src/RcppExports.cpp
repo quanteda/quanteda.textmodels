@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // qatd_cpp_ca
 S4 qatd_cpp_ca(const arma::sp_mat& dfm, const double residual_floor);
 RcppExport SEXP _quanteda_textmodels_qatd_cpp_ca(SEXP dfmSEXP, SEXP residual_floorSEXP) {

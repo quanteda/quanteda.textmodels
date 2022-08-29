@@ -84,7 +84,7 @@ textmodel_svmlin.dfm <-  function(x, y, intercept = TRUE, # x_u = NULL,
     class <- y[!is.na(y)]
     temp <- dfm_group(temp, class, force = TRUE)
 
-    svmlinfitted <- svmlin(X = as(temp, "dgCMatrix"), #X_u = x_u,
+    svmlinfitted <- svmlin(X = as(temp, "CsparseMatrix"), #X_u = x_u,
                            y = factor(docnames(temp), levels = docnames(temp)),
                            intercept = intercept,
                            algorithm = 1, lambda = lambda,

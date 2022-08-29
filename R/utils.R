@@ -100,4 +100,3 @@ group_classes <- function(x, y, smooth = 0) {
     names(x) <- levels
     do.call("rbind", x)
 }
-

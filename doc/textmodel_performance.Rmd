@@ -69,12 +69,12 @@ microbenchmark(
       pred <- predict(tmod, newdata = dfmat_test)
     },
     fastNaiveBayes = { 
-      tmod <- fnb.multinomial(as(dfmat_train, "dgCMatrix"), y = dfmat_train$polarity, laplace = 1, sparse = TRUE)
-      pred <- predict(tmod, newdata = as(dfmat_test, "dgCMatrix"))
+      tmod <- fnb.multinomial(as(dfmat_train, "CsparseMatrix"), y = dfmat_train$polarity, laplace = 1, sparse = TRUE)
+      pred <- predict(tmod, newdata = as(dfmat_test, "CsparseMatrix"))
     },
     naivebayes = {
-      tmod = multinomial_naive_bayes(as(dfmat_train, "dgCMatrix"), dfmat_train$polarity, laplace = 1)
-      pred <- predict(tmod, newdata = as(dfmat_test, "dgCMatrix"))
+      tmod = multinomial_naive_bayes(as(dfmat_train, "CsparseMatrix"), dfmat_train$polarity, laplace = 1)
+      pred <- predict(tmod, newdata = as(dfmat_test, "CsparseMatrix"))
     },
     times = 50
 )
@@ -91,12 +91,12 @@ microbenchmark(
       pred <- predict(tmod, newdata = dfmat_test)
     },
     fastNaiveBayes = { 
-      tmod <- fnb.bernoulli(as(dfmat_train_bern, "dgCMatrix"), y = dfmat_train$polarity, laplace = 1, sparse = TRUE)
-      pred <- predict(tmod, newdata = as(dfmat_test_bern, "dgCMatrix"))
+      tmod <- fnb.bernoulli(as(dfmat_train_bern, "CsparseMatrix"), y = dfmat_train$polarity, laplace = 1, sparse = TRUE)
+      pred <- predict(tmod, newdata = as(dfmat_test_bern, "CsparseMatrix"))
     },
     naivebayes = {
-      tmod = bernoulli_naive_bayes(as(dfmat_train_bern, "dgCMatrix"), dfmat_train$polarity, laplace = 1)
-      pred <- predict(tmod, newdata = as(dfmat_test_bern, "dgCMatrix"))
+      tmod = bernoulli_naive_bayes(as(dfmat_train_bern, "CsparseMatrix"), dfmat_train$polarity, laplace = 1)
+      pred <- predict(tmod, newdata = as(dfmat_test_bern, "CsparseMatrix"))
     },
     times = 50
 )

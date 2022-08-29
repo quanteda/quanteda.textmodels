@@ -1,20 +1,21 @@
 ## Purpose
 
-Updates to remove minor warnings and to ensure compatibility with forthcoming quanteda v3.  This version works with both quanteda v2.1.2 (on CRAN at the time of submission) and forthcoming v3.
+Changes to Matrix package coercions required to avoid warnings in forthcoming
+Matrix 1.4-2 release.
 
 # Checks
 
 ## Test environments
 
-* local macOS 10.15.7, R 4.0.4
-* Ubuntu 18.04 LTS and 18.10, R 4.0.4
+* local macOS 12.5, R 4.2.1
+* Ubuntu 20.04 LTS, R 4.2.1
 * Windows release via devtools::check_win_release()
 * Windows devel via devtools::check_win_devel()
-* Windows oldrel via devtools::check_win_oldrelease()
+* Windows oldrelease via devtools::check_win_oldrelease()
 
 ## R CMD check results
 
-No ERRORs, WARNINGS or NOTEs.
+No ERRORs, NOTEs, or WARNINGs produced.
 
 ## Reverse dependency and other package conflicts
 

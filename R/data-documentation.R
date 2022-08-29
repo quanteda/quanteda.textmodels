@@ -13,7 +13,7 @@
 #' @keywords data
 #' @source
 #' Dáil Éireann Debate,
-#' [Budget Statement 2010.](http://oireachtasdebates.oireachtas.ie/debates\%20authoring/debateswebpack.nsf/takes/dail2009120900022?opendocument)
+#' [Budget Statement 2010.](https://www.oireachtas.ie/en/debates/debate/dail/2009-12-09/33/)
 #' 9 December 2009. vol. 697, no. 3.
 "data_corpus_irishbudget2010"
 

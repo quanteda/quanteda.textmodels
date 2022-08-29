@@ -157,22 +157,13 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
     }
 
     if (distribution == "multinomial") {
-        # PwGc <- dfm_weight(dfm_smooth(x, smooth), scheme = "prop", force = TRUE)
-        # PwGc <- (x + smooth) / (rowSums(x) + ncol(x) * smooth)
         PwGc <- x / rowSums(x)
     } else if (distribution == "Bernoulli") {
         PwGc <- (x + smooth) / (freq + 2 * smooth)
-        PwGc <- as(PwGc, "dgeMatrix")
     }
 
     Pc <- Pc[rownames(PwGc)]      # make sure Pc order matches the rows of PwGc
     PwGc <- as.matrix(PwGc)       # convert to ordinary matrix
-    # names(dimnames(PwGc)) <- NULL # remove dimname labels
-
-    ## other quantities no longer computed
-    # PcGw <- colNorm(PwGc * base::outer(Pc, rep(1, ncol(PwGc))))
-    # names(dimnames(PcGw))[1] <- names(dimnames(PwGc))[1] <- "classes"
-    # Pw <- t(PwGc) %*% as.numeric(Pc)
 
     result[["priors"]] <- Pc
     result[["param"]] <- PwGc

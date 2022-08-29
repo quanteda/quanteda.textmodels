@@ -1,3 +1,8 @@
+# quanteda.textmodels 0.9.5
+
+* Fixes for compatibility with Matrix 1.4.2.
+* Minor bug fix for `predict.textmodel_lr()`. (#52)
+
 # quanteda.textmodels 0.9.4
 
 * removed `data_dfm_lbgexample` as this is already in **quanteda**.
