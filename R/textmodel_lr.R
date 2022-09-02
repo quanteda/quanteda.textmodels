@@ -90,7 +90,7 @@ textmodel_lr.dfm <- function(x, y, ...) {
     )
 
     if (family == "multinomial") {
-      model_feat <- unique(unlist(lapply(lrfitted[["glmnet.fit"]][["beta"]], rownames)))
+      model_feat <- rownames(lrfitted[["glmnet.fit"]][["beta"]][[1]])
     } else {
       model_feat <- rownames(lrfitted[["glmnet.fit"]][["beta"]])
     }
