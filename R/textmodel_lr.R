@@ -89,14 +89,20 @@ textmodel_lr.dfm <- function(x, y, ...) {
         ...
     )
 
+    if (family == "multinomial") {
+      model_feat <- unique(unlist(lapply(lrfitted[["glmnet.fit"]][["beta"]], rownames)))
+    } else {
+      model_feat <- rownames(lrfitted[["glmnet.fit"]][["beta"]])
+    }
+    
     result <- list(
-        x = x,
-        y = y,
-        algorithm = paste(family, "logistic regression"),
-        type = family,
-        classnames = lrfitted[["glmnet.fit"]][["classnames"]],
-        lrfitted = lrfitted,
-        call = call
+      x = force_conformance(x, model_feat, TRUE), 
+      y = y,
+      algorithm = paste(family, "logistic regression"),
+      type = family,
+      classnames = lrfitted[["glmnet.fit"]][["classnames"]],
+      lrfitted = lrfitted,
+      call = call
     )
     class(result) <- c("textmodel_lr", "textmodel", "list")
     result
