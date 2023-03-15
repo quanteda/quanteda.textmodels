@@ -11,6 +11,7 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textmodels?col
 [![R build
 status](https://github.com/quanteda/quanteda.textmodels/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/quanteda.textmodels/actions)
 [![codecov](https://codecov.io/gh/quanteda/quanteda.textmodels/branch/master/graph/badge.svg)](https://app.codecov.io/gh/quanteda/quanteda.textmodels)
+[![R-CMD-check](https://github.com/quanteda/quanteda.textmodels/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/quanteda/quanteda.textmodels/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## About
@@ -74,16 +75,16 @@ testimonial here](https://github.com/quanteda/quanteda/issues/461).
 Contributions in the form of feedback, comments, code, and bug reports
 are most welcome. How to contribute:
 
--   Fork the source code, modify, and issue a [pull
-    request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/)
-    through the [project GitHub
-    page](https://github.com/quanteda/quanteda). See our [Contributor
-    Code of
-    Conduct](https://github.com/quanteda/quanteda/blob/master/CONDUCT.md)
-    and the all-important **quanteda** [Style
-    Guide](https://github.com/quanteda/quanteda/wiki/Style-guide).
--   Issues, bug reports, and wish lists: [File a GitHub
-    issue](https://github.com/quanteda/quanteda.textmodels/issues).
--   Usage questions: Submit a question on the [**quanteda** channel on
-    StackOverflow](https://stackoverflow.com/questions/tagged/quanteda).
--   Contact [the maintainer](mailto:kbenoit@lse.ac.uk) by email.
+- Fork the source code, modify, and issue a [pull
+  request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/)
+  through the [project GitHub
+  page](https://github.com/quanteda/quanteda). See our [Contributor Code
+  of
+  Conduct](https://github.com/quanteda/quanteda/blob/master/CONDUCT.md)
+  and the all-important **quanteda** [Style
+  Guide](https://github.com/quanteda/quanteda/wiki/Style-guide).
+- Issues, bug reports, and wish lists: [File a GitHub
+  issue](https://github.com/quanteda/quanteda.textmodels/issues).
+- Usage questions: Submit a question on the [**quanteda** channel on
+  StackOverflow](https://stackoverflow.com/questions/tagged/quanteda).
+- Contact [the maintainer](mailto:kbenoit@lse.ac.uk) by email.
