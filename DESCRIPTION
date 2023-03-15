@@ -1,12 +1,12 @@
 Package: quanteda.textmodels
 Type: Package
 Title: Scaling Models and Classifiers for Textual Data
-Version: 0.9.5-1
+Version: 0.9.6
 Description: Scaling models and classifiers for sparse matrix objects representing 
     textual data in the form of a document-feature matrix.  Includes original 
     implementations of 'Laver', 'Benoit', and Garry's (2003) <doi:10.1017/S0003055403000698>,
-    'Wordscores' model, Perry and 'Benoit's' (2017) <arXiv:1710.08963> class affinity scaling model, 
-    and 'Slapin' and 'Proksch's' (2008) <doi:10.1111/j.1540-5907.2008.00338.x> 'wordfish'
+    'Wordscores' model, the Perry and 'Benoit' (2017) <arXiv:1710.08963> class affinity scaling model, 
+    and the 'Slapin' and 'Proksch' (2008) <doi:10.1111/j.1540-5907.2008.00338.x> 'wordfish'
     model, as well as methods for correspondence analysis, latent semantic analysis,
     and fast Naive Bayes and linear 'SVMs' specially designed for sparse textual data.
 Authors@R: c( 
