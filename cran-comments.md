@@ -1,14 +1,13 @@
 ## Purpose
 
-Changes to Matrix package coercions required to avoid warnings in forthcoming
-Matrix 1.4-2 release.
+Fix URL for large dataset used in vignette.
 
 # Checks
 
 ## Test environments
 
-* local macOS 12.5, R 4.2.1
-* Ubuntu 20.04 LTS, R 4.2.1
+* local macOS 13.2.1, R 4.2.2
+* Ubuntu 20.04 LTS, R 4.2.2
 * Windows release via devtools::check_win_release()
 * Windows devel via devtools::check_win_devel()
 * Windows oldrelease via devtools::check_win_oldrelease()
