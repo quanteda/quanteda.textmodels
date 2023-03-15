@@ -15,7 +15,7 @@ Authors@R: c(
     person("Haiyan", "Wang", email = "whyinsa@yahoo.com", role = "aut", comment = c(ORCID = "0000-0003-4992-4311")),
     person("Patrick O.", "Perry", email = "patperry@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-7460-127X")),
     person("Benjamin", "Lauderdale", email = "b.e.lauderdale@lse.ac.uk", role = "aut", comment = c(ORCID = "0000-0003-3090-0969")),    
-    person("Johannes", "Gruber", email = "j.gruber.1@research.gla.ac.uk", role = "aut", comment = c(ORCID = "0000-0001-9177-1772")),
+    person("Johannes", "Gruber", email = "JohannesB.Gruber@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-9177-1772")),
     person("William", "Lowe", email = "lowe@hertie-school.org", role = "aut", comment = c(ORCID = "0000-0002-1549-6163")),
     person("Vikas", "Sindhwani", email = "vikas.sindhwani@gmail.com", role = "cph", 
            comment = "authored svmlin C++ source code"),
