@@ -452,7 +452,7 @@ int TSVM_MFN(const struct data *Data,
   /* Setup labeled-only examples and train L2_SVM_MFN */
   timer tictoc;
   tictoc.restart();
-  struct data *Data_Labeled = new data[1];
+  struct ::data *Data_Labeled = new ::data[1];
   struct vector_double *Outputs_Labeled = new vector_double[1];
   initialize(Outputs_Labeled,Data->l,0.0);
   if (Options->verbose) { Rcpp::Rcout << "Initializing weights, unknown labels" << std::endl; }
