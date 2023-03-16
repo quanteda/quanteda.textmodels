@@ -354,8 +354,7 @@ int L2_SVM_MFN(const struct data *Data,
       ActiveSubset->d=active;
       if(fabs(F-F_old)<RELATIVE_STOP_EPS*fabs(F_old))
 	{
-        if (Options->verbose) { Rcpp::Rcout << "L2_SVM_MFN converged (rel. criterion) in " << iter << " iterations and "<< tictoc.time() << " seconds. \n" << endl; }
-	  return 2;
+      if (Options->verbose) { tictoc.stop(); Rcpp::Rcout << "L2_SVM_MFN converged (rel. criterion) in " << iter << " iterations and "<< tictoc.time() << " seconds. \n" << std::endl; }	  return 2;
 	}
     }
   delete[] ActiveSubset->vec;
@@ -1260,4 +1259,4 @@ void Clear(struct vector_double *c)
 void Clear(struct vector_int *c)
 { delete[] c->vec; delete [] c; return;}
 void Clear(struct options *opt)
-{ delete[] opt; delete [] opt; return;}
+{ delete [] opt; return;}
