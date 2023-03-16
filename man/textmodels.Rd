@@ -8,7 +8,7 @@
 \alias{quanteda.textmodels-package}
 \title{quanteda.textmodels: Scaling Models and Classifiers for Textual Data}
 \description{
-Scaling models and classifiers for sparse matrix objects representing textual data in the form of a document-feature matrix. Includes original implementations of 'Laver', 'Benoit', and Garry's (2003) \doi{10.1017/S0003055403000698}, 'Wordscores' model, Perry and 'Benoit's' (2017) \href{https://arxiv.org/abs/1710.08963}{arXiv:1710.08963} class affinity scaling model, and 'Slapin' and 'Proksch's' (2008) \doi{10.1111/j.1540-5907.2008.00338.x} 'wordfish' model, as well as methods for correspondence analysis, latent semantic analysis, and fast Naive Bayes and linear 'SVMs' specially designed for sparse textual data.
+Scaling models and classifiers for sparse matrix objects representing textual data in the form of a document-feature matrix. Includes original implementations of 'Laver', 'Benoit', and Garry's (2003) \doi{10.1017/S0003055403000698}, 'Wordscores' model, the Perry and 'Benoit' (2017) \href{https://arxiv.org/abs/1710.08963}{arXiv:1710.08963} class affinity scaling model, and the 'Slapin' and 'Proksch' (2008) \doi{10.1111/j.1540-5907.2008.00338.x} 'wordfish' model, as well as methods for correspondence analysis, latent semantic analysis, and fast Naive Bayes and linear 'SVMs' specially designed for sparse textual data.
 }
 \seealso{
 Useful links:
@@ -26,7 +26,7 @@ Authors:
   \item Haiyan Wang \email{whyinsa@yahoo.com} (\href{https://orcid.org/0000-0003-4992-4311}{ORCID})
   \item Patrick O. Perry \email{patperry@gmail.com} (\href{https://orcid.org/0000-0001-7460-127X}{ORCID})
   \item Benjamin Lauderdale \email{b.e.lauderdale@lse.ac.uk} (\href{https://orcid.org/0000-0003-3090-0969}{ORCID})
-  \item Johannes Gruber \email{j.gruber.1@research.gla.ac.uk} (\href{https://orcid.org/0000-0001-9177-1772}{ORCID})
+  \item Johannes Gruber \email{JohannesB.Gruber@gmail.com} (\href{https://orcid.org/0000-0001-9177-1772}{ORCID})
   \item William Lowe \email{lowe@hertie-school.org} (\href{https://orcid.org/0000-0002-1549-6163}{ORCID})
 }
 

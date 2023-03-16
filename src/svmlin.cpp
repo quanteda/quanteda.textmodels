@@ -28,7 +28,7 @@
 using namespace Rcpp;
 
 struct options *Options = new options[1];
-struct data *Data = new data[1];
+struct ::data *Data = new ::data[1];
 struct vector_double *Weights = new vector_double[1];
 struct vector_double *Outputs = new vector_double[1];
 struct vector_double *Labels = new vector_double[1];
