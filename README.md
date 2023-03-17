@@ -8,10 +8,9 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textmodels)](https://CRAN.R-project.org/package=quanteda.textmodels)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textmodels?color=orange)](https://CRAN.R-project.org/package=quanteda.textmodels)
-[![R build
-status](https://github.com/quanteda/quanteda.textmodels/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/quanteda.textmodels/actions)
-[![codecov](https://codecov.io/gh/quanteda/quanteda.textmodels/branch/master/graph/badge.svg)](https://app.codecov.io/gh/quanteda/quanteda.textmodels)
 [![R-CMD-check](https://github.com/quanteda/quanteda.textmodels/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/quanteda/quanteda.textmodels/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/quanteda/quanteda.textmodels/branch/master/graph/badge.svg)](https://app.codecov.io/gh/quanteda/quanteda.textmodels?branch=master)
 <!-- badges: end -->
 
 ## About
@@ -25,8 +24,7 @@ For more details, see <https://quanteda.io>.
 
 ## How to Install
 
-Once the package is on CRAN (which is it not yet), then you can install
-it via the normal way from CRAN, using your R GUI or
+You can install it via the normal way from CRAN, using your R GUI or
 
 ``` r
 install.packages("quanteda.textmodels") 
@@ -40,17 +38,13 @@ remotes::install_github("quanteda/quanteda.textmodels")
 ```
 
 Because this compiles some C++ and Fortran source code, you will need to
-have installed the appropriate compilers.
-
-**If you are using a Windows platform**, this means you will need also
-to install the [Rtools](https://CRAN.R-project.org/bin/windows/Rtools/)
-software available from CRAN.
-
-**If you are using macOS**, you should install the [macOS
-tools](https://cran.r-project.org/bin/macosx/tools/), namely the Clang
-6.x compiler and the GNU Fortran compiler (as **quanteda** requires
-gfortran to build). If you are still getting errors related to gfortran,
-follow the fixes
+have installed the appropriate compilers. **On Windows platform**, this
+means the [Rtools](https://CRAN.R-project.org/bin/windows/Rtools/)
+software available from CRAN, or the macOS tools from [macOS
+tools](https://cran.r-project.org/bin/macosx/tools/), including namely
+the Clang 6.x compiler and the GNU Fortran compiler (as **quanteda**
+requires gfortran to build). If you are still getting errors related to
+gfortran, follow the fixes
 [here](https://thecoatlessprofessor.com/programming/rcpp-rcpparmadillo-and-os-x-mavericks--lgfortran-and--lquadmath-error/).
 
 ## How to cite
