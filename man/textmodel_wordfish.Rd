@@ -9,6 +9,9 @@ textmodel_wordfish(
   dir = c(1, 2),
   priors = c(Inf, Inf, 3, 1),
   tol = c(1e-06, 1e-08),
+  method = "Poisson",
+  dim2 = FALSE,
+  prior_values = NULL,
   dispersion = c("poisson", "quasipoisson"),
   dispersion_level = c("feature", "overall"),
   dispersion_floor = 0,
@@ -33,6 +36,14 @@ threshold for the log-posterior of the model, the second value is the
 tolerance in the difference in parameter values from the iterative
 conditional maximum likelihood (from conditionally estimating
 document-level, then feature-level parameters).}
+
+\item{method}{specifies whether to use the Poisson model or the negative
+binomial model}
+
+\item{dim2}{a boolean variable that specifies whether to estimate the second
+dimension of theta and beta}
+
+\item{prior_values}{NEEDS DOCUMENTING}
 
 \item{dispersion}{sets whether a quasi-Poisson quasi-likelihood should be
 used based on a single dispersion parameter (\code{"poisson"}), or
@@ -101,11 +112,13 @@ dfmat <- dfm(tokens(data_corpus_irishbudget2010))
 (tmod2 <- textmodel_wordfish(dfmat, dir = c(6,5)))
 (tmod3 <- textmodel_wordfish(dfmat, dir = c(6,5),
                              dispersion = "quasipoisson", dispersion_floor = 0))
-(tmod4 <- textmodel_wordfish(dfmat, dir = c(6,5),
+(tmod4 <- textmodel_wordfish(dfmat, dir = c(6, 5),
                              dispersion = "quasipoisson", dispersion_floor = .5))
-plot(tmod3$phi, tmod4$phi, xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
+plot(tmod3$phi, tmod4$phi,
+     xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
      xlim = c(0, 1.0), ylim = c(0, 1.0))
-plot(tmod3$phi, tmod4$phi, xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
+plot(tmod3$phi, tmod4$phi,
+     xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
      xlim = c(0, 1.0), ylim = c(0, 1.0), type = "n")
 underdispersedTerms <- sample(which(tmod3$phi < 1.0), 5)
 which(featnames(dfmat) \%in\% names(topfeatures(dfmat, 20)))

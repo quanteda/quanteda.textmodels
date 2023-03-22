@@ -16,6 +16,11 @@
 #'   tolerance in the difference in parameter values from the iterative
 #'   conditional maximum likelihood (from conditionally estimating
 #'   document-level, then feature-level parameters).
+#' @param method specifies whether to use the Poisson model or the negative
+#'   binomial model
+#' @param dim2 a boolean variable that specifies whether to estimate the second
+#'   dimension of theta and beta
+#' @param prior_values NEEDS DOCUMENTING
 #' @param dispersion sets whether a quasi-Poisson quasi-likelihood should be
 #'   used based on a single dispersion parameter (`"poisson"`), or
 #'   quasi-Poisson (`"quasipoisson"`)
@@ -75,14 +80,16 @@
 #' \dontrun{
 #' library("quanteda")
 #' dfmat <- dfm(tokens(data_corpus_irishbudget2010))
-#' (tmod2 <- textmodel_wordfish(dfmat, dir = c(6,5)))
-#' (tmod3 <- textmodel_wordfish(dfmat, dir = c(6,5),
+#' (tmod2 <- textmodel_wordfish(dfmat, dir = c(6, 5)))
+#' (tmod3 <- textmodel_wordfish(dfmat, dir = c(6, 5),
 #'                              dispersion = "quasipoisson", dispersion_floor = 0))
-#' (tmod4 <- textmodel_wordfish(dfmat, dir = c(6,5),
+#' (tmod4 <- textmodel_wordfish(dfmat, dir = c(6, 5),
 #'                              dispersion = "quasipoisson", dispersion_floor = .5))
-#' plot(tmod3$phi, tmod4$phi, xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
+#' plot(tmod3$phi, tmod4$phi,
+#'      xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
 #'      xlim = c(0, 1.0), ylim = c(0, 1.0))
-#' plot(tmod3$phi, tmod4$phi, xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
+#' plot(tmod3$phi, tmod4$phi,
+#'      xlab = "Min underdispersion = 0", ylab = "Min underdispersion = .5",
 #'      xlim = c(0, 1.0), ylim = c(0, 1.0), type = "n")
 #' underdispersedTerms <- sample(which(tmod3$phi < 1.0), 5)
 #' which(featnames(dfmat) %in% names(topfeatures(dfmat, 20)))
@@ -100,6 +107,9 @@
 textmodel_wordfish <- function(x, dir = c(1, 2),
                                priors = c(Inf, Inf, 3, 1),
                                tol = c(1e-6, 1e-8),
+                               method = "Poisson",
+                               dim2 = FALSE,
+                               prior_values = NULL,
                                dispersion = c("poisson", "quasipoisson"),
                                dispersion_level = c("feature", "overall"),
                                dispersion_floor = 0,
@@ -114,6 +124,9 @@ textmodel_wordfish <- function(x, dir = c(1, 2),
 textmodel_wordfish.default <- function(x, dir = c(1, 2),
                                        priors = c(Inf, Inf, 3, 1),
                                        tol = c(1e-6, 1e-8),
+                                       method = "Poisson",
+                                       dim2 = FALSE,
+                                       prior_values = NULL,
                                        dispersion = c("poisson", "quasipoisson"),
                                        dispersion_level = c("feature", "overall"),
                                        dispersion_floor = 0,
@@ -128,6 +141,9 @@ textmodel_wordfish.default <- function(x, dir = c(1, 2),
 textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
                                    priors = c(Inf, Inf, 3, 1),
                                    tol = c(1e-6, 1e-8),
+                                   method = "Poisson",
+                                   dim2 = FALSE,
+                                   prior_values = NULL,
                                    dispersion = c("poisson", "quasipoisson"),
                                    dispersion_level = c("feature", "overall"),
                                    dispersion_floor = 0,
@@ -187,19 +203,41 @@ textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
     } else {
         stop("Illegal option combination.")
     }
-    if (sparse == TRUE) {
+
+    if (method == "Poisson") {
+
+      if (dim2 == TRUE) {
+        priors <- c(priors, 0.5)
+      }else if (dim2 == FALSE) {
+        priors <- c(priors, 1)
+      }
+      if (sparse == TRUE) {
         result <- qatd_cpp_wordfish(x, as.integer(dir), 1 / (priors ^ 2),
                                     tol, disp,
                                     dispersion_floor, abs_err, svd_sparse,
                                     residual_floor)
-    } else{
+      } else{
         result <- qatd_cpp_wordfish_dense(as.matrix(x),
                                           as.integer(dir), 1 / (priors ^ 2),
                                           tol, disp,
                                           dispersion_floor, abs_err)
-    }
-    # NOTE: psi is a 1 x nfeat matrix, not a numeric vector
-    #       alpha is a ndoc x 1 matrix, not a numeric vector
+      }
+      # NOTE: psi is a 1 x nfeat matrix, not a numeric vector
+      #       alpha is a ndoc x 1 matrix, not a numeric vector
+    }else if (method == "NB") {
+      if (dim2 == TRUE) {
+        priors <- c(priors, 0.01)
+      } else if (dim2 == FALSE) {
+        priors <- c(priors, 0.1)
+      }
+
+      result <- qatd_cpp_wordfish_dense(as.matrix(x),
+                                        as.integer(dir), 1 / (priors ^ 2),
+                                        tol, disp,
+                                        dispersion_floor, abs_err)
+     }
+
+
     if (any(is.nan(result$theta)))
         warning("Warning: The algorithm did not converge.")
 
@@ -215,12 +253,22 @@ textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
         psi = as.numeric(result$psi),
         alpha = as.numeric(result$alpha),
         phi = as.numeric(result$phi),
-        se.theta = as.numeric(result$thetaSE) ,
+        zeta = as.numeric(result$zeta),
+        theta2 = as.numeric(result$theta2),
+        beta2 = as.numeric(result$beta2),
+        se.alpha = as.numeric(result$alphaSE),
+        se.theta = as.numeric(result$thetaSE),
+        se.psi = as.numeric(result$psiSE),
+        se.beta = as.numeric(result$betaSE),
+        se.theta2 = as.numeric(result$theta2SE),
+        se.beta2 = as.numeric(result$beta2SE),
+        lp = as.numeric(result$LogL),
         call = match.call()
     )
     class(result) <- c("textmodel_wordfish", "textmodel", "list")
     result
 }
+
 
 #' Prediction from a textmodel_wordfish method
 #'
@@ -273,7 +321,7 @@ print.textmodel_wordfish <- function(x, ...) {
     print(x$call)
     cat("\n",
         "Dispersion: ", x$dispersion, "; ",
-        "direction: ", x$dir[1], ' < ' , x$dir[2], "; ",
+        "direction: ", x$dir[1], " < ", x$dir[2], "; ",
         ndoc(x), " documents; ",
         nfeat(x), " features.",
         "\n",
@@ -300,9 +348,9 @@ summary.textmodel_wordfish <- function(object, n = 30, ...) {
     )
 
     result <- list(
-        'call' = object$call,
-        'estimated.document.positions' = as.statistics_textmodel(stat),
-        'estimated.feature.scores' = as.coefficients_textmodel(head(coef(object)$features, n))
+        "call" = object$call,
+        "estimated.document.positions" = as.statistics_textmodel(stat),
+        "estimated.feature.scores" = as.coefficients_textmodel(head(coef(object)$features, n))
     )
     return(as.summary.textmodel(result))
 }
