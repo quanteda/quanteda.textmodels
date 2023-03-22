@@ -62,7 +62,7 @@ textmodel_svmlin.default <-  function(x, y, intercept = TRUE, # x_u = NULL,
                                       # lambda_u = 1, max_switch = 10000, # pos_frac = 0.5,
                                       cp = 1, cn = 1,
                                       scale = FALSE, center = FALSE) {
-  stop(friendly_class_undefined_message(class(x), "textmodel_svmlin"))
+  stop(check_class(class(x), "textmodel_svmlin"))
 }
 
 #' @export
@@ -137,7 +137,7 @@ textmodel_svmlin.dfm <-  function(x, y, intercept = TRUE, # x_u = NULL,
 predict.textmodel_svmlin <- function(object, newdata = NULL,
                                   type = c("class", "probability"),
                                   force = FALSE, ...) {
-    unused_dots(...)
+    check_dots(...)
 
     type <- match.arg(type)
 
@@ -183,6 +183,8 @@ print.textmodel_svmlin <- function(x, ...) {
 #' @param object output from [textmodel_svmlin()]
 #' @param n how many coefficients to print before truncating
 #' @param ... additional arguments not used
+#' @returns a `summary.textmodel` classed list containing the call and the
+#'   estimated feature scores
 #' @keywords textmodel internal
 #' @method summary textmodel_svmlin
 #' @importFrom utils head

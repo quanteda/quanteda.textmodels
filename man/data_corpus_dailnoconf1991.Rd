@@ -31,15 +31,17 @@ tmod <- textmodel_affinity(data_dfm_dailnoconf1991,
 dat <-
     data.frame(party = as.character(docvars(data_corpus_dailnoconf1991, "party")),
                govt = coef(pred)[, "Govt"],
-               position = as.character(docvars(data_corpus_dailnoconf1991, "position")),
-               stringsAsFactors = FALSE)
+               position = as.character(docvars(data_corpus_dailnoconf1991, "position")))
 bymedian <- with(dat, reorder(paste(party, position), govt, median))
-par(mar = c(5, 6, 4, 2)+.1)
+oldpar <- par(no.readonly = TRUE)
+par(mar = c(5, 6, 4, 2) + .1)
 boxplot(govt ~ bymedian, data = dat,
         horizontal = TRUE, las = 1,
-        xlab = "Degree of support for government")
+        xlab = "Degree of support for government",
+        ylab = "")
 abline(h = 7.5, col = "red", lty = "dashed")
 text(c(0.9, 0.9), c(8.5, 6.5), c("Goverment", "Opposition"))
+par(oldpar)
 }
 }
 \references{

@@ -16,6 +16,18 @@ factors.)}
 
 \item{...}{additional arguments passed to \code{\link[glmnet:cv.glmnet]{cv.glmnet()}}}
 }
+\value{
+an object of class \code{textmodel_lr}, a list containing:
+\itemize{
+\item \code{x}, \code{y} the input model matrix and input training class labels
+\item \code{algorithm} character; the type and family of logistic regression model used in calling
+\code{\link[glmnet:cv.glmnet]{cv.glmnet()}}
+\item \code{type} the type of associated with \code{algorithm}
+\item \code{classnames} the levels of training classes in \code{y}
+\item \code{lrfitted} the fitted model object from \code{\link[glmnet:cv.glmnet]{cv.glmnet()}}
+\item \code{call} the model call
+}
+}
 \description{
 Fits a fast penalized maximum likelihood estimator to predict discrete
 categories from sparse \link[quanteda:dfm]{dfm} objects. Using the \pkg{glmnet}

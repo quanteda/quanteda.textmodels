@@ -15,7 +15,14 @@ affinity(p, x, smooth = 0.5, verbose = FALSE)
 equal in length to the number of documents}
 }
 \value{
-a list with stuff
+a list containing:
+\itemize{
+\item \code{coefficients} point estimates of theta
+\item \code{se} (likelihood) standard error of theta
+\item \code{cov} covariance matrix
+\item \code{smooth} values of the smoothing parameter
+\item \code{support} logical indicating if the feature was included
+}
 }
 \description{
 Ken recommends you use \code{\link[=textmodel_affinity]{textmodel_affinity()}} instead.

@@ -27,8 +27,11 @@ print.summary.textmodel <- function(x, digits = max(3L, getOption("digits") - 3L
 }
 
 #' Assign the summary.textmodel class to a list
+#' 
+#' Assigns the class `summary.textmodel` to a list
 #' @param x a named list
 #' @keywords internal
+#' @returns an object of class `summary.textmodel`
 #' @export
 as.summary.textmodel <- function(x) {
     class(x) <- c("summary.textmodel", "list")
@@ -61,7 +64,7 @@ as.summary.textmodel <- function(x) {
 # }
 
 #' Print methods for textmodel features estimates
-
+#' 
 #' This is a helper function used in `print.summary.textmodel`.
 #' @param x a coefficients_textmodel object
 #' @param digits minimal number of *significant digits*, see
@@ -83,12 +86,13 @@ print.coefficients_textmodel <- function(x, digits = max(3L, getOption("digits")
 }
 
 #' Coerce various objects to coefficients_textmodel
-
-#' This is a helper function used in `summary.textmodel_*`.
+#'
+#' Helper functions used in `summary.textmodel_*()`.
 #' @param x an object to be coerced
 #' @importFrom stats coefficients
 #' @importFrom stats coef
 #' @keywords internal
+#' @returns an object with the class tag of `coefficients_textmodel`
 #' @export
 as.coefficients_textmodel <- function(x) {
     UseMethod('as.coefficients_textmodel')
@@ -138,6 +142,7 @@ print.statistics_textmodel <- function(x, digits = max(3L, getOption("digits") -
 #' This is a helper function used in `summary.textmodel_*`.
 #' @param x an object to be coerced
 #' @keywords internal textmodel
+#' @returns an object of class `statistics_textmodel`
 #' @export
 as.statistics_textmodel <- function(x) {
     UseMethod("as.statistics_textmodel")

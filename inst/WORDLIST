@@ -1,7 +1,8 @@
 ACL
 Akitaka
-Benoit's
 CMD
+CSparseMatrix
+Codecov
 Crowdflower
 Deerwester
 Dumais
@@ -22,7 +23,7 @@ LBG
 LIBLINEAR
 LSA
 Landauer
-Lifecycle
+LiblineaR
 MFN
 Maas
 Majka
@@ -56,7 +57,7 @@ Wordscores
 Wordscoring
 arXiv
 austin
-codecov
+com
 csr
 dfm
 docfreq
@@ -65,16 +66,17 @@ doi
 elasticnet
 fastNaiveBayes
 gfortran
+github
 io
 lr
 lsa
 macM
 macOS
+mskogholt
 naivebayes
 nb
 newdata's
 org
-pearson
 quanteda
 se
 stat
@@ -86,6 +88,8 @@ termfreq
 textmodel
 textmodels
 th
+u
+udv
 underdispersed
 underdispersion
 unsmoothed

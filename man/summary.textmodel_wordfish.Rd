@@ -13,6 +13,10 @@
 
 \item{...}{unused}
 }
+\value{
+a \code{summary.textmodel} classed list containing the call, the
+estimated document positions, and the estimated feature scores
+}
 \description{
 summary method for textmodel_wordfish
 }

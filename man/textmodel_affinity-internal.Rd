@@ -16,6 +16,27 @@
 \arguments{
 \item{n}{how many coefficients to print before truncating}
 }
+\value{
+\code{summary.influence.predict.textmodel_affinity()} returns a list
+classes as \code{summary.influence.predict.textmodel_affinity} that includes:
+\itemize{
+\item \code{word} the feature name
+\item \code{count} the total counts of each feature for which influence was computed
+\item \code{mean}, \code{median}, \code{sd}, \code{max} mean, median, standard deviation, and maximum
+values of influence for each feature, computed across classes
+\item \code{direction} an integer vector of 1 or 2 indicating the class which the feature
+is influencing
+\item \code{rate} a document by feature class sparse matrix of normalised influence
+measures
+\item \code{count} a vector of counts of each non-zero feature in the input matrix
+\item \code{rate} the median of \code{rate} from \code{\link[=influence.predict.textmodel_affinity]{influence.predict.textmodel_affinity()}}
+\item \code{support} logical vector for each feature matching the same return from
+\code{\link[=predict.textmodel_affinity]{predict.textmodel_affinity()}}
+}
+
+the mean, the standard deviation, the direction of the influence, the rate,
+and the support
+}
 \description{
 Internal print and summary methods for derivative
 \link{textmodel_affinity} objects.

@@ -9,6 +9,9 @@
 \arguments{
 \item{x}{input \link{dfm}}
 }
+\value{
+a \pkg{SparseM} object of class \link[SparseM:SparseM.ontology]{matrix.csr}
+}
 \description{
 Utility to convert a dfm into a \link[SparseM:SparseM.ontology]{matrix.csr} from the \pkg{SparseM} package.
 }

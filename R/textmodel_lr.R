@@ -12,6 +12,14 @@
 #'   in \code{train}.  (These will be converted to factors if not already
 #'   factors.)
 #' @param ... additional arguments passed to [`cv.glmnet()`][glmnet::cv.glmnet()]
+#' @returns an object of class `textmodel_lr`, a list containing:
+#' * `x`, `y` the input model matrix and input training class labels
+#' * `algorithm` character; the type and family of logistic regression model used in calling
+#'   [`cv.glmnet()`][glmnet::cv.glmnet()]
+#' * `type` the type of associated with `algorithm`
+#' * `classnames` the levels of training classes in `y`
+#' * `lrfitted` the fitted model object from [`cv.glmnet()`][glmnet::cv.glmnet()]
+#' * `call` the model call
 #' @seealso [`cv.glmnet()`][glmnet::cv.glmnet()], [predict.textmodel_lr()],
 #'   [coef.textmodel_lr()]
 #' @references
@@ -49,7 +57,7 @@ textmodel_lr <- function(x, y, ...) {
 
 #' @export
 textmodel_lr.default <- function(x, y, ...) {
-    stop(quanteda:::friendly_class_undefined_message(class(x), "textmodel_lr"))
+    stop(check_class(class(x), "textmodel_lr"))
 }
 
 #' @export
@@ -219,6 +227,9 @@ coefficients.textmodel_lr <- function(object, ...) {
 #' @param n how many coefficients to print before truncating
 #' @param ... additional arguments not used
 #' @keywords textmodel internal
+#' @returns a `summary.textmodel` classed list containing elements from the 
+#' call to `textmodel_lr()`, including the call, statistics for lambda, and
+#' the estimated feature scores
 #' @method summary textmodel_lr
 #' @export
 summary.textmodel_lr <- function(object, n = 30, ...) {

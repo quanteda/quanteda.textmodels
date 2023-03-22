@@ -16,6 +16,15 @@
 #'   [LiblineaR::LiblineaR()]; default is `1` for L2-regularized L2-loss support
 #'   vector classification (dual)
 #' @param ... additional arguments passed to [LiblineaR::LiblineaR()]
+#' @returns an object of class `textmodel_svm`, a list containing:
+#' * `x`, `y`, `weights`, `type`: argument values from the call parameters
+#' * `algorithm` character label of the algorithm used in the call to 
+#'   [LiblineaR::LiblineaR()]
+#' * `classnames` levels of `y`
+#' * `bias` the value of `Bias` returned from [LiblineaR::LiblineaR()] 
+#' * `svmlinfitted` the fitted model object passed from the call to 
+#'   LiblineaR::LiblineaR()]
+#' * `call` the model call
 #' @references
 #' R. E. Fan, K. W. Chang, C. J. Hsieh, X. R. Wang, and C. J. Lin. (2008)
 #' LIBLINEAR: A Library for Large Linear Classification.
@@ -42,7 +51,7 @@ textmodel_svm <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), ty
 
 #' @export
 textmodel_svm.default <- function(x, y, weight = c("uniform", "docfreq", "termfreq"), type = 1, ...) {
-    stop(friendly_class_undefined_message(class(x), "textmodel_svm"))
+    stop(check_class(class(x), "textmodel_svm"))
 }
 
 #' @importFrom LiblineaR LiblineaR
@@ -115,7 +124,7 @@ textmodel_svm.dfm <- function(x, y, weight = c("uniform", "docfreq", "termfreq")
 predict.textmodel_svm <- function(object, newdata = NULL,
                                   type = c("class", "probability"),
                                   force = TRUE, ...) {
-    unused_dots(...)
+    check_dots(...)
 
     type <- match.arg(type)
 
@@ -166,6 +175,8 @@ print.textmodel_svm <- function(x, ...) {
 #' @param object output from [textmodel_svm()]
 #' @param n how many coefficients to print before truncating
 #' @param ... additional arguments not used
+#' @returns a `summary.textmodel` classed list containing the call and the
+#'   estimated feature scores
 #' @keywords textmodel internal
 #' @method summary textmodel_svm
 #' @export
@@ -206,6 +217,7 @@ print.predict.textmodel_svm <- function(x, ...) {
 #' @importFrom SparseM as.matrix.csr
 #' @importFrom methods new
 #' @method as.matrix.csr dfm
+#' @returns a \pkg{SparseM} object of class [matrix.csr][SparseM::matrix.csr]
 #' @keywords internal
 as.matrix.csr.dfm <- function(x) {
     # convert first to column sparse format

@@ -9,7 +9,10 @@ as.summary.textmodel(x)
 \arguments{
 \item{x}{a named list}
 }
+\value{
+an object of class \code{summary.textmodel}
+}
 \description{
-Assign the summary.textmodel class to a list
+Assigns the class \code{summary.textmodel} to a list
 }
 \keyword{internal}

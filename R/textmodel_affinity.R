@@ -1,6 +1,6 @@
 #' Class affinity maximum likelihood text scaling model
 #'
-#' `textmodel_affinity` implements the maximum likelihood supervised text
+#' `textmodel_affinity()` implements the maximum likelihood supervised text
 #' scaling method described in Perry and Benoit (2017).
 #' @param x the [dfm] or [bootstrap_dfm] object on which the model
 #'   will be fit.  Does not need to contain only the training documents, since
@@ -14,6 +14,15 @@
 #'   defaults to 0.5
 #' @param verbose logical; if `TRUE` print diagnostic information during
 #'   fitting.
+#' @returns A `textmodel_affinity` class list object, with elements:
+#' * `smooth` a numeric vector of length two for the smoothing parameters `smooth`
+#'   and `ref_smooth`
+#' `x` the input model matrix `x`
+#' `y` the vector of class training labels `y`
+#' `p` a feature \eqn{\times} class sparse matrix of estimated class affinities
+#' * `support` logical vector indicating whether a feature was included in computing
+#'   class affinities
+#' * `call` the model call
 #' @author Patrick Perry and Kenneth Benoit
 #' @references Perry, P.O. & Benoit, K.R. (2017). Scaling Text with
 #'   the Class Affinity Model.
@@ -34,7 +43,7 @@
 #' @importFrom stats sd predict
 #' @importFrom quanteda dfm_group as.dfm
 #' @seealso [predict.textmodel_affinity()] for methods of applying a
-#'   fitted [textmodel_affinity] model object to predict quantities from
+#'   fitted [textmodel_affinity()] model object to predict quantities from
 #'   (other) documents.
 textmodel_affinity <- function(x, y, exclude = NULL,
                                smooth = 0.5, ref_smooth = 0.5,
@@ -46,7 +55,7 @@ textmodel_affinity <- function(x, y, exclude = NULL,
 textmodel_affinity.default <- function(x, y, exclude = NULL,
                                        smooth = 0.5, ref_smooth = 0.5,
                                        verbose = quanteda_options("verbose")) {
-    stop(friendly_class_undefined_message(class(x), "textmodel_affinity"))
+    stop(check_class(class(x), "textmodel_affinity"))
 }
 
 
@@ -90,7 +99,7 @@ textmodel_affinity.dfm <- function(x, y, exclude = NULL,
         y = y,
         p = p,
         support = fitted$support,
-        method = "affinity",
+        # method = "affinity",
         call = match.call()
     )
     class(result) <- "textmodel_affinity"
@@ -139,7 +148,12 @@ textmodel_affinity.dfm_bootstrap <- function(x, y, exclude = NULL,
 #' @param smooth a misnamed smoothing parameter, either a scalar or a vector
 #'   equal in length to the number of documents
 #' @author Patrick Perry
-#' @return a list with stuff
+#' @returns a list containing:
+#' * `coefficients` point estimates of theta
+#' * `se` (likelihood) standard error of theta
+#' * `cov` covariance matrix
+#' * `smooth` values of the smoothing parameter
+#' * `support` logical indicating if the feature was included
 #' @examples
 #' p <- matrix(c(c(5/6, 0, 1/6), c(0, 4/5, 1/5)), nrow = 3,
 #'             dimnames = list(c("A", "B", "C"), NULL))
@@ -449,8 +463,21 @@ print.textmodel_affinity <- function(x, ...) {
 #' @param level probability level for confidence interval width
 #' @param newdata dfm on which prediction should be made
 #' @param ... unused
-#' @return `predict()` returns a list of predicted affinity textmodel
-#'   quantities.
+#' @returns `predict()` returns a list of predicted affinity textmodel
+#'   quantities, containing:
+#' * `coefficients` a numeric matrix of affinity estimates (coefficients) for 
+#'    each class (columns) for each document (rows)
+#' * `se` a numeric matrix of likelihood standard errors for affinity coefficients
+#'    each class (columns) for each document (rows)
+#' * `cov` an array of covariance matrices for each affinity class, one per document
+#' * `smooth` a numeric vector of length two for the smoothing parameters `smooth`
+#'   and `ref_smooth` from [textmodel_affinity()]
+#' * `newdata` a [dfm][quanteda::dfm] on which prediction has been made
+#' * `train` a logical vector indicating which documents were used in training the model
+#' * `level` the confidence level for computing standard errors
+#' * `p` the `p` return from `textmodel_affinity`
+#' * `support` logical vector indicating whether a feature was included in computing
+#'   class affinities
 #' @importFrom methods new
 #' @importFrom stats predict
 #' @method predict textmodel_affinity
@@ -497,7 +524,7 @@ print.predict.textmodel_affinity <- function(x, ...) {
 
 #' @rdname predict.textmodel_affinity
 #' @method coef predict.textmodel_affinity
-#' @return `coef()` returns a document \eqn{\times} class matrix of class
+#' @returns `coef()` returns a document \eqn{\times} class matrix of class
 #'   affinities for each document.
 #' @export
 coef.predict.textmodel_affinity <- function(object, ...) {
@@ -511,7 +538,7 @@ coefficients.predict.textmodel_affinity <- function(object, ...) {
 }
 
 #' @rdname predict.textmodel_affinity
-#' @return
+#' @returns
 #' `residuals()` returns a document-by-feature matrix of residuals.
 #' `resid()` is an alias.
 #' @method residuals predict.textmodel_affinity
@@ -540,7 +567,7 @@ resid.predict.textmodel_affinity <- function(object, ...) {
 
 #' @rdname predict.textmodel_affinity
 #' @method rstandard predict.textmodel_affinity
-#' @return `rstandard()` is a shortcut to return the pearson residuals.
+#' @returns `rstandard()` is a shortcut to return the Pearson residuals.
 #' @importFrom stats rstandard sd
 #' @export
 rstandard.predict.textmodel_affinity <- function(model, ...) {
@@ -552,10 +579,10 @@ rstandard.predict.textmodel_affinity <- function(model, ...) {
 
 #' Compute feature influence from a predicted textmodel_affinity object
 #'
-#' Computes the influence of features on scaled [textmodel_affinity]
+#' Computes the influence of features on scaled [textmodel_affinity()]
 #' applications.
-#' @param model a predicted
-#'   [textmodel_affinity][predict.textmodel_affinity] object
+#' @param model a predicted [textmodel_affinity()][predict.textmodel_affinity]
+#'   object
 #' @param subset whether to use all data or a subset (for instance, exclude the
 #'   training set)
 #' @param ... unused
@@ -563,9 +590,24 @@ rstandard.predict.textmodel_affinity <- function(model, ...) {
 #' @keywords textmodel internal
 #' @importFrom stats influence
 #' @method influence predict.textmodel_affinity
+#' @returns a named list classed as [influence.predict.textmodel_affinity] that
+#'   contains
+#' * `norm` a document by feature class sparse matrix of normalised influence 
+#'   measures
+#' * `count` a vector of counts of each non-zero feature in the input matrix
+#' * `rate` the normalised feature count for each non-zero feature in the input 
+#'    matrix
+#' * `mode` an integer vector of 1 or 2 indicating the class which the feature 
+#'    is influencing, for each non-zero feature
+#' * `levels` a character vector of the affinity class labels
+#' * `subset` a logical vector indicating whether the document was included in 
+#'   the computation of influence; `FALSE` for documents assigned a class label 
+#'   in training the model
+#' * `support` logical vector for each feature matching the same return from 
+#'   [predict.textmodel_affinity]
 #' @examples
-#' tmot <- textmodel_affinity(quanteda::data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA))
-#' pred <- predict(tmot)
+#' tmod <- textmodel_affinity(quanteda::data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA))
+#' pred <- predict(tmod)
 #' influence(pred)
 #' @export
 influence.predict.textmodel_affinity <- function(model, subset = !train, ...) {
@@ -665,6 +707,24 @@ print.influence.predict.textmodel_affinity <- function(x, n = 30, ...) {
 
 #' @rdname textmodel_affinity-internal
 #' @method summary influence.predict.textmodel_affinity
+#' @returns `summary.influence.predict.textmodel_affinity()` returns a list
+#' classes as `summary.influence.predict.textmodel_affinity` that includes:
+#' 
+#' * `word` the feature name
+#' * `count` the total counts of each feature for which influence was computed
+#' * `mean`, `median`, `sd`, `max` mean, median, standard deviation, and maximum
+#'   values of influence for each feature, computed across classes
+#' * `direction` an integer vector of 1 or 2 indicating the class which the feature 
+#'    is influencing
+#' * `rate` a document by feature class sparse matrix of normalised influence 
+#'   measures
+#' * `count` a vector of counts of each non-zero feature in the input matrix
+#' * `rate` the median of `rate` from [influence.predict.textmodel_affinity()]
+#' * `support` logical vector for each feature matching the same return from 
+#'   [predict.textmodel_affinity()]
+#' 
+#' the mean, the standard deviation, the direction of the influence, the rate,
+#' and the support
 #' @importFrom stats median
 #' @export
 summary.influence.predict.textmodel_affinity <- function(object, ...) {
@@ -731,9 +791,12 @@ summary.influence.predict.textmodel_affinity <- function(object, ...) {
     levels <- seq_along(labels)
     max_dir <- factor(max_dir, levels, labels)
 
-    result <- list(word = words, count = count_val,
-                   mean = mean_val, median = med_val,
-                   sd = sd_val, max = max_val,
+    result <- list(word = words, 
+                   count = count_val,
+                   mean = mean_val, 
+                   median = med_val,
+                   sd = sd_val, 
+                   max = max_val,
                    direction = max_dir,
                    rate = med_rate,
                    support = object$support)
@@ -789,6 +852,3 @@ interleave <- function(v1, v2) {
     ord2 <- 2 * (seq_along(v2))
     c(v1, v2)[order(c(ord1, ord2))]
 }
-
-
-

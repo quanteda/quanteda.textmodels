@@ -2,16 +2,17 @@
 % Please edit documentation in R/textmodel-methods.R
 \name{as.coefficients_textmodel}
 \alias{as.coefficients_textmodel}
-\title{Coerce various objects to coefficients_textmodel
-This is a helper function used in \verb{summary.textmodel_*}.}
+\title{Coerce various objects to coefficients_textmodel}
 \usage{
 as.coefficients_textmodel(x)
 }
 \arguments{
 \item{x}{an object to be coerced}
 }
+\value{
+an object with the class tag of \code{coefficients_textmodel}
+}
 \description{
-Coerce various objects to coefficients_textmodel
-This is a helper function used in \verb{summary.textmodel_*}.
+Helper functions used in \verb{summary.textmodel_*()}.
 }
 \keyword{internal}

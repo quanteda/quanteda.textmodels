@@ -13,6 +13,10 @@
 
 \item{...}{additional arguments not used}
 }
+\value{
+a \code{summary.textmodel} classed list containing the call and the
+estimated feature scores
+}
 \description{
 summary method for textmodel_svmlin objects
 }

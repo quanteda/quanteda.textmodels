@@ -14,6 +14,11 @@ fitted or predicted scaling model object to be plotted}
 
 \item{...}{additional arguments passed to \code{\link[=plot]{plot()}}}
 }
+\value{
+Creates a base R plot of feature influences of the median influence
+by the log10 median rate of the feature, and invisibly returns the elements
+from the call to \code{\link[=plot]{plot()}}.
+}
 \description{
 Plot the results of a fitted scaling model, from (e.g.) a predicted
 \link{textmodel_affinity} model.

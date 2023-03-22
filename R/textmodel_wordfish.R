@@ -121,7 +121,7 @@ textmodel_wordfish.default <- function(x, dir = c(1, 2),
                                        abs_err = FALSE,
                                        svd_sparse = TRUE,
                                        residual_floor = 0.5) {
-    stop(friendly_class_undefined_message(class(x), "textmodel_wordfish"))
+    stop(check_class(class(x), "textmodel_wordfish"))
 }
 
 #' @export
@@ -284,6 +284,8 @@ print.textmodel_wordfish <- function(x, ...) {
 #' @param object a [textmodel_wordfish] object
 #' @param n maximum number of features to print in summary
 #' @param ... unused
+#' @returns a `summary.textmodel` classed list containing the call, the
+#'   estimated document positions, and the estimated feature scores
 #' @export
 #' @method summary textmodel_wordfish
 #' @keywords internal textmodel

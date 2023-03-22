@@ -106,7 +106,7 @@ textmodel_nb <- function(x, y, smooth = 1,
 textmodel_nb.default <- function(x, y, smooth = 1,
                                  prior = c("uniform", "docfreq", "termfreq"),
                                  distribution = c("multinomial", "Bernoulli")) {
-    stop(friendly_class_undefined_message(class(x), "textmodel_nb"))
+    stop(check_class(class(x), "textmodel_nb"))
 }
 
 #' @export
@@ -200,7 +200,7 @@ textmodel_nb.dfm <- function(x, y, smooth = 1,
 predict.textmodel_nb <- function(object, newdata = NULL,
                                  type = c("class", "probability", "logposterior"),
                                  force = FALSE, ...) {
-    unused_dots(...)
+    check_dots(...)
     type <- match.arg(type)
     if ("Pc" %in% names(object)) {
       names(object)[which(names(object) == "Pc")] <- "priors"
@@ -278,6 +278,8 @@ print.textmodel_nb <- function(x, ...) {
 #' @param object output from [textmodel_nb()]
 #' @param n how many coefficients to print before truncating
 #' @param ... additional arguments not used
+#' @returns a `summary.textmodel` classed list containing the call, the class
+#'   priors, and the estimated feature scores
 #' @keywords textmodel internal
 #' @method summary textmodel_nb
 #' @export
