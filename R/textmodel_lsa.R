@@ -5,6 +5,12 @@
 #' @param x the [dfm] on which the model will be fit
 #' @param nd  the number of dimensions to be included in output
 #' @param margin margin to be smoothed by the SVD
+#' @returns a `textmodel_lsa` class object, a list containing:
+#' * `sk` a numeric vector containing the d values from the SVD
+#' * `docs` document coordinates from the SVD (u)
+#' * `features` feature coordinates from the SVD (v)
+#' * `matrix_low_rank` the multiplication of udv'
+#' * `data` the input data as a CSparseMatrix from the \pkg{Matrix} package
 #' @author Haiyan Wang and Kohei Watanabe
 #' @details [svds][RSpectra::svds] in the \pkg{RSpectra} package is applied to
 #'   enable the fast computation of the SVD.

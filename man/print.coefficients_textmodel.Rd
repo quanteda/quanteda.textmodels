@@ -2,8 +2,7 @@
 % Please edit documentation in R/textmodel-methods.R
 \name{print.coefficients_textmodel}
 \alias{print.coefficients_textmodel}
-\title{Print methods for textmodel features estimates
-This is a helper function used in \code{print.summary.textmodel}.}
+\title{Print methods for textmodel features estimates}
 \usage{
 \method{print}{coefficients_textmodel}(x, digits = max(3L, getOption("digits") - 3L), ...)
 }
@@ -16,7 +15,6 @@ This is a helper function used in \code{print.summary.textmodel}.}
 \item{...}{additional arguments not used}
 }
 \description{
-Print methods for textmodel features estimates
 This is a helper function used in \code{print.summary.textmodel}.
 }
 \keyword{internal}

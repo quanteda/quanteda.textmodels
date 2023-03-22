@@ -13,6 +13,16 @@ textmodel_lsa(x, nd = 10, margin = c("both", "documents", "features"))
 
 \item{margin}{margin to be smoothed by the SVD}
 }
+\value{
+a \code{textmodel_lsa} class object, a list containing:
+\itemize{
+\item \code{sk} a numeric vector containing the d values from the SVD
+\item \code{docs} document coordinates from the SVD (u)
+\item \code{features} feature coordinates from the SVD (v)
+\item \code{matrix_low_rank} the multiplication of udv'
+\item \code{data} the input data as a CSparseMatrix from the \pkg{Matrix} package
+}
+}
 \description{
 Fit the Latent Semantic Analysis scaling model to a \link{dfm}, which may be
 weighted (for instance using \code{\link[quanteda:dfm_tfidf]{quanteda::dfm_tfidf()}}).

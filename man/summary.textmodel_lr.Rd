@@ -13,6 +13,11 @@
 
 \item{...}{additional arguments not used}
 }
+\value{
+a \code{summary.textmodel} classed list containing elements from the
+call to \code{textmodel_lr()}, including the call, statistics for lambda, and
+the estimated feature scores
+}
 \description{
 summary method for textmodel_lr objects
 }

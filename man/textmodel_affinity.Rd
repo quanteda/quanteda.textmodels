@@ -32,8 +32,21 @@ defaults to 0.5}
 \item{verbose}{logical; if \code{TRUE} print diagnostic information during
 fitting.}
 }
+\value{
+A \code{textmodel_affinity} class list object, with elements:
+\itemize{
+\item \code{smooth} a numeric vector of length two for the smoothing parameters \code{smooth}
+and \code{ref_smooth}
+\code{x} the input model matrix \code{x}
+\code{y} the vector of class training labels \code{y}
+\code{p} a feature \eqn{\times} class sparse matrix of estimated class affinities
+\item \code{support} logical vector indicating whether a feature was included in computing
+class affinities
+\item \code{call} the model call
+}
+}
 \description{
-\code{textmodel_affinity} implements the maximum likelihood supervised text
+\code{textmodel_affinity()} implements the maximum likelihood supervised text
 scaling method described in Perry and Benoit (2017).
 }
 \examples{
@@ -54,7 +67,7 @@ the Class Affinity Model.
 }
 \seealso{
 \code{\link[=predict.textmodel_affinity]{predict.textmodel_affinity()}} for methods of applying a
-fitted \link{textmodel_affinity} model object to predict quantities from
+fitted \code{\link[=textmodel_affinity]{textmodel_affinity()}} model object to predict quantities from
 (other) documents.
 }
 \author{

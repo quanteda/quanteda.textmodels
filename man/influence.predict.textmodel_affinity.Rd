@@ -7,21 +7,40 @@
 \method{influence}{predict.textmodel_affinity}(model, subset = !train, ...)
 }
 \arguments{
-\item{model}{a predicted
-\link[=predict.textmodel_affinity]{textmodel_affinity} object}
+\item{model}{a predicted \link[=predict.textmodel_affinity]{textmodel_affinity()}
+object}
 
 \item{subset}{whether to use all data or a subset (for instance, exclude the
 training set)}
 
 \item{...}{unused}
 }
+\value{
+a named list classed as \link{influence.predict.textmodel_affinity} that
+contains
+\itemize{
+\item \code{norm} a document by feature class sparse matrix of normalised influence
+measures
+\item \code{count} a vector of counts of each non-zero feature in the input matrix
+\item \code{rate} the normalised feature count for each non-zero feature in the input
+matrix
+\item \code{mode} an integer vector of 1 or 2 indicating the class which the feature
+is influencing, for each non-zero feature
+\item \code{levels} a character vector of the affinity class labels
+\item \code{subset} a logical vector indicating whether the document was included in
+the computation of influence; \code{FALSE} for documents assigned a class label
+in training the model
+\item \code{support} logical vector for each feature matching the same return from
+\link{predict.textmodel_affinity}
+}
+}
 \description{
-Computes the influence of features on scaled \link{textmodel_affinity}
+Computes the influence of features on scaled \code{\link[=textmodel_affinity]{textmodel_affinity()}}
 applications.
 }
 \examples{
-tmot <- textmodel_affinity(quanteda::data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA))
-pred <- predict(tmot)
+tmod <- textmodel_affinity(quanteda::data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA))
+pred <- predict(tmod)
 influence(pred)
 }
 \seealso{

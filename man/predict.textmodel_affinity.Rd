@@ -28,7 +28,22 @@
 }
 \value{
 \code{predict()} returns a list of predicted affinity textmodel
-quantities.
+quantities, containing:
+\itemize{
+\item \code{coefficients} a numeric matrix of affinity estimates (coefficients) for
+each class (columns) for each document (rows)
+\item \code{se} a numeric matrix of likelihood standard errors for affinity coefficients
+each class (columns) for each document (rows)
+\item \code{cov} an array of covariance matrices for each affinity class, one per document
+\item \code{smooth} a numeric vector of length two for the smoothing parameters \code{smooth}
+and \code{ref_smooth} from \code{\link[=textmodel_affinity]{textmodel_affinity()}}
+\item \code{newdata} a \link[quanteda:dfm]{dfm} on which prediction has been made
+\item \code{train} a logical vector indicating which documents were used in training the model
+\item \code{level} the confidence level for computing standard errors
+\item \code{p} the \code{p} return from \code{textmodel_affinity}
+\item \code{support} logical vector indicating whether a feature was included in computing
+class affinities
+}
 
 \code{coef()} returns a document \eqn{\times} class matrix of class
 affinities for each document.
@@ -36,7 +51,7 @@ affinities for each document.
 \code{residuals()} returns a document-by-feature matrix of residuals.
 \code{resid()} is an alias.
 
-\code{rstandard()} is a shortcut to return the pearson residuals.
+\code{rstandard()} is a shortcut to return the Pearson residuals.
 }
 \description{
 Estimate \eqn{\theta_i} for each document, from a fitted

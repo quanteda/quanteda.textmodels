@@ -14,6 +14,11 @@ force_conformance(x, features, force = TRUE)
 \item{force}{logical; if \code{TRUE}, make the new dfm conform to the vector of
 features, otherwise return an error message}
 }
+\value{
+a \link[quanteda:dfm]{dfm} from the \pkg{quanteda} package containing
+only \code{features} as columns, in the same order as \code{features}.  A warning message
+is printed if some feature names from \code{features} are not matched in \code{x}.
+}
 \description{
 Takes a dfm and a set of features, and makes them match the features listed
 in the set.

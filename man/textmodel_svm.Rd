@@ -32,6 +32,19 @@ vector classification (dual)}
 
 \item{...}{additional arguments passed to \code{\link[LiblineaR:LiblineaR]{LiblineaR::LiblineaR()}}}
 }
+\value{
+an object of class \code{textmodel_svm}, a list containing:
+\itemize{
+\item \code{x}, \code{y}, \code{weights}, \code{type}: argument values from the call parameters
+\item \code{algorithm} character label of the algorithm used in the call to
+\code{\link[LiblineaR:LiblineaR]{LiblineaR::LiblineaR()}}
+\item \code{classnames} levels of \code{y}
+\item \code{bias} the value of \code{Bias} returned from \code{\link[LiblineaR:LiblineaR]{LiblineaR::LiblineaR()}}
+\item \code{svmlinfitted} the fitted model object passed from the call to
+LiblineaR::LiblineaR()]
+\item \code{call} the model call
+}
+}
 \description{
 Fit a fast linear SVM classifier for texts, using the
 \pkg{LiblineaR} package.

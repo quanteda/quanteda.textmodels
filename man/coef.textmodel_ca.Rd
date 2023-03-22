@@ -17,6 +17,18 @@ extracted}
 
 \item{...}{unused}
 }
+\value{
+a list containing numeric vectors of feature and document
+coordinates.  Includes \code{NA} vectors of standard errors for consistency with
+other models' coefficient outputs, and for the possibility of having these
+computed in the future.
+\itemize{
+\item \code{coef_feature} column coordinates of the features
+\item \code{coef_feature_se} feature length vector of \code{NA} values
+\item \code{coef_document} row coordinates of the documents
+\item \code{coef_document_se} document length vector of \code{NA} values
+}
+}
 \description{
 \code{coef()} extract model coefficients from a fitted \code{textmodel_ca}
 object.  \code{coefficients()} is an alias.

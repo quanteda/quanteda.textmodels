@@ -45,7 +45,7 @@ textmodel_ca <- function(x, smooth = 0, nd = NA, sparse = FALSE,
 #' @export
 textmodel_ca.default <- function(x, smooth = 0, nd = NA, sparse = FALSE,
                                  residual_floor = 0.1) {
-    stop(friendly_class_undefined_message(class(x), "textmodel_ca"))
+    stop(check_class(class(x), "textmodel_ca"))
 }
 
 #' @export
@@ -151,6 +151,14 @@ textmodel_ca.dfm <- function(x, smooth = 0, nd = NA, sparse = FALSE,
 #'   extracted
 #' @param ... unused
 #' @keywords textmodel internal
+#' @returns a list containing numeric vectors of feature and document
+#'   coordinates.  Includes `NA` vectors of standard errors for consistency with
+#'   other models' coefficient outputs, and for the possibility of having these
+#'   computed in the future.
+#' * `coef_feature` column coordinates of the features
+#' * `coef_feature_se` feature length vector of `NA` values
+#' * `coef_document` row coordinates of the documents
+#' * `coef_document_se` document length vector of `NA` values
 #' @export
 coef.textmodel_ca <- function(object, doc_dim = 1, feat_dim = 1, ...) {
     list(coef_feature = object$colcoord[, feat_dim],

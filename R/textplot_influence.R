@@ -6,6 +6,9 @@
 #'   fitted or predicted scaling model object to be plotted
 #' @param n the number of features whose influence will be plotted
 #' @param ... additional arguments passed to [plot()]
+#' @returns Creates a base R plot of feature influences of the median influence
+#'   by the log10 median rate of the feature, and invisibly returns the elements
+#'   from the call to [plot()].
 #' @seealso [textmodel_affinity()]
 #' @importFrom graphics plot
 #' @export
@@ -22,7 +25,7 @@ textplot_influence <- function(x, n = 30, ...) {
 
 #' @export
 textplot_influence.default <- function(x, n = 30, ...) {
-    stop(friendly_class_undefined_message(class(x), "textplot_influence"))
+    stop(check_class(class(x), "textplot_influence"))
 }
 
 #' @export

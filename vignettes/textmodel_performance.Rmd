@@ -16,8 +16,8 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library("quanteda.textmodels")
 library("quanteda")
+library("quanteda.textmodels")
 ```
 
 ## Naive Bayes
@@ -81,7 +81,7 @@ microbenchmark(
 )
 ```
 
-And Bernoulli.  Note here that while we are supplying the boolean matrix to `textmodel_nb()`, this re-weighting from the count matrix would have been performed automatically within the function had we not done so in advance - it's done here just for comparison.
+And Bernoulli.  Note here that while we are supplying the Boolean matrix to `textmodel_nb()`, this re-weighting from the count matrix would have been performed automatically within the function had we not done so in advance - it's done here just for comparison.
 ```{r}
 dfmat_train_bern <- dfm_weight(dfmat_train, scheme = "boolean")
 dfmat_test_bern <- dfm_weight(dfmat_test, scheme = "boolean")
@@ -113,5 +113,5 @@ https://CRAN.R-project.org/package=naivebayes>.  Date: 2020-03-08.
 
 Manning, Christopher D., Prabhakar Raghavan, and Hinrich Schütze (2008). _Introduction to Information Retrieval_. Cambridge University Press.
 
-Skogholt, Martin (2020). _fastNaiveBayes: Extremely Fast Implementation of a Naive Bayes Classifier_. R package version 2.2.0.
-  https://github.com/mskogholt/fastNaiveBayes.  Date: 2020-02-23.
+Skogholt, Martin (2020). _fastNaiveBayes: Extremely Fast Implementation of a Naive Bayes Classifier_. R package version 2.2.1.
+  https://github.com/mskogholt/fastNaiveBayes.  Date: 2020-05-04.

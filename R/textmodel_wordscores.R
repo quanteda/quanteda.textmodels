@@ -63,7 +63,7 @@ textmodel_wordscores <- function(x, y, scale = c("linear", "logit"), smooth = 0)
 
 #' @export
 textmodel_wordscores.default <- function(x, y, scale = c("linear", "logit"), smooth = 0) {
-    stop(friendly_class_undefined_message(class(x), "textmodel_wordscores"))
+    stop(check_class(class(x), "textmodel_wordscores"))
 }
 
 #' @export
@@ -159,7 +159,7 @@ predict.textmodel_wordscores <- function(object,
                                          force = TRUE,
                                          ...) {
 
-    unused_dots(...)
+    check_dots(...)
 
     interval <- match.arg(interval)
     rescaling <- match.arg(rescaling)
