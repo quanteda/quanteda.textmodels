@@ -27,13 +27,7 @@
 #'   terms with rare term or document frequencies that appear to be severely
 #'   underdispersed.  Default is 0, but this only applies if `dispersion =
 #'   "quasipoisson"`.
-#' @param sparse specifies whether the `"dfm"` is coerced to dense.  While
-#'   setting this to `TRUE` will make it possible to handle larger dfm
-#'   objects (and make execution faster), it will generate slightly different
-#'   results each time, because the sparse SVD routine has a stochastic element.
 #' @param abs_err specifies how the convergence is considered
-#' @param svd_sparse uses svd to initialize the starting values of theta,
-#'   only applies when `sparse = TRUE`
 #' @param residual_floor specifies the threshold for residual matrix when
 #'   calculating the svds, only applies when `sparse = TRUE`
 #' @return An object of class `textmodel_fitted_wordfish`.  This is a list
@@ -103,9 +97,7 @@ textmodel_wordfish <- function(x, dir = c(1, 2),
                                dispersion = c("poisson", "quasipoisson"),
                                dispersion_level = c("feature", "overall"),
                                dispersion_floor = 0,
-                               sparse = FALSE,
                                abs_err = FALSE,
-                               svd_sparse = TRUE,
                                residual_floor = 0.5) {
     UseMethod("textmodel_wordfish")
 }
@@ -117,9 +109,7 @@ textmodel_wordfish.default <- function(x, dir = c(1, 2),
                                        dispersion = c("poisson", "quasipoisson"),
                                        dispersion_level = c("feature", "overall"),
                                        dispersion_floor = 0,
-                                       sparse = FALSE,
                                        abs_err = FALSE,
-                                       svd_sparse = TRUE,
                                        residual_floor = 0.5) {
     stop(check_class(class(x), "textmodel_wordfish"))
 }
@@ -131,9 +121,7 @@ textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
                                    dispersion = c("poisson", "quasipoisson"),
                                    dispersion_level = c("feature", "overall"),
                                    dispersion_floor = 0,
-                                   sparse = FALSE,
                                    abs_err = FALSE,
-                                   svd_sparse = TRUE,
                                    residual_floor = 0.5) {
 
     x <- as.dfm(x)
@@ -187,17 +175,11 @@ textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
     } else {
         stop("Illegal option combination.")
     }
-    if (sparse == TRUE) {
-        result <- qatd_cpp_wordfish(x, as.integer(dir), 1 / (priors ^ 2),
-                                    tol, disp,
-                                    dispersion_floor, abs_err, svd_sparse,
-                                    residual_floor)
-    } else{
-        result <- qatd_cpp_wordfish_dense(as.matrix(x),
-                                          as.integer(dir), 1 / (priors ^ 2),
-                                          tol, disp,
-                                          dispersion_floor, abs_err)
-    }
+    result <- cpp_wordfish_dense(as.matrix(x),
+                                 as.integer(dir), 1 / (priors ^ 2),
+                                 tol, disp,
+                                 dispersion_floor, abs_err)
+    
     # NOTE: psi is a 1 x nfeat matrix, not a numeric vector
     #       alpha is a ndoc x 1 matrix, not a numeric vector
     if (any(is.nan(result$theta)))
