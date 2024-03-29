@@ -82,7 +82,7 @@ textmodel_ca.dfm <- function(x, smooth = 0, nd = NA, sparse = FALSE,
         S  <- (P - eP) / sqrt(eP)
     } else {
         # keep the residual matrix sparse
-        S <- qatd_cpp_ca(P, residual_floor / sqrt(n), quanteda:::get_threads())
+        S <- cpp_ca(P, residual_floor / sqrt(n), quanteda:::get_threads())
         S <- as(S, "CsparseMatrix")
     }
 
