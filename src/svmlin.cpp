@@ -34,7 +34,7 @@ struct vector_double *Outputs = new vector_double[1];
 struct vector_double *Labels = new vector_double[1];
 
 // [[Rcpp::export]]
-List svmlin_rcpp(S4 X,
+List cpp_svmlin(S4 X,
                  NumericVector y,
                  int l,
                  int algorithm,

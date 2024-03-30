@@ -18,7 +18,7 @@ void create_residual_ca(std::size_t row_num, const arma::sp_mat& dfm, const arma
 
 
 // [[Rcpp::export]]
-S4 qatd_cpp_ca(const arma::sp_mat &dfm, const double residual_floor){
+S4 cpp_ca(const arma::sp_mat &dfm, const double residual_floor){
     
     const std::size_t N = dfm.n_rows;
     const std::size_t K = dfm.n_cols;
@@ -62,5 +62,5 @@ smoke <- matrix(c(4,2,3,2, 4,5,7,4,25,10,12,4,18,24,33,13,10,6,7,2), nrow = 5, n
 residual_floor <- 0.1
 n = 195
 P <- as.dfm(smoke) / n
-qatd_cpp_ca(P, residual_floor/sqrt(n))
+cpp_ca(P, residual_floor/sqrt(n))
 */

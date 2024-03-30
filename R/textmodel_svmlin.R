@@ -276,7 +276,7 @@ svmlin <- function(X, y, X_u = NULL, algorithm = 1, lambda = 1, lambda_u = 1, ma
         costs[y > 0] <- Cp
     }
 
-    res <- svmlin_rcpp(X = Xall, y = y, l = nrow(X), algorithm = algorithm,
+    res <- cpp_svmlin(X = Xall, y = y, l = nrow(X), algorithm = algorithm,
                        lambda = lambda, lambda_u = lambda_u, max_switch = max_switch,
                        pos_frac = pos_frac, Cp = Cp, Cn = Cn, costs = costs,
                        verbose = verbose)
