@@ -12,15 +12,14 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // cpp_ca
-S4 cpp_ca(const arma::sp_mat& dfm, const double residual_floor, const int threads);
-RcppExport SEXP _quanteda_textmodels_cpp_ca(SEXP dfmSEXP, SEXP residual_floorSEXP, SEXP threadsSEXP) {
+S4 cpp_ca(const arma::sp_mat& dfm, const double residual_floor);
+RcppExport SEXP _quanteda_textmodels_cpp_ca(SEXP dfmSEXP, SEXP residual_floorSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::sp_mat& >::type dfm(dfmSEXP);
     Rcpp::traits::input_parameter< const double >::type residual_floor(residual_floorSEXP);
-    Rcpp::traits::input_parameter< const int >::type threads(threadsSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_ca(dfm, residual_floor, threads));
+    rcpp_result_gen = Rcpp::wrap(cpp_ca(dfm, residual_floor));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -75,7 +74,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_quanteda_textmodels_cpp_ca", (DL_FUNC) &_quanteda_textmodels_cpp_ca, 3},
+    {"_quanteda_textmodels_cpp_ca", (DL_FUNC) &_quanteda_textmodels_cpp_ca, 2},
     {"_quanteda_textmodels_cpp_svmlin", (DL_FUNC) &_quanteda_textmodels_cpp_svmlin, 12},
     {"_quanteda_textmodels_qatd_cpp_tbb_enabled", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_tbb_enabled, 0},
     {"_quanteda_textmodels_cpp_wordfish_dense", (DL_FUNC) &_quanteda_textmodels_cpp_wordfish_dense, 7},
