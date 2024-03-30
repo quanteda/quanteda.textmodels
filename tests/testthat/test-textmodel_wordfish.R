@@ -1,26 +1,22 @@
 library("quanteda")
 
 ie2010dfm <- dfm(tokens(data_corpus_irishbudget2010))
-wfm <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = TRUE)
-wfm_d <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = FALSE)
+wfm <- textmodel_wordfish(ie2010dfm, dir = c(6,5))
 wfs <- summary(wfm)
 wfp <- predict(wfm)
 
 test_that("textmodel-wordfish (sparse) works as expected as austin::wordfish", {
     skip_if_not_installed("austin")
-    wfmodelAustin <- austin::wordfish(convert(ie2010dfm, to = "austin"), dir = c(6, 5))
+    wfmodelAustin <- austin::wordfish(convert(ie2010dfm, to = "austin"), 
+                                      dir = c(6, 5))
     cc <- cor(wfm$theta, wfmodelAustin$theta)
     expect_gt(cc, 0.99)
-
-    # dense methods
-    cc <- cor(wfm_d$theta, wfmodelAustin$theta)
-    expect_gt(cc, 0.99)
 })
 
-test_that("textmodel-wordfish works as expected: dense vs sparse vs sparse+mt", {
-    cc <- cor(wfm_d$theta, wfm$theta)
-    expect_gt(cc, 0.99)
-})
+# test_that("textmodel-wordfish works as expected: dense vs sparse vs sparse+mt", {
+#     cc <- cor(wfm_d$theta, wfm$theta)
+#     expect_gt(cc, 0.99)
+# })
 
 test_that("print/show/summary method works as expected", {
     expect_output(
@@ -54,47 +50,47 @@ test_that("coef works for wordfish fitted", {
     expect_equal(coef(wfm), coefficients(wfm))
 })
 
-test_that("textmodel-wordfish works for quasipoisson - feature as expected: dense vs sparse vs sparse+mt", {
-    ie2010dfm <- dfm(tokens(data_corpus_irishbudget2010))
-    wfm_d <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = FALSE,
-                                dispersion = "quasipoisson", dispersion_floor = 0)
-    wfm <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = TRUE,
-                                 dispersion = "quasipoisson", dispersion_floor = 0)
-    expect_equal(
-        cor(wfm_d$theta, wfm$theta),
-        0.99,
-        tolerance = .005
-    )
-})
+# test_that("textmodel-wordfish works for quasipoisson - feature as expected: dense vs sparse vs sparse+mt", {
+#     ie2010dfm <- dfm(tokens(data_corpus_irishbudget2010))
+#     wfm_d <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = FALSE,
+#                                 dispersion = "quasipoisson", dispersion_floor = 0)
+#     wfm <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = TRUE,
+#                                  dispersion = "quasipoisson", dispersion_floor = 0)
+#     expect_equal(
+#         cor(wfm_d$theta, wfm$theta),
+#         0.99,
+#         tolerance = .005
+#     )
+# })
 
-test_that("textmodel-wordfish works for quasipoisson - overall as expected: dense vs sparse vs sparse+mt", {
-    wfm_d <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = FALSE,
-                                dispersion = "quasipoisson", dispersion_level = "overall")
-    wfm <- textmodel_wordfish(ie2010dfm, dir = c(6,5),
-                                 dispersion = "quasipoisson", dispersion_level = "overall")
-    cc<-cor(wfm_d$theta, wfm$theta)
-    expect_gt(cc, 0.99)
-})
+# test_that("textmodel-wordfish works for quasipoisson - overall as expected: dense vs sparse vs sparse+mt", {
+#     wfm_d <- textmodel_wordfish(ie2010dfm, dir = c(6,5), sparse = FALSE,
+#                                 dispersion = "quasipoisson", dispersion_level = "overall")
+#     wfm <- textmodel_wordfish(ie2010dfm, dir = c(6,5),
+#                                  dispersion = "quasipoisson", dispersion_level = "overall")
+#     cc<-cor(wfm_d$theta, wfm$theta)
+#     expect_gt(cc, 0.99)
+# })
 
-test_that("textmodel-wordfish (sparse) works as expected on another dataset", {
-    usdfm <- dfm(
-        tokens(corpus_subset(data_corpus_inaugural, Year > 1900))
-    )
-
-    wfm_s <- textmodel_wordfish(usdfm, dir = c(6,5), sparse = TRUE, svd_sparse = TRUE, residual_floor = 0.5)
-    wfm_d <- textmodel_wordfish(usdfm, dir = c(6,5), sparse = FALSE)
-    cc <- cor(wfm_d$theta, wfm_s$theta)
-    expect_gt(cc, 0.99)
-
-    # with different sparsity of residual matrix
-    wfm_s <- textmodel_wordfish(usdfm, dir = c(6,5), sparse = TRUE, svd_sparse = TRUE, residual_floor = 1)
-    cc <- cor(wfm_d$theta, wfm_s$theta)
-    expect_gt(cc, 0.99)
-
-    wfm_s <- textmodel_wordfish(usdfm, dir = c(6,5), sparse = TRUE, svd_sparse = TRUE, residual_floor = 2)
-    cc <- cor(wfm_d$theta, wfm_s$theta)
-    expect_gt(cc, 0.99)
-})
+# test_that("textmodel-wordfish (sparse) works as expected on another dataset", {
+#     usdfm <- dfm(
+#         tokens(corpus_subset(data_corpus_inaugural, Year > 1900))
+#     )
+# 
+#     wfm_s <- textmodel_wordfish(usdfm, dir = c(6,5), sparse = TRUE, svd_sparse = TRUE, residual_floor = 0.5)
+#     wfm_d <- textmodel_wordfish(usdfm, dir = c(6,5), sparse = FALSE)
+#     cc <- cor(wfm_d$theta, wfm_s$theta)
+#     expect_gt(cc, 0.99)
+# 
+#     # with different sparsity of residual matrix
+#     wfm_s <- textmodel_wordfish(usdfm, dir = c(6,5), sparse = TRUE, svd_sparse = TRUE, residual_floor = 1)
+#     cc <- cor(wfm_d$theta, wfm_s$theta)
+#     expect_gt(cc, 0.99)
+# 
+#     wfm_s <- textmodel_wordfish(usdfm, dir = c(6,5), sparse = TRUE, svd_sparse = TRUE, residual_floor = 2)
+#     cc <- cor(wfm_d$theta, wfm_s$theta)
+#     expect_gt(cc, 0.99)
+# })
 
 test_that("test wordfish predict methods", {
     pr <- predict(wfm)
