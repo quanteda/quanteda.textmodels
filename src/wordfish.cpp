@@ -3,10 +3,15 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-Rcpp::List cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SEXP disp, SEXP dispfloor, bool abs_err){
+Rcpp::List cpp_wordfish_dense(SEXP wfm, 
+                              SEXP dir, 
+                              SEXP priors, 
+                              SEXP tol, 
+                              SEXP disp, 
+                              SEXP dispfloor, 
+                              bool abs_err){
 
     // DEFINE INPUTS
-
     Rcpp::NumericMatrix Y(wfm);
     Rcpp::NumericVector priorvec(priors);
     Rcpp::NumericVector tolvec(tol);
