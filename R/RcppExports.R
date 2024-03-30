@@ -17,7 +17,3 @@ qatd_cpp_wordfish_dense <- function(wfm, dir, priors, tol, disp, dispfloor, abs_
     .Call(`_quanteda_textmodels_qatd_cpp_wordfish_dense`, wfm, dir, priors, tol, disp, dispfloor, abs_err)
 }
 
-qatd_cpp_wordfish <- function(wfm, dirvec, priorvec, tolvec, disptype, dispmin, ABS, svd_sparse, residual_floor) {
-    .Call(`_quanteda_textmodels_qatd_cpp_wordfish`, wfm, dirvec, priorvec, tolvec, disptype, dispmin, ABS, svd_sparse, residual_floor)
-}
-

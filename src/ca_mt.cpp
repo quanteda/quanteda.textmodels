@@ -16,28 +16,6 @@ void create_residual_ca(std::size_t row_num, const arma::sp_mat& dfm, const arma
     }
 }
 
-//Create the residual matrix
-struct Res : public Worker {
-    const arma::sp_mat &dfm;
-    const arma::colvec &rsum;
-    const arma::rowvec &csum;
-    const double residual_floor;
-    const std::size_t K;
-    
-    // output: residual[index0, index1, residual_value]
-    Triplets &residual_tri;
-    
-    //constructor
-    Res(const arma::sp_mat& dfm, const arma::colvec &rsum, const arma::rowvec &csum, 
-        const double residual_floor, const std::size_t K, Triplets &residual_tri):
-        dfm(dfm), rsum(rsum), csum(csum), residual_floor(residual_floor), K(K), residual_tri(residual_tri) {}
-    
-    void operator() (std::size_t begin, std::size_t end) {
-        for (std::size_t i = begin; i < end; i++) {
-            create_residual_ca(i, dfm, rsum, csum, residual_floor, K, residual_tri);
-        }
-    }
-};
 
 // [[Rcpp::export]]
 S4 qatd_cpp_ca(const arma::sp_mat &dfm, const double residual_floor){
@@ -53,15 +31,10 @@ S4 qatd_cpp_ca(const arma::sp_mat &dfm, const double residual_floor){
     Triplets residual_tri;
     residual_tri.reserve(N * K / 1000); // assume 99.9% sparsity
 
-#if QUANTEDA_USE_TBB
-    Res res(dfm, rsum, csum, residual_floor, K, residual_tri);
-    parallelFor(0, N, res);
-#else
     for (std::size_t i = 0; i < N; i++) {
         create_residual_ca(i, dfm, rsum, csum, residual_floor, K, residual_tri);
     }
-#endif
-    
+
     return to_matrix( residual_tri, N, K, false );
 //     std::size_t residual_size = residual_tri.size();
 //     IntegerVector dim_ = IntegerVector::create(N, K);

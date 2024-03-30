@@ -187,17 +187,11 @@ textmodel_wordfish.dfm <- function(x, dir = c(1, 2),
     } else {
         stop("Illegal option combination.")
     }
-    if (sparse == TRUE) {
-        result <- qatd_cpp_wordfish(x, as.integer(dir), 1 / (priors ^ 2),
-                                    tol, disp,
-                                    dispersion_floor, abs_err, svd_sparse,
-                                    residual_floor)
-    } else{
-        result <- qatd_cpp_wordfish_dense(as.matrix(x),
-                                          as.integer(dir), 1 / (priors ^ 2),
-                                          tol, disp,
-                                          dispersion_floor, abs_err)
-    }
+    result <- qatd_cpp_wordfish_dense(as.matrix(x),
+                                      as.integer(dir), 1 / (priors ^ 2),
+                                      tol, disp,
+                                      dispersion_floor, abs_err)
+    
     # NOTE: psi is a 1 x nfeat matrix, not a numeric vector
     #       alpha is a ndoc x 1 matrix, not a numeric vector
     if (any(is.nan(result$theta)))

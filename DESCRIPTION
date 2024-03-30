@@ -31,7 +31,6 @@ Imports:
     quanteda (>= 2.0),
     RSpectra,
     Rcpp (>= 0.12.12),
-    RcppParallel,
     SparseM,
     stringi
 Suggests:
@@ -46,7 +45,7 @@ Suggests:
     spelling,
     testthat,
     rmarkdown
-LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
+LinkingTo: Rcpp, RcppArmadillo (>= 0.7.600.1.0), quanteda
 URL: https://github.com/quanteda/quanteda.textmodels
 License: GPL-3
 Encoding: UTF-8
