@@ -1,7 +1,6 @@
 #' @name textmodels
 #' @keywords internal
 #' @aliases textmodels quanteda.textmodels quanteda.textmodels-package
-#' @importFrom RcppParallel RcppParallelLibs
 #' @importFrom quanteda docnames featnames nfeat ndoc quanteda_options ntoken docfreq
 #' @useDynLib "quanteda.textmodels", .registration = TRUE
 "_PACKAGE"
