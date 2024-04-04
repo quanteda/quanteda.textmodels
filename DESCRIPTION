@@ -28,7 +28,7 @@ Imports:
     glmnet,
     LiblineaR,
     Matrix (>= 1.2),
-    quanteda,
+    quanteda (>= 4.0.0),
     RSpectra,
     Rcpp (>= 0.12.12),
     SparseM,
