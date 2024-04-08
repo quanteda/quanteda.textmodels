@@ -44,6 +44,14 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: Install remotes
+        run: |
+          Rscript -e "install.packages('remotes', repos='https://ftp.belnet.be/mirror/CRAN')"
+
+      - name: Install quanteda from Github
+        run: |
+          Rscript -e "remotes::install_github('quanteda/quanteda')"
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true

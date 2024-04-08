@@ -12,9 +12,7 @@ textmodel_wordfish(
   dispersion = c("poisson", "quasipoisson"),
   dispersion_level = c("feature", "overall"),
   dispersion_floor = 0,
-  sparse = FALSE,
   abs_err = FALSE,
-  svd_sparse = TRUE,
   residual_floor = 0.5
 )
 }
@@ -47,15 +45,7 @@ in the quasi-Poisson model.  Used to minimize the distorting effect of
 terms with rare term or document frequencies that appear to be severely
 underdispersed.  Default is 0, but this only applies if \code{dispersion = "quasipoisson"}.}
 
-\item{sparse}{specifies whether the \code{"dfm"} is coerced to dense.  While
-setting this to \code{TRUE} will make it possible to handle larger dfm
-objects (and make execution faster), it will generate slightly different
-results each time, because the sparse SVD routine has a stochastic element.}
-
 \item{abs_err}{specifies how the convergence is considered}
-
-\item{svd_sparse}{uses svd to initialize the starting values of theta,
-only applies when \code{sparse = TRUE}}
 
 \item{residual_floor}{specifies the threshold for residual matrix when
 calculating the svds, only applies when \code{sparse = TRUE}}

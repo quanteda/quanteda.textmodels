@@ -11,21 +11,21 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// qatd_cpp_ca
-S4 qatd_cpp_ca(const arma::sp_mat& dfm, const double residual_floor);
-RcppExport SEXP _quanteda_textmodels_qatd_cpp_ca(SEXP dfmSEXP, SEXP residual_floorSEXP) {
+// cpp_ca
+S4 cpp_ca(const arma::sp_mat& dfm, const double residual_floor);
+RcppExport SEXP _quanteda_textmodels_cpp_ca(SEXP dfmSEXP, SEXP residual_floorSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::sp_mat& >::type dfm(dfmSEXP);
     Rcpp::traits::input_parameter< const double >::type residual_floor(residual_floorSEXP);
-    rcpp_result_gen = Rcpp::wrap(qatd_cpp_ca(dfm, residual_floor));
+    rcpp_result_gen = Rcpp::wrap(cpp_ca(dfm, residual_floor));
     return rcpp_result_gen;
 END_RCPP
 }
-// svmlin_rcpp
-List svmlin_rcpp(S4 X, NumericVector y, int l, int algorithm, double lambda, double lambda_u, int max_switch, double pos_frac, double Cp, double Cn, NumericVector costs, bool verbose);
-RcppExport SEXP _quanteda_textmodels_svmlin_rcpp(SEXP XSEXP, SEXP ySEXP, SEXP lSEXP, SEXP algorithmSEXP, SEXP lambdaSEXP, SEXP lambda_uSEXP, SEXP max_switchSEXP, SEXP pos_fracSEXP, SEXP CpSEXP, SEXP CnSEXP, SEXP costsSEXP, SEXP verboseSEXP) {
+// cpp_svmlin
+List cpp_svmlin(S4 X, NumericVector y, int l, int algorithm, double lambda, double lambda_u, int max_switch, double pos_frac, double Cp, double Cn, NumericVector costs, bool verbose);
+RcppExport SEXP _quanteda_textmodels_cpp_svmlin(SEXP XSEXP, SEXP ySEXP, SEXP lSEXP, SEXP algorithmSEXP, SEXP lambdaSEXP, SEXP lambda_uSEXP, SEXP max_switchSEXP, SEXP pos_fracSEXP, SEXP CpSEXP, SEXP CnSEXP, SEXP costsSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -41,23 +41,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type Cn(CnSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type costs(costsSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(svmlin_rcpp(X, y, l, algorithm, lambda, lambda_u, max_switch, pos_frac, Cp, Cn, costs, verbose));
+    rcpp_result_gen = Rcpp::wrap(cpp_svmlin(X, y, l, algorithm, lambda, lambda_u, max_switch, pos_frac, Cp, Cn, costs, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
-// qatd_cpp_tbb_enabled
-bool qatd_cpp_tbb_enabled();
-RcppExport SEXP _quanteda_textmodels_qatd_cpp_tbb_enabled() {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(qatd_cpp_tbb_enabled());
-    return rcpp_result_gen;
-END_RCPP
-}
-// qatd_cpp_wordfish_dense
-Rcpp::List qatd_cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SEXP disp, SEXP dispfloor, bool abs_err);
-RcppExport SEXP _quanteda_textmodels_qatd_cpp_wordfish_dense(SEXP wfmSEXP, SEXP dirSEXP, SEXP priorsSEXP, SEXP tolSEXP, SEXP dispSEXP, SEXP dispfloorSEXP, SEXP abs_errSEXP) {
+// cpp_wordfish_dense
+Rcpp::List cpp_wordfish_dense(SEXP wfm, SEXP dir, SEXP priors, SEXP tol, SEXP disp, SEXP dispfloor, bool abs_err);
+RcppExport SEXP _quanteda_textmodels_cpp_wordfish_dense(SEXP wfmSEXP, SEXP dirSEXP, SEXP priorsSEXP, SEXP tolSEXP, SEXP dispSEXP, SEXP dispfloorSEXP, SEXP abs_errSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -68,36 +58,15 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type disp(dispSEXP);
     Rcpp::traits::input_parameter< SEXP >::type dispfloor(dispfloorSEXP);
     Rcpp::traits::input_parameter< bool >::type abs_err(abs_errSEXP);
-    rcpp_result_gen = Rcpp::wrap(qatd_cpp_wordfish_dense(wfm, dir, priors, tol, disp, dispfloor, abs_err));
-    return rcpp_result_gen;
-END_RCPP
-}
-// qatd_cpp_wordfish
-Rcpp::List qatd_cpp_wordfish(arma::sp_mat& wfm, IntegerVector& dirvec, NumericVector& priorvec, NumericVector& tolvec, IntegerVector& disptype, NumericVector& dispmin, bool ABS, bool svd_sparse, double residual_floor);
-RcppExport SEXP _quanteda_textmodels_qatd_cpp_wordfish(SEXP wfmSEXP, SEXP dirvecSEXP, SEXP priorvecSEXP, SEXP tolvecSEXP, SEXP disptypeSEXP, SEXP dispminSEXP, SEXP ABSSEXP, SEXP svd_sparseSEXP, SEXP residual_floorSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::sp_mat& >::type wfm(wfmSEXP);
-    Rcpp::traits::input_parameter< IntegerVector& >::type dirvec(dirvecSEXP);
-    Rcpp::traits::input_parameter< NumericVector& >::type priorvec(priorvecSEXP);
-    Rcpp::traits::input_parameter< NumericVector& >::type tolvec(tolvecSEXP);
-    Rcpp::traits::input_parameter< IntegerVector& >::type disptype(disptypeSEXP);
-    Rcpp::traits::input_parameter< NumericVector& >::type dispmin(dispminSEXP);
-    Rcpp::traits::input_parameter< bool >::type ABS(ABSSEXP);
-    Rcpp::traits::input_parameter< bool >::type svd_sparse(svd_sparseSEXP);
-    Rcpp::traits::input_parameter< double >::type residual_floor(residual_floorSEXP);
-    rcpp_result_gen = Rcpp::wrap(qatd_cpp_wordfish(wfm, dirvec, priorvec, tolvec, disptype, dispmin, ABS, svd_sparse, residual_floor));
+    rcpp_result_gen = Rcpp::wrap(cpp_wordfish_dense(wfm, dir, priors, tol, disp, dispfloor, abs_err));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_quanteda_textmodels_qatd_cpp_ca", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_ca, 2},
-    {"_quanteda_textmodels_svmlin_rcpp", (DL_FUNC) &_quanteda_textmodels_svmlin_rcpp, 12},
-    {"_quanteda_textmodels_qatd_cpp_tbb_enabled", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_tbb_enabled, 0},
-    {"_quanteda_textmodels_qatd_cpp_wordfish_dense", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_wordfish_dense, 7},
-    {"_quanteda_textmodels_qatd_cpp_wordfish", (DL_FUNC) &_quanteda_textmodels_qatd_cpp_wordfish, 9},
+    {"_quanteda_textmodels_cpp_ca", (DL_FUNC) &_quanteda_textmodels_cpp_ca, 2},
+    {"_quanteda_textmodels_cpp_svmlin", (DL_FUNC) &_quanteda_textmodels_cpp_svmlin, 12},
+    {"_quanteda_textmodels_cpp_wordfish_dense", (DL_FUNC) &_quanteda_textmodels_cpp_wordfish_dense, 7},
     {NULL, NULL, 0}
 };
 

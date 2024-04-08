@@ -28,10 +28,9 @@ Imports:
     glmnet,
     LiblineaR,
     Matrix (>= 1.2),
-    quanteda (>= 2.0),
+    quanteda (>= 4.0.0),
     RSpectra,
     Rcpp (>= 0.12.12),
-    RcppParallel,
     SparseM,
     stringi
 Suggests:
@@ -46,13 +45,13 @@ Suggests:
     spelling,
     testthat,
     rmarkdown
-LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
+LinkingTo: Rcpp, RcppArmadillo (>= 0.7.600.1.0), quanteda
 URL: https://github.com/quanteda/quanteda.textmodels
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Language: en-GB
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 Collate: 
     'RcppExports.R'

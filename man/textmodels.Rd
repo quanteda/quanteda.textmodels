@@ -3,7 +3,6 @@
 \docType{package}
 \name{textmodels}
 \alias{textmodels}
-\alias{_PACKAGE}
 \alias{quanteda.textmodels}
 \alias{quanteda.textmodels-package}
 \title{quanteda.textmodels: Scaling Models and Classifiers for Textual Data}
