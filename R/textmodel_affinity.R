@@ -24,9 +24,8 @@
 #'   class affinities
 #' * `call` the model call
 #' @author Patrick Perry and Kenneth Benoit
-#' @references Perry, P.O. & Benoit, K.R. (2017). Scaling Text with
-#'   the Class Affinity Model.
-#'   [arXiv:1710.08963 \[stat.ML\]](https://arxiv.org/abs/1710.08963).
+#' @references Perry, P.O. & Benoit, K.R. (2017). Scaling Text with the Class
+#'   Affinity Model. \doi{https://doi.org/10.48550/arXiv.1710.08963}.
 #' @examples
 #' (af <- textmodel_affinity(quanteda::data_dfm_lbgexample, y = c("L", NA, NA, NA, "R", NA)))
 #' predict(af)

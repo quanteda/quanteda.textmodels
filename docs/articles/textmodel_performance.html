@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">quanteda.textmodels</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.8</span>
       </span>
     </div>
 
@@ -132,8 +132,8 @@ training sets for training and fitting our models.</p>
 <span><span class="co">## integer overflows</span></span>
 <span><span class="co">## Unit: milliseconds</span></span>
 <span><span class="co">##   expr      min       lq     mean   median       uq       max neval cld</span></span>
-<span><span class="co">##  multi 49.88696 52.04464 56.95667 58.24144 60.67502  63.13438    20  a </span></span>
-<span><span class="co">##   bern 59.45004 65.37524 76.16274 67.87212 73.62042 155.44658    20   b</span></span></code></pre></div>
+<span><span class="co">##  multi 51.53479 52.64687 56.95419 55.03725 61.70344  64.49571    20  a </span></span>
+<span><span class="co">##   bern 60.36516 67.31620 73.13912 69.23032 71.07346 147.81939    20   b</span></span></code></pre></div>
 <p>And for prediction:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html" class="external-link">microbenchmark</a></span><span class="op">(</span></span>
@@ -144,9 +144,9 @@ training sets for training and fitting our models.</p>
 <span>    times <span class="op">=</span> <span class="fl">20</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">## Unit: milliseconds</span></span>
-<span><span class="co">##   expr      min       lq     mean   median        uq       max neval cld</span></span>
-<span><span class="co">##  multi 58.95058 59.81260  64.7091 61.06913  70.09877  74.51918    20  a </span></span>
-<span><span class="co">##   bern 84.58087 92.29918 103.1451 95.49585 103.00258 174.19543    20   b</span></span></code></pre></div>
+<span><span class="co">##   expr      min       lq      mean   median        uq      max neval cld</span></span>
+<span><span class="co">##  multi 60.80935 61.99913  66.51447 64.48031  71.08076  75.1350    20  a </span></span>
+<span><span class="co">##   bern 86.20730 95.75378 106.08407 96.94245 104.91923 177.2802    20   b</span></span></code></pre></div>
 <p>Now let’s see how <code><a href="../reference/textmodel_nb.html">textmodel_nb()</a></code> compares to equivalent
 functions from other packages. Multinomial:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -173,9 +173,9 @@ functions from other packages. Multinomial:</p>
 <span><span class="op">)</span></span>
 <span><span class="co">## Unit: milliseconds</span></span>
 <span><span class="co">##            expr      min       lq     mean   median       uq       max neval</span></span>
-<span><span class="co">##      textmodels 57.66777 59.25267 63.18279 60.81132 66.50772  76.41986    20</span></span>
-<span><span class="co">##  fastNaiveBayes 88.07148 93.88274 99.06479 94.53833 96.34848 179.57237    20</span></span>
-<span><span class="co">##      naivebayes 68.59173 70.43794 79.46681 78.88402 81.78010 131.19315    20</span></span>
+<span><span class="co">##      textmodels 59.78718 60.04831 64.00753 61.54282 68.35704  73.26192    20</span></span>
+<span><span class="co">##  fastNaiveBayes 86.16814 93.57801 95.30868 95.09071 97.52908 102.10640    20</span></span>
+<span><span class="co">##      naivebayes 68.02134 70.19854 82.90685 77.51526 81.24525 163.81816    20</span></span>
 <span><span class="co">##  cld</span></span>
 <span><span class="co">##  a  </span></span>
 <span><span class="co">##   b </span></span>
@@ -204,14 +204,14 @@ we not done so in advance - it’s done here just for comparison.</p>
 <span>    times <span class="op">=</span> <span class="fl">20</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">## Unit: milliseconds</span></span>
-<span><span class="co">##            expr      min        lq      mean    median        uq       max</span></span>
-<span><span class="co">##      textmodels 85.81669  92.62283 100.46985  96.03899  97.74023 188.34596</span></span>
-<span><span class="co">##  fastNaiveBayes 94.07056 101.04415 107.58515 103.37758 105.78961 187.07480</span></span>
-<span><span class="co">##      naivebayes 76.75467  77.87341  83.31281  82.88636  87.98122  91.87034</span></span>
-<span><span class="co">##  neval cld</span></span>
-<span><span class="co">##     20  a </span></span>
-<span><span class="co">##     20  a </span></span>
-<span><span class="co">##     20   b</span></span></code></pre></div>
+<span><span class="co">##            expr      min        lq      mean    median        uq      max neval</span></span>
+<span><span class="co">##      textmodels 84.36295  93.27285  98.10159  94.49510  97.16100 179.5457    20</span></span>
+<span><span class="co">##  fastNaiveBayes 94.01722 103.65411 113.11096 106.94247 111.88312 201.4171    20</span></span>
+<span><span class="co">##      naivebayes 75.86140  76.40778  83.43480  80.08382  90.76361 100.1694    20</span></span>
+<span><span class="co">##  cld</span></span>
+<span><span class="co">##  a  </span></span>
+<span><span class="co">##   b </span></span>
+<span><span class="co">##    c</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

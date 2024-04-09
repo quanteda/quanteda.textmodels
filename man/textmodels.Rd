@@ -7,7 +7,7 @@
 \alias{quanteda.textmodels-package}
 \title{quanteda.textmodels: Scaling Models and Classifiers for Textual Data}
 \description{
-Scaling models and classifiers for sparse matrix objects representing textual data in the form of a document-feature matrix. Includes original implementations of 'Laver', 'Benoit', and Garry's (2003) \doi{10.1017/S0003055403000698}, 'Wordscores' model, the Perry and 'Benoit' (2017) \href{https://arxiv.org/abs/1710.08963}{arXiv:1710.08963} class affinity scaling model, and the 'Slapin' and 'Proksch' (2008) \doi{10.1111/j.1540-5907.2008.00338.x} 'wordfish' model, as well as methods for correspondence analysis, latent semantic analysis, and fast Naive Bayes and linear 'SVMs' specially designed for sparse textual data.
+Scaling models and classifiers for sparse matrix objects representing textual data in the form of a document-feature matrix. Includes original implementations of 'Laver', 'Benoit', and Garry's (2003) \doi{10.1017/S0003055403000698}, 'Wordscores' model, the Perry and 'Benoit' (2017) \doi{10.48550/arXiv.1710.08963} class affinity scaling model, and the 'Slapin' and 'Proksch' (2008) \doi{10.1111/j.1540-5907.2008.00338.x} 'wordfish' model, as well as methods for correspondence analysis, latent semantic analysis, and fast Naive Bayes and linear 'SVMs' specially designed for sparse textual data.
 }
 \seealso{
 Useful links:
