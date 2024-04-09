@@ -4,10 +4,12 @@
 \alias{as.matrix.csr.dfm}
 \title{convert a dfm into a matrix.csr from SparseM package}
 \usage{
-\method{as.matrix.csr}{dfm}(x)
+\method{as.matrix.csr}{dfm}(x, ...)
 }
 \arguments{
 \item{x}{input \link{dfm}}
+
+\item{...}{unused}
 }
 \value{
 a \pkg{SparseM} object of class \link[SparseM:SparseM.ontology]{matrix.csr}

@@ -40,6 +40,7 @@ Proksch
 Proksch's
 QUANTESS
 Raghavan
+RcppParallel
 Rtools
 SIGIR
 SVMs
@@ -49,6 +50,7 @@ Slapin
 SparseM
 StG
 StackOverflow
+TBB
 TDs
 Tibshirani
 Vanberg
@@ -57,7 +59,6 @@ Wordscores
 Wordscoring
 arXiv
 austin
-com
 csr
 dfm
 docfreq
@@ -66,17 +67,13 @@ doi
 elasticnet
 fastNaiveBayes
 gfortran
-github
-io
 lr
 lsa
 macM
 macOS
-mskogholt
 naivebayes
 nb
 newdata's
-org
 quanteda
 se
 stat

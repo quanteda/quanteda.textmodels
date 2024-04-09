@@ -49,7 +49,7 @@
 #' Science Review*, 97(2), 311--331.
 #'
 #'   Beauchamp, N. (2012). [Using Text to Scale Legislatures with Uninformative
-#'   Voting](http://nickbeauchamp.com/work/Beauchamp_scaling_current.pdf). New
+#'   Voting](https://nickbeauchamp.com/work/Beauchamp_scaling_current.pdf). New
 #'   York University Mimeo.
 #'
 #'   Martin, L.W. & Vanberg, G. (2007). A Robust Transformation Procedure for

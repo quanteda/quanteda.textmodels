@@ -57,7 +57,7 @@ predict(tmod, se.fit = TRUE, interval = "confidence", rescaling = "mv")
 Laver, M., Benoit, K.R., & Garry, J. (2003). \href{https://kenbenoit.net/pdfs/WORDSCORESAPSR.pdf}{Estimating Policy Positions from Political Text using Words as Data}. \emph{American Political
 Science Review}, 97(2), 311--331.
 
-Beauchamp, N. (2012). \href{http://nickbeauchamp.com/work/Beauchamp_scaling_current.pdf}{Using Text to Scale Legislatures with Uninformative Voting}. New
+Beauchamp, N. (2012). \href{https://nickbeauchamp.com/work/Beauchamp_scaling_current.pdf}{Using Text to Scale Legislatures with Uninformative Voting}. New
 York University Mimeo.
 
 Martin, L.W. & Vanberg, G. (2007). A Robust Transformation Procedure for

@@ -214,12 +214,13 @@ print.predict.textmodel_svm <- function(x, ...) {
 #'
 #' Utility to convert a dfm into a [matrix.csr][SparseM::matrix.csr] from the \pkg{SparseM} package.
 #' @param x input [dfm]
+#' @param ... unused
 #' @importFrom SparseM as.matrix.csr
 #' @importFrom methods new
 #' @method as.matrix.csr dfm
 #' @returns a \pkg{SparseM} object of class [matrix.csr][SparseM::matrix.csr]
 #' @keywords internal
-as.matrix.csr.dfm <- function(x) {
+as.matrix.csr.dfm <- function(x, ...) {
     # convert first to column sparse format
     as.matrix.csr(new("matrix.csc",
                       ra = x@x,

@@ -835,13 +835,13 @@ print.summary.influence.predict.textmodel_affinity <- function(x, n = 30, ...) {
 
 # ========= Internal functions =========
 
-# compute chi^2 goodness of fit
-gof_chi2 <- function(x) {
-    UseMethod("gof_chi2")
-}
-gof_chi2.predict.textmodel_affinity <- function(x) {
-    rowSums(rstandard(x)[,x$support,drop=FALSE]^2)
-}
+# # compute chi^2 goodness of fit
+# gof_chi2 <- function(x) {
+#     UseMethod("gof_chi2")
+# }
+# gof_chi2.predict.textmodel_affinity <- function(x) {
+#     rowSums(rstandard(x)[,x$support,drop=FALSE]^2)
+# }
 
 # function to interleave two vector objects
 # Example:

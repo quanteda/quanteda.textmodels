@@ -1,3 +1,18 @@
+# quanteda.textmodels 0.9.7
+
+Fixes the compilation errors caused by changes to the TBB library and RcppParallel. This version links to quanteda v4.0 that does not rely on RcppParallel.
+
+Also fixes some minor method class and methods signature issues caught by the improved CRAN checks in the forthcoming R v4.
+
+# quanteda.textmodels 0.9.6
+
+Remedies the problems that led to the package being archived on Mar 15, 2023, so that it would be restored to CRAN.
+
+- Remove C++11 specification
+- Fixed compiler warnings appearing in devel versions
+- Fixed URL for large dataset used in vignette
+- Upon resubmission to be restored from the archive, a number of new issues were raised that we also addressed:  We combed through the entire documentation set and have added or improved return value descriptions to many functions that had lacked them.
+
 # quanteda.textmodels 0.9.5
 
 * Fixes for compatibility with Matrix 1.4.2.
@@ -22,7 +37,6 @@
 * Adds the Pang and Lee (2004) movie review polarity dataset as `data_corpus_moviereviews`.
 * Fixed a bug in `textmodel_nb(x, distribution = "Bernoulli")` that affected the class conditional probabilities when the number of classes was > 2.
 * Doubled the performance of `textmodel_nb()` - it's now officially the fastest implementation in R.  (See the vignette.)
-
 
 # quanteda.textmodels 0.9.0
 
