@@ -10,6 +10,7 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  error = TRUE,
   collapse = TRUE,
   comment = "##"
 )
@@ -28,7 +29,28 @@ Here, we compare performance for the two models, and then to the performance fro
 
 For these tests, we will choose the dataset of 50,000 movie reviews from Maas et. al. (2011).  We will use their partition into test and training sets for training and fitting our models.
 
-```{r}
+```{r echo = FALSE}
+# large movie review database of 50,000 movie reviews
+data_corpus_LMRD <- NULL
+suppressWarnings(
+    try(load(url("https://quanteda.org/data/data_corpus_LMRD.rda")))
+)
+if (is.null(data_corpus_LMRD)) {
+    data_corpus_LMRD <- data_corpus_moviereviews
+    data_corpus_LMRD$polarity <- data_corpus_LMRD$sentiment
+    data_corpus_LMRD$set <- "train"
+    data_corpus_LMRD$set[c(sample(1:1000, size = 200),
+                           sample(1001:2000, size = 200))] <- "test"
+}
+
+dfmat <- tokens(data_corpus_LMRD) %>%
+  dfm()
+dfmat_train <- dfm_subset(dfmat, set == "train")
+dfmat_test <- dfm_subset(dfmat, set == "test")
+```
+
+
+```{r eval = FALSE}
 # large movie review database of 50,000 movie reviews
 load(url("https://quanteda.org/data/data_corpus_LMRD.rda"))
 
@@ -87,7 +109,7 @@ dfmat_train_bern <- dfm_weight(dfmat_train, scheme = "boolean")
 dfmat_test_bern <- dfm_weight(dfmat_test, scheme = "boolean")
 
 microbenchmark(
-    textmodels = {
+    textmodel_nb = {
       tmod <-  textmodel_nb(dfmat_train_bern, dfmat_train$polarity, smooth = 1, distribution = "Bernoulli")
       pred <- predict(tmod, newdata = dfmat_test)
     },

@@ -38,3 +38,5 @@ tests/data-creation/txt_sentoken/
 tests/data-creation/review_polarity.tar.gz
 Meta
 revdep
+/doc/
+/Meta/
