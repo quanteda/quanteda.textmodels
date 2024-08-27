@@ -11,8 +11,8 @@
 #' way that translates into more standard SVM parameters that we understand. Use
 #' with caution after reading the Sindhwani and Keerthi (2006) paper.
 #'
-#' @param x the [dfm] on which the model will be fit.  Does not need to contain
-#'   only the training documents.
+#' @param x the [dfm][quanteda::dfm] on which the model will be fit.  Does not
+#'   need to contain only the training documents.
 #' @param y vector of training labels associated with each document identified
 #'   in `train`.  (These will be converted to factors if not already factors.)
 #' @param intercept logical; if `TRUE`, add an intercept to the data

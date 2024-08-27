@@ -7,7 +7,7 @@
 \method{as.matrix.csr}{dfm}(x, ...)
 }
 \arguments{
-\item{x}{input \link{dfm}}
+\item{x}{input \link[quanteda:dfm]{dfm}}
 
 \item{...}{unused}
 }

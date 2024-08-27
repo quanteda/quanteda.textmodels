@@ -7,7 +7,7 @@
 force_conformance(x, features, force = TRUE)
 }
 \arguments{
-\item{x}{input \link{dfm}}
+\item{x}{input \link[quanteda:dfm]{dfm}}
 
 \item{features}{character; a vector of feature names}
 

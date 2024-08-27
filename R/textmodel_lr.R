@@ -6,12 +6,13 @@
 #' elasticnet penalty at a grid of values for the regularization parameter
 #' lambda.  This is done automatically by testing on several folds of the data
 #' at estimation time.
-#' @param x the \link{dfm} on which the model will be fit.  Does not need to
-#'   contain only the training documents.
+#' @param x the [dfm][quanteda::dfm] on which the model will be fit.  Does not
+#'   need to contain only the training documents.
 #' @param y vector of training labels associated with each document identified
 #'   in \code{train}.  (These will be converted to factors if not already
 #'   factors.)
-#' @param ... additional arguments passed to [`cv.glmnet()`][glmnet::cv.glmnet()]
+#' @param ... additional arguments passed to
+#'   [`cv.glmnet()`][glmnet::cv.glmnet()]
 #' @returns an object of class `textmodel_lr`, a list containing:
 #' * `x`, `y` the input model matrix and input training class labels
 #' * `algorithm` character; the type and family of logistic regression model used in calling

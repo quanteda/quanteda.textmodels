@@ -2,9 +2,9 @@
 #'
 #' `textmodel_affinity()` implements the maximum likelihood supervised text
 #' scaling method described in Perry and Benoit (2017).
-#' @param x the [dfm] or [bootstrap_dfm] object on which the model
-#'   will be fit.  Does not need to contain only the training documents, since
-#'   the index of these will be matched automatically.
+#' @param x the [dfm][quanteda::dfm] or [bootstrap_dfm][quanteda::bootstrap_dfm]
+#'   object on which the model will be fit.  Does not need to contain only the
+#'   training documents, since the index of these will be matched automatically.
 #' @param y vector of training classes/scores associated with each document
 #'   identified in `data`
 #' @param exclude a set of words to exclude from the model

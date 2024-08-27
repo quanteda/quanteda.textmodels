@@ -16,8 +16,8 @@ textmodel_svmlin(
 )
 }
 \arguments{
-\item{x}{the \link{dfm} on which the model will be fit.  Does not need to contain
-only the training documents.}
+\item{x}{the \link[quanteda:dfm]{dfm} on which the model will be fit.  Does not
+need to contain only the training documents.}
 
 \item{y}{vector of training labels associated with each document identified
 in \code{train}.  (These will be converted to factors if not already factors.)}

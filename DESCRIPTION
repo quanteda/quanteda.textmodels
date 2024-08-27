@@ -1,7 +1,7 @@
 Package: quanteda.textmodels
 Type: Package
 Title: Scaling Models and Classifiers for Textual Data
-Version: 0.9.7
+Version: 0.9.8
 Description: Scaling models and classifiers for sparse matrix objects representing 
     textual data in the form of a document-feature matrix.  Includes original 
     implementations of 'Laver', 'Benoit', and Garry's (2003) <doi:10.1017/S0003055403000698>,
@@ -51,7 +51,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Language: en-GB
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Collate: 
     'RcppExports.R'

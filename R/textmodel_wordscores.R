@@ -10,7 +10,7 @@
 #' unknown texts are obtained using the `predict()` method to score
 #' documents from a fitted `textmodel_wordscores` object.
 #'
-#' @param x the [dfm] on which the model will be trained
+#' @param x the [dfm][quanteda::dfm] on which the model will be trained
 #' @param y vector of training scores associated with each document
 #'   in `x`
 #' @param smooth a smoothing parameter for word counts; defaults to zero to

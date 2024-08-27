@@ -7,7 +7,7 @@ catm <- quanteda:::catm
 #'
 #' Takes a dfm and a set of features, and makes them match the features listed
 #' in the set.
-#' @param x input [dfm]
+#' @param x input [dfm][quanteda::dfm]
 #' @param features character; a vector of feature names
 #' @param force logical; if `TRUE`, make the new dfm conform to the vector of
 #'   features, otherwise return an error message

@@ -7,7 +7,7 @@
 textmodel_lsa(x, nd = 10, margin = c("both", "documents", "features"))
 }
 \arguments{
-\item{x}{the \link{dfm} on which the model will be fit}
+\item{x}{the \link[quanteda:dfm]{dfm} on which the model will be fit}
 
 \item{nd}{the number of dimensions to be included in output}
 
@@ -24,8 +24,8 @@ a \code{textmodel_lsa} class object, a list containing:
 }
 }
 \description{
-Fit the Latent Semantic Analysis scaling model to a \link{dfm}, which may be
-weighted (for instance using \code{\link[quanteda:dfm_tfidf]{quanteda::dfm_tfidf()}}).
+Fit the Latent Semantic Analysis scaling model to a \link[quanteda:dfm]{dfm},
+which may be weighted (for instance using \code{\link[quanteda:dfm_tfidf]{quanteda::dfm_tfidf()}}).
 }
 \details{
 \link[RSpectra:svds]{svds} in the \pkg{RSpectra} package is applied to

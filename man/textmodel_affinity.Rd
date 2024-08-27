@@ -14,9 +14,9 @@ textmodel_affinity(
 )
 }
 \arguments{
-\item{x}{the \link{dfm} or \link{bootstrap_dfm} object on which the model
-will be fit.  Does not need to contain only the training documents, since
-the index of these will be matched automatically.}
+\item{x}{the \link[quanteda:dfm]{dfm} or \link[quanteda:bootstrap_dfm]{bootstrap_dfm}
+object on which the model will be fit.  Does not need to contain only the
+training documents, since the index of these will be matched automatically.}
 
 \item{y}{vector of training classes/scores associated with each document
 identified in \code{data}}

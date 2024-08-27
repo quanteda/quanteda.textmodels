@@ -15,7 +15,7 @@ textmodel_ca(x, smooth = 0, nd = NA, sparse = FALSE, residual_floor = 0.1)
 default) then the maximum possible dimensions are included.}
 
 \item{sparse}{retains the sparsity if set to \code{TRUE}; set it to
-\code{TRUE} if \code{x} (the \link{dfm}) is too big to be allocated after
+\code{TRUE} if \code{x} (the \link[quanteda:dfm]{dfm}) is too big to be allocated after
 converting to dense}
 
 \item{residual_floor}{specifies the threshold for the residual matrix for
@@ -28,7 +28,8 @@ class of \pkg{ca} object.
 }
 \description{
 \code{textmodel_ca} implements correspondence analysis scaling on a
-\link{dfm}.  The method is a fast/sparse version of function \link[ca:ca]{ca}.
+\link[quanteda:dfm]{dfm}.  The method is a fast/sparse version of function
+\link[ca:ca]{ca}.
 }
 \details{
 \link[RSpectra:svds]{svds} in the \pkg{RSpectra} package is applied to
@@ -38,7 +39,7 @@ enable the fast computation of the SVD.
 You may need to set \code{sparse = TRUE}) and
 increase the value of \code{residual_floor} to ignore less important
 information and hence to reduce the memory cost when you have a very big
-\link{dfm}.
+\link[quanteda:dfm]{dfm}.
 If your attempt to fit the model fails due to the matrix being too large,
 this is probably because of the memory demands of computing the \eqn{V
   \times V} residual matrix.  To avoid this, consider increasing the value of

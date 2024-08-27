@@ -2,8 +2,8 @@
 #'
 #' Fit a fast linear SVM classifier for texts, using the
 #' \pkg{LiblineaR} package.
-#' @param x the [dfm] on which the model will be fit.  Does not need to
-#'   contain only the training documents.
+#' @param x the [dfm][quanteda::dfm] on which the model will be fit.  Does not
+#'   need to contain only the training documents.
 #' @param y vector of training labels associated with each document identified
 #'   in `train`.  (These will be converted to factors if not already
 #'   factors.)
@@ -213,7 +213,7 @@ print.predict.textmodel_svm <- function(x, ...) {
 #' convert a dfm into a matrix.csr from SparseM package
 #'
 #' Utility to convert a dfm into a [matrix.csr][SparseM::matrix.csr] from the \pkg{SparseM} package.
-#' @param x input [dfm]
+#' @param x input [dfm][quanteda::dfm]
 #' @param ... unused
 #' @importFrom SparseM as.matrix.csr
 #' @importFrom methods new

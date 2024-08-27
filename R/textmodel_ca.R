@@ -1,13 +1,14 @@
 #' Correspondence analysis of a document-feature matrix
 #'
 #' `textmodel_ca` implements correspondence analysis scaling on a
-#' [dfm].  The method is a fast/sparse version of function [ca][ca::ca].
+#' [dfm][quanteda::dfm].  The method is a fast/sparse version of function
+#' [ca][ca::ca].
 #' @param x the dfm on which the model will be fit
 #' @param smooth a smoothing parameter for word counts; defaults to zero.
 #' @param nd  Number of dimensions to be included in output; if `NA` (the
 #'   default) then the maximum possible dimensions are included.
 #' @param sparse retains the sparsity if set to `TRUE`; set it to
-#'   `TRUE` if `x` (the [dfm]) is too big to be allocated after
+#'   `TRUE` if `x` (the [dfm][quanteda::dfm]) is too big to be allocated after
 #'   converting to dense
 #' @param residual_floor specifies the threshold for the residual matrix for
 #'   calculating the truncated svd.Larger value will reduce memory and time cost
@@ -22,7 +23,7 @@
 #' @note You may need to set `sparse = TRUE`) and
 #'   increase the value of `residual_floor` to ignore less important
 #'   information and hence to reduce the memory cost when you have a very big
-#'   [dfm].
+#'   [dfm][quanteda::dfm].
 #'   If your attempt to fit the model fails due to the matrix being too large,
 #'   this is probably because of the memory demands of computing the \eqn{V
 #'   \times V} residual matrix.  To avoid this, consider increasing the value of

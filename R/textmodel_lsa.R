@@ -1,8 +1,8 @@
 #' Latent Semantic Analysis
 #'
-#' Fit the Latent Semantic Analysis scaling model to a [dfm], which may be
-#' weighted (for instance using [quanteda::dfm_tfidf()]).
-#' @param x the [dfm] on which the model will be fit
+#' Fit the Latent Semantic Analysis scaling model to a [dfm][quanteda::dfm],
+#' which may be weighted (for instance using [quanteda::dfm_tfidf()]).
+#' @param x the [dfm][quanteda::dfm] on which the model will be fit
 #' @param nd  the number of dimensions to be included in output
 #' @param margin margin to be smoothed by the SVD
 #' @returns a `textmodel_lsa` class object, a list containing:

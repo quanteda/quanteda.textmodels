@@ -7,7 +7,7 @@
 textmodel_wordscores(x, y, scale = c("linear", "logit"), smooth = 0)
 }
 \arguments{
-\item{x}{the \link{dfm} on which the model will be trained}
+\item{x}{the \link[quanteda:dfm]{dfm} on which the model will be trained}
 
 \item{y}{vector of training scores associated with each document
 in \code{x}}
