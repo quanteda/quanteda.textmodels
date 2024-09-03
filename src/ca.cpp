@@ -1,6 +1,7 @@
+#include <RcppArmadillo.h>
 #include "lib.h"
 using namespace quanteda;
-using namespace arma;
+// using namespace arma;
 
 
 //find the principle elements for the sparse residual matrix
