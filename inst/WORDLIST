@@ -40,6 +40,7 @@ Proksch
 Proksch's
 QUANTESS
 Raghavan
+RcppArmadillo
 RcppParallel
 Rtools
 SIGIR
@@ -70,6 +71,7 @@ gfortran
 lr
 lsa
 macM
+macOS
 naivebayes
 nb
 newdata's
