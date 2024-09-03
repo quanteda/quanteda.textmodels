@@ -1,5 +1,8 @@
 ## Purpose
 
+Re-submission: Adds conditionality to tests involving packages that are only in 
+Suggests.
+
 To rescue quanteda.textmodels from CRAN archives, after fixing the issues with
 it that led to its archiving on 25 August 2024.
 

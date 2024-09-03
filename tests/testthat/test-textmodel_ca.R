@@ -93,6 +93,7 @@ test_that("ca coefficients methods work", {
 })
 
 test_that("ca textplot_scale1d method works", {
+    skip_if_not_installed("quanteda.textplots")
     camodel <- textmodel_ca(data_dfm_lbgexample)
     quanteda.textplots::textplot_scale1d(camodel, margin = "document")
     expect_error(

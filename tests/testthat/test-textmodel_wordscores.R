@@ -236,13 +236,12 @@ test_that("raises error when dfm is empty (#1419)",  {
 })
 
 test_that("works with different predicted object in different shapes (#1440)",  {
-
+    skip_if_not_installed("quanteda.textplots")
     ws <- textmodel_wordscores(data_dfm_lbgexample, c(seq(-1.5, 1.5, .75), NA))
     expect_silent(quanteda.textplots::textplot_scale1d(predict(ws)))
     expect_silent(quanteda.textplots::textplot_scale1d(predict(ws, se.fit = TRUE)))
     expect_silent(quanteda.textplots::textplot_scale1d(predict(ws, interval = "confidence")))
     expect_silent(quanteda.textplots::textplot_scale1d(predict(ws, se.fit = TRUE, interval = "confidence")))
-
 })
 
 test_that("textmodel_wordscores correctly implements smoothing (#1476)", {
