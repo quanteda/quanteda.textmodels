@@ -1,10 +1,7 @@
 ## Purpose
 
-Re-submission: Adds conditionality to tests involving packages that are only in 
-Suggests.
-
-To rescue quanteda.textmodels from CRAN archives, after fixing the issues with
-it that led to its archiving on 25 August 2024.
+* Fixes namespace issues caused by removing RcppArmadillo from quanteda 4.1.0. 
+* Fixes extraneous output from the spelling check.
 
 # Checks
 

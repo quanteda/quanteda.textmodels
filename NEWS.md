@@ -1,3 +1,8 @@
+# quanteda.textmodels 0.9.9
+
+* Fixes namespace issues caused by removing RcppArmadillo from quanteda 4.1.0. 
+* Fixes extraneous output from the spelling check.
+
 # quanteda.textmodels 0.9.7
 
 Fixes the compilation errors caused by changes to the TBB library and RcppParallel. This version links to quanteda v4.0 that does not rely on RcppParallel.

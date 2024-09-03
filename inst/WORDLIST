@@ -40,6 +40,7 @@ Proksch
 Proksch's
 QUANTESS
 Raghavan
+RcppArmadillo
 RcppParallel
 Rtools
 SIGIR
@@ -76,7 +77,6 @@ nb
 newdata's
 quanteda
 se
-stat
 svd
 svds
 svm
