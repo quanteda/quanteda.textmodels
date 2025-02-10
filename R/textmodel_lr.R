@@ -63,10 +63,11 @@ textmodel_lr.default <- function(x, y, ...) {
 
 #' @export
 #' @importFrom glmnet cv.glmnet
+#' @importFrom quanteda dfm_trim
 textmodel_lr.dfm <- function(x, y, ...) {
 
     x <- as.dfm(x)
-    if (!sum(x)) stop(quanteda:::message_error("dfm_empty"))
+    if (!sum(x)) stop(message_error("dfm_empty"))
     call <- match.call()
 
     # exclude NA in training labels

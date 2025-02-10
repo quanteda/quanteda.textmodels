@@ -17,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Kenneth Benoit \email{kbenoit@lse.ac.uk} (\href{https://orcid.org/0000-0002-0797-564X}{ORCID}) [copyright holder]
+\strong{Maintainer}: Kenneth Benoit \email{kbenoit@smu.edu.sg} (\href{https://orcid.org/0000-0002-0797-564X}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{

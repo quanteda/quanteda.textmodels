@@ -47,7 +47,7 @@ remotes::install_github("quanteda/quanteda.textmodels")
 
 Because this compiles some C++ and Fortran source code, you will need to have installed the appropriate compilers. **On Windows platform**, this means the [Rtools](https://CRAN.R-project.org/bin/windows/Rtools/) software available from CRAN, or the macOS tools from 
 [macOS tools](https://cran.r-project.org/bin/macosx/tools/), including 
-namely the Clang 6.x compiler and the GNU Fortran compiler (as **quanteda** requires gfortran to build).  If you are still getting errors related to gfortran, follow the fixes [here](https://thecoatlessprofessor.com/programming/rcpp-rcpparmadillo-and-os-x-mavericks--lgfortran-and--lquadmath-error/).  
+namely the Clang 6.x compiler and the GNU Fortran compiler (as **quanteda** requires gfortran to build).  If you are still getting errors related to gfortran, follow the fixes [here](https://blog.thecoatlessprofessor.com/programming/rcpp-rcpparmadillo-and-os-x-mavericks--lgfortran-and--lquadmath-error/index.html).  
 
 
 ## How to cite

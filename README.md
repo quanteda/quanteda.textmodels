@@ -4,7 +4,7 @@
 <!-- badges: start -->
 
 [![](https://www.r-pkg.org/badges/version/quanteda.textmodels?color=green)](https://cran.r-project.org/package=quanteda.textmodels)
-[![](https://img.shields.io/badge/devel%20version-0.9.7-royalblue.svg)](https://github.com/quanteda/quanteda.textmodels)
+[![](https://img.shields.io/badge/devel%20version-0.9.10-royalblue.svg)](https://github.com/quanteda/quanteda.textmodels)
 [![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textmodels)](https://CRAN.R-project.org/package=quanteda.textmodels)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textmodels?color=orange)](https://CRAN.R-project.org/package=quanteda.textmodels)
@@ -45,7 +45,7 @@ tools](https://cran.r-project.org/bin/macosx/tools/), including namely
 the Clang 6.x compiler and the GNU Fortran compiler (as **quanteda**
 requires gfortran to build). If you are still getting errors related to
 gfortran, follow the fixes
-[here](https://thecoatlessprofessor.com/programming/rcpp-rcpparmadillo-and-os-x-mavericks--lgfortran-and--lquadmath-error/).
+[here](https://blog.thecoatlessprofessor.com/programming/rcpp-rcpparmadillo-and-os-x-mavericks--lgfortran-and--lquadmath-error/index.html).
 
 ## How to cite
 

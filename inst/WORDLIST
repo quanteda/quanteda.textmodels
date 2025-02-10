@@ -15,15 +15,13 @@ Greenacre
 Harshman
 Hastie
 Hinrich
-Hsieh
 INFOSYS
 Jurafsky
 Keerthi
 LBG
-LIBLINEAR
 LSA
 Landauer
-LiblineaR
+LibLineaR
 MFN
 Maas
 Majka
@@ -48,7 +46,6 @@ SVMs
 Sathiya
 Skogholt
 Slapin
-SparseM
 StG
 StackOverflow
 TBB
@@ -60,7 +57,6 @@ Wordscores
 Wordscoring
 arXiv
 austin
-csr
 dfm
 docfreq
 docvars
@@ -71,7 +67,6 @@ gfortran
 lr
 lsa
 macM
-macOS
 naivebayes
 nb
 newdata's
@@ -79,7 +74,6 @@ quanteda
 se
 svd
 svds
-svm
 svmlin
 termfreq
 textmodel
