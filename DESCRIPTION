@@ -1,7 +1,7 @@
 Package: quanteda.textmodels
 Type: Package
 Title: Scaling Models and Classifiers for Textual Data
-Version: 0.9.9
+Version: 0.9.10
 Description: Scaling models and classifiers for sparse matrix objects representing 
     textual data in the form of a document-feature matrix.  Includes original 
     implementations of 'Laver', 'Benoit', and Garry's (2003) <doi:10.1017/S0003055403000698>,
@@ -10,7 +10,7 @@ Description: Scaling models and classifiers for sparse matrix objects representi
     model, as well as methods for correspondence analysis, latent semantic analysis,
     and fast Naive Bayes and linear 'SVMs' specially designed for sparse textual data.
 Authors@R: c( 
-    person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role = c("cre", "aut", "cph"), comment = c(ORCID = "0000-0002-0797-564X")), 
+    person("Kenneth", "Benoit", email = "kbenoit@quanteda.org", role = c("cre", "aut", "cph"), comment = c(ORCID = "0000-0002-0797-564X")), 
     person("Kohei", "Watanabe", email = "watanabe.kohei@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-6519-5265")), 
     person("Haiyan", "Wang", email = "whyinsa@yahoo.com", role = "aut", comment = c(ORCID = "0000-0003-4992-4311")),
     person("Patrick O.", "Perry", email = "patperry@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-7460-127X")),
@@ -26,12 +26,10 @@ Depends:
     methods
 Imports:
     glmnet,
-    LiblineaR,
     Matrix (>= 1.2),
     quanteda (>= 4.0.0),
     RSpectra,
     Rcpp (>= 0.12.12),
-    SparseM,
     stringi
 Suggests:
     ca,
@@ -63,7 +61,6 @@ Collate:
     'textmodel_lsa.R'
     'textmodel_lr.R'
     'textmodel_nb.R'
-    'textmodel_svm.R'
     'textmodel_svmlin.R'
     'textmodel_wordfish.R'
     'textmodel_wordscores.R'

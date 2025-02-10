@@ -75,7 +75,7 @@ test_that("the svm model works with bias = 0", {
         dfm()
     tmod <- textmodel_svm(dfmat, y = dfmat$sentiment, bias = 0)
     expect_identical(
-        suppressWarnings(predict(tmod, newdata = dfm(tokens(data_corpus_moviereviews[1101])), type = "class")),
+        predict(tmod, newdata = dfm(tokens(data_corpus_moviereviews[1101])), type = "class"),
         factor(c("cv100_11528.txt" = "pos"), levels = c("neg", "pos"))
     )
 })

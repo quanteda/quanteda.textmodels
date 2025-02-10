@@ -1,3 +1,7 @@
+# quanteda.textmodels 0.9.10
+
+* Removed `textmodel_svm()` due to #72. We are working with the authors of **LibLineaR** on a fix, at which time we will restore the function to the CRAN version of the package.
+
 # quanteda.textmodels 0.9.9
 
 * Fixes namespace issues caused by removing RcppArmadillo from quanteda 4.1.0. 
